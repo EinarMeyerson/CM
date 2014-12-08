@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent" >
+
+   <RelativeLayout
+        android:id="@+id/android_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@drawable/borde">
+
+        
+        <TextView
+            android:id="@+id/textViewAnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="17dp"
+            android:textColor="#FFFFFF"
+            android:drawablePadding="10dp"
+            android:text="@string/asignatura"
+            android:textSize="@dimen/asignatura" />
+
+        <ImageView
+            android:id="@+id/imageViewEliminar"
+            android:layout_width="@dimen/X"
+            android:layout_height="@dimen/X"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/cruz_eliminar_clickeffect" />
+
+        <ListView
+            
+            android:id="@+id/listView1"
+            android:animateLayoutChanges="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewAnd"
+            android:layout_above="@+id/resultados"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:cacheColorHint="#FFFFFF"
+            android:drawSelectorOnTop="false"
+            android:smoothScrollbar="true"
+            android:listSelector="@drawable/list_selector_background_custom"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false"
+            android:requiresFadingEdge="vertical"
+            android:scrollbarFadeDuration="1000" >
+
+        </ListView>
+
+         <View 
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#bbFFFFFF"
+                android:layout_below="@id/listView1"/>
+
+        <!-- **** EMPEZAMOS EL DISEÑO DE LA TABLA **** -->
+
+        <LinearLayout
+            android:id="@+id/resultados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/resultados1"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/TVtotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/Total"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/datos" />
+
+
+                <View
+                    android:id="@+id/lineaHoriz"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#bbFFFFFF" />
+
+                <TextView
+                    android:id="@+id/TVmedia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/Media"
+                    android:textColor="@color/white"
+					android:textSize="@dimen/datos" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/lineaVerti"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:translationX="0dp"
+                android:background="#bbFFFFFF" />
+
+            <LinearLayout
+                android:id="@+id/resultados2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/TVnotaneeded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="@string/recuadroo"
+                    android:textColor="@color/white"
+					android:textSize="@dimen/datosporcentaje" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

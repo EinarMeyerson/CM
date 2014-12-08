@@ -1,0 +1,17 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="notas">28.5sp</dimen>
+    <dimen name="asignatura">36sp</dimen>
+    <dimen name="titulo_footer">31sp</dimen>
+    <dimen name="datos">31sp</dimen>
+    <dimen name="datosporcentaje_botones_eliminar_sin">32.5sp</dimen>
+    <dimen name="datosporcentaje">29sp</dimen>
+    <dimen name="sin">35sp</dimen>
+    <dimen name="titulodialog">36sp</dimen>
+    <dimen name="textdialog">30sp</dimen>
+    <dimen name="edittext">26sp</dimen>
+    <dimen name="TFD">18sp</dimen>
+    <dimen name="iconos">65dp</dimen>
+    <dimen name="X">26dp</dimen>
+</resources>

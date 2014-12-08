@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutCrearNota1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    >
+
+    <TextView
+        android:id="@+id/textviewAsignatura"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/layoutCrearNota2"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/asignatura"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/titulodialog" />
+
+<!--     android:background="@drawable/dialogheadshape" -->
+
+	<View 
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dp"
+	    android:background="#CED6DD"
+	    android:layout_alignRight="@id/textviewAsignatura"
+	    android:layout_below="@id/textviewAsignatura"/>
+        
+    <LinearLayout
+        android:id="@+id/layoutCrearNota2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textviewAsignatura"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+<!--         android:background="@drawable/dialogfootershape" -->
+        
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp" >
+
+            <TextView
+                android:id="@+id/textviewNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingRight="20dp"
+                android:text="@string/nombre"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textdialog" />
+
+            <EditText
+                android:id="@+id/edittextNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/textviewNombre"
+                android:layout_toRightOf="@id/textviewNombre"
+                android:background="@drawable/edittext_shape"
+                android:ems="7"
+                android:hint="@string/introducirnombre"
+                android:textSize="@dimen/edittext"
+                android:inputType="textCapSentences"
+                android:gravity="center"
+                android:maxLength="14"
+                android:maxLines="1"
+                android:textColor="#585858" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/textviewPorcentaje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textviewNombre"
+                android:layout_marginTop="15dp"
+                android:text="@string/porcentaje"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textdialog" />
+
+            <EditText
+                android:id="@+id/edittextPorcentaje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/textviewPorcentaje"
+                android:layout_alignRight="@id/edittextNombre"
+                android:background="@drawable/edittext_shape"
+                android:textSize="@dimen/edittext"
+                android:ems="4"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:gravity="center"
+                android:numeric="decimal"
+                android:singleLine="true"
+                android:textColor="#585858" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/textviewNota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textviewPorcentaje"
+                android:layout_marginTop="15dp"
+                android:paddingBottom="7dp"
+                android:text="@string/nota"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textdialog" />
+
+            <EditText
+                android:id="@+id/edittextNota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textviewNota"
+                android:layout_alignRight="@+id/edittextPorcentaje"
+                android:background="@drawable/edittext_shape"
+                android:textSize="@dimen/edittext"
+                android:ems="4"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:gravity="center"
+                android:numeric="decimal"
+                android:textColor="#585858" >
+            </EditText>
+        </RelativeLayout>
+
+        <View 
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dp"
+	    android:background="#CED6DD"
+	    android:layout_alignRight="@id/textviewAsignatura"
+	    android:layout_above="@+id/layoutCrearNotaButtons"/>
+        
+        <LinearLayout
+            android:id="@+id/layoutCrearNotaButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutCrearNota2"
+            android:divider="@drawable/divider"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:showDividers="middle" >
+
+            
+            <Button
+				android:id="@+id/buttonSalirNota"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/datosporcentaje_botones_eliminar_sin" />
+
+            <Button
+                
+                android:id="@+id/buttonCrearNota"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="@string/create"
+                android:textColor="@color/white"
+                android:textSize="@dimen/datosporcentaje_botones_eliminar_sin" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

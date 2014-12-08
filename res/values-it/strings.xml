@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ClassMarks</string>
+    <string name="Media">Mitjana: </string>
+    <string name="Total">Totale: </string>
+    <string name="recuadroo">richiesto un marchio per passare  </string>
+    <string name="addasig">aggiungere soggetto </string>
+    <string name="Aprobado">passato </string>
+    <string name="Suspendido">mancato </string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ClassMarks</string>
+	<string name="Media">Mean: </string>
+    <string name="Total">Total: </string>
+    <string name="recuadroo">  Required mark to pass: </string>
+    <string name="addasig">Add Subject  </string>
+    <string name="Aprobado">Passed </string>
+    <string name="Suspendido">Failed </string>
+     <string name="addmark">+ Add new mark  </string>
+    <string name="emptyfolder"> Doesn\'t exist any subject.\n\n Click on the icon on the right top corner of the screen to add a new subject.</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
+    <string name="introducirnombre">Add name</string>
+    <string name="modificar">Edit</string>
+    <string name="nombre">Name</string>
+    <string name="Nota_aprobar">Score needed to overcome</string>
+    <string name="porcentaje">Percentage</string>
+    <string name="nota">Mark</string>
+    <string name="nuevaasig">New subject</string>
+    <string name="asignatura">Subject</string>
+    <string name="delete">Delete</string>
+    <string name="textoEliminar">Are you sure to delete\nthe subject?</string>
+    
+
+</resources>

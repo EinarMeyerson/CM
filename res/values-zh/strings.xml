@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="app_name">ClassMarks</string>
+    <string name="Media">媒体</string>
+    <string name="Total">全部</string>
+    <string name="recuadroo">合格分数</string>
+    <string name="addasig">添加科目</string>
+    <string name="Aprobado">合格</string>
+    <string name="Suspendido">不合格</string>
+</resources>

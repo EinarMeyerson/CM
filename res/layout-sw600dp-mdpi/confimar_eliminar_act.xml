@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutConfirmacionEliminar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background" >
+
+    <TextView
+        android:id="@+id/textviewAsignatura"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/layoutConfirmacionEliminar2"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="Asignatura"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/titulodialog" />
+
+    <View 
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dp"
+	    android:background="#CED6DD"
+	    android:layout_alignRight="@id/textviewAsignatura"
+	    android:layout_below="@id/textviewAsignatura"/>
+    
+    <LinearLayout
+        android:id="@+id/layoutConfirmacionEliminar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textviewAsignatura"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textviewConfirmacionEliminar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            android:text="@string/textoEliminar"
+            android:textColor="@color/white"
+            android:textSize="@dimen/datosporcentaje_botones_eliminar_sin" />
+        
+        <View 
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dp"
+	    android:background="#CED6DD"
+	    android:layout_alignRight="@id/textviewAsignatura"
+	    android:layout_above="@+id/layoutConfirmarElimButtons"/>
+
+        <LinearLayout
+            android:id="@+id/layoutConfirmarElimButtons"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="center"
+            android:divider="@drawable/divider"
+            android:showDividers="middle"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnconfirmarNO"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/datosporcentaje_botones_eliminar_sin" />
+
+            <Button
+                android:id="@+id/btnconfirmarSI"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="@string/delete"
+                android:textColor="@color/white"
+                android:textSize="@dimen/datosporcentaje_botones_eliminar_sin" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

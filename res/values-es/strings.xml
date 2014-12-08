@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ClassMarks</string>
+    <string name="Media">Media: </string>
+    <string name="Total">Total: </string>
+    <string name="recuadroo">Nota necesaria para aprobar: </string>
+    <string name="addasig">Añadir asignatura </string>
+	<string name="Aprobado">Aprobado </string>
+    <string name="Suspendido">Suspendido </string>
+    <string name="addmark">+ Añadir nota  </string>
+    <string name="emptyfolder"> No existe ninguna asignatura creada.\n\nPresiona en el icono de la parte superior derecha de la pantalla para añadir una asignatura.</string>
+    <string name="cancel">Cancelar</string>
+    <string name="create">Crear</string>
+    <string name="introducirnombre">Introducir nombre</string>
+    <string name="modificar">Modificar</string>
+    <string name="nombre">Nombre</string>
+    <string name="porcentaje">Porcentaje</string>
+    <string name="nota">Nota</string>
+    <string name="nuevaasig">Nueva asignatura</string>
+    <string name="asignatura">Asignatura</string>
+    <string name="delete">Eliminar</string>
+    <string name="textoEliminar">¿Está seguro de\nque desea\neliminar la asignatura?</string>
+    
+</resources>

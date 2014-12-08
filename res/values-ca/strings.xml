@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ClassMarks</string>
+    <string name="Media">Mitjana: </string>
+    <string name="Total">Total: </string>
+    <string name="recuadroo">Nota necessaria per aprobar:  </string>
+    <string name="addasig">Afegir asignatura  </string>
+    <string name="Aprobado">Aprovat </string>
+    <string name="Suspendido">Suspès </string>
+</resources>
