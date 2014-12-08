@@ -120,18 +120,19 @@ public class FragmentAsig extends Fragment{
         //C�digo para crear y escalar el indicardor verde
         Drawable indic = getActivity().getResources().getDrawable(R.drawable.indicador_verde_x);   
         Bitmap bm = ((BitmapDrawable)indic).getBitmap();
-        final Drawable indicator = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm, 22, 22, true));
+        int dim = (int) getResources().getDimension(R.dimen.iconos_asignatura);
+        final Drawable indicator = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm,dim, dim, true));
  
  
         //C�digo para crear y escalar el indicardor rojo
         Drawable indicR = getActivity().getResources().getDrawable(R.drawable.indicador_rojo_x);   
         Bitmap bm1 = ((BitmapDrawable)indicR).getBitmap();
-        final Drawable indicatorR = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm1, 22, 22, true));
+        final Drawable indicatorR = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm1, dim,dim, true));
  
         //C�digo para crear y escalar el indicardor nulo
         Drawable indicN = getActivity().getResources().getDrawable(R.drawable.indicador_nulo_x);   
         Bitmap bm2 = ((BitmapDrawable)indicN).getBitmap();
-        final Drawable indicatorN = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm2, 22, 22, true));
+        final Drawable indicatorN = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm2, dim, dim, true));
  
  
         ImageView x = (ImageView)fragment.findViewById(R.id.imageViewEliminar);

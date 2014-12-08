@@ -14,4 +14,6 @@
     <dimen name="TFD">9sp</dimen>
     <dimen name="iconos">50dp</dimen>
     <dimen name="X">20dp</dimen>
+    <dimen name="iconos_asignatura">15dp</dimen>
+    
 </resources>
