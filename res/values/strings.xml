@@ -22,6 +22,12 @@
     <string name="asignatura">Subject</string>
     <string name="delete">Delete</string>
     <string name="textoEliminar">Are you sure to delete\nthe subject?</string>
+    <string name="toastSinrellenar">Field blank!</string>
+    <string name="toastYaexiste"> already exists</string>
+    <string name="toastMaxAsignaturas">You\'ve entered the maximum of subjects, 10!</string>
+    <string name="toastNotaExiste"> already exists</string>
+    <string name="toastDatosincorrectos">Data are incorrect!</string>
+    <string name="toastCampossinrellenar">Some fields are empty!</string>
     
 
 </resources>

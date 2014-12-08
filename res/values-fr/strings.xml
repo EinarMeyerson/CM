@@ -15,9 +15,18 @@
     <string name="introducirnombre">écrire ici</string>
     <string name="modificar">Éditer</string>
     <string name="nombre">Nom</string>
-    <string name="Nota_aprobar">points nécessaires pour réussir</string>
     <string name="porcentaje">Percentaje</string>
     <string name="nota">Points</string>
     <string name="nuevaasig">Ajouter une matiére</string>
     <string name="asignatura">Matière</string>    
+    
+    <string name="delete">Eliminar</string>
+    <string name="textoEliminar">¿Está seguro de\nque desea\neliminar la asignatura?</string>
+    <string name="toastSinrellenar">!Campo sin rellenar!</string>
+    <string name="toastYaexiste"> ya existe</string>
+    <string name="toastMaxAsignaturas">¡Ya has introducido el máximo de asignaturas, 10!</string>
+    <string name="toastNotaExiste"> ya existe</string>
+    <string name="toastDatosincorrectos">¡Los datos no son correctos!</string>
+    <string name="toastCampossinrellenar">¡Faltan campos por rellenar!</string>
+    
 </resources>

@@ -40,7 +40,7 @@ public class FragmentAsig extends Fragment{
     private static final int ID_EDIT     = 1;
     private static final int ID_ELIMINAR   = 2;
     public String mText;
-    public TextView txtnotaexfin, txttotal, txtmedia, txtsobre, txta��adir;
+    public TextView txtnotaexfin, txttotal, txtmedia, txtsobre, txtaadir;
     public ListView lv;
     public Principal prin;
     public ListAdapter adap;
@@ -111,7 +111,7 @@ public class FragmentAsig extends Fragment{
  
         View fragment = inflater.inflate(R.layout.asignatura_frag, container, false);
  
-        // Configuraci�n de objetos
+        // Configuración de objetos
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(),"Roboto-Light.ttf");
  
         //TextView nombre de la asignatura
@@ -119,21 +119,22 @@ public class FragmentAsig extends Fragment{
         txt.setText(mText);
         txt.setTypeface(tf);
  
-        //C�digo para crear y escalar el indicardor verde
+        //Código para crear y escalar el indicardor verde
         Drawable indic = getActivity().getResources().getDrawable(R.drawable.indicador_verde_x);   
         Bitmap bm = ((BitmapDrawable)indic).getBitmap();
-        final Drawable indicator = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm, 22, 22, true));
+        int dim = (int) getResources().getDimension(R.dimen.iconos_asignatura);
+        final Drawable indicator = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm,dim, dim, true));
  
  
-        //C�digo para crear y escalar el indicardor rojo
+        //Código para crear y escalar el indicardor rojo
         Drawable indicR = getActivity().getResources().getDrawable(R.drawable.indicador_rojo_x);   
         Bitmap bm1 = ((BitmapDrawable)indicR).getBitmap();
-        final Drawable indicatorR = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm1, 22, 22, true));
+        final Drawable indicatorR = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm1, dim,dim, true));
  
-        //C�digo para crear y escalar el indicardor nulo
+        //Código para crear y escalar el indicardor nulo
         Drawable indicN = getActivity().getResources().getDrawable(R.drawable.indicador_nulo_x);   
         Bitmap bm2 = ((BitmapDrawable)indicN).getBitmap();
-        final Drawable indicatorN = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm2, 22, 22, true));
+        final Drawable indicatorN = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm2, dim, dim, true));
  
  
         ImageView x = (ImageView)fragment.findViewById(R.id.imageViewEliminar);
@@ -156,14 +157,14 @@ public class FragmentAsig extends Fragment{
  
         /*
          * 
-         *EMPIEZA EL C�DIGO DEL BOCADILLO (SPEECH BUBBLE)
+         *EMPIEZA EL Cï¿½DIGO DEL BOCADILLO (SPEECH BUBBLE)
          * 
          */
  
         ActionItem editItem = new ActionItem(ID_EDIT, null, getResources().getDrawable(R.drawable.ic_action_edit));
         ActionItem eliminarItem = new ActionItem(ID_ELIMINAR, null, getResources().getDrawable(R.drawable.ic_action_discard));
  
-        // Crea un objeto QuickAction y determina que su orientaci�n sea horizontal
+        // Crea un objeto QuickAction y determina que su orientaciï¿½n sea horizontal
         final QuickAction quickAction = new QuickAction(getActivity(), QuickAction.HORIZONTAL);
  
         // add action items into QuickAction
@@ -180,48 +181,53 @@ public class FragmentAsig extends Fragment{
                 // here we can filter which action item was clicked with
                 // pos or actionId parameter
                 if (actionId == ID_EDIT) {
-                    ((Principal)getActivity()).setIDmodif(cn.IdNota(items.get(EliminarID).getEvaluable()));
+                    Log.d("items_IDnota",""+items.get(EliminarID).getId());
+
+                    ((Principal)getActivity()).setIDmodif(cn.IdNota(items.get(EliminarID).getId()));
+
+//                    Log.d("items_evaluable",""+items.get(EliminarID).getEvaluable());
+//                    Log.d("items_por",""+items.get(EliminarID).getPorcentaje());
+
                     getActivity().showDialog(2);
                     adap.notifyDataSetChanged();
                     itemselected.clearFocus();
                     //Toast.makeText(getActivity(), "Let's edit",Toast.LENGTH_SHORT).show();
                 } else if (actionId == ID_ELIMINAR) {
-                    cn.EliminarNota(cn.IdNota(items.get(EliminarID).getEvaluable()));
+                    cn.EliminarNota(cn.IdNota(items.get(EliminarID).getId()));
  
+                    float txtsob = cn.SumaPorcentajes(cn.IdAsignatura(mText));
+                    double txttot = cn.TotalProducto(cn.IdAsignatura(mText));
+                     
+                    final double txtmed = Math.round((txttot / (txtsob / 100)) * 100.0) / 100.0;
+                    double txtporrest = Math.round((100-txtsob)*100.0) / 100.0;
+                    double notanece = Math.round(((5-txttot)/(txtporrest/100)) * 100.0) / 100.0;
  
+                    
                     ObjectAnimator anim = ObjectAnimator.ofFloat(itemselected, View.ALPHA, 0);
                     anim.setDuration(1000);
                     anim.addListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            items.remove(items.get(EliminarID));
+                            items.remove(items.get(EliminarID));      
+                            if(items.isEmpty() == true){
+                                txt.setCompoundDrawablesWithIntrinsicBounds(indicatorN, null, null, null);
+                            }else{
+         
+                                if(txtmed >= 5){
+                                    txt.setCompoundDrawablesWithIntrinsicBounds(indicator, null, null, null);
+                                }
+                                else{
+         
+                                    txt.setCompoundDrawablesWithIntrinsicBounds(indicatorR, null, null, null);
+                                }
+                            }
                             adap.notifyDataSetChanged();
  
                             itemselected.setAlpha(1);
                         }
                     });
                     anim.start();
- 
-                     
-                    float txtsob = cn.SumaPorcentajes(cn.IdAsignatura(mText));
-                    double txttot = cn.TotalProducto(cn.IdAsignatura(mText));
-                     
-                    double txtmed = Math.round((txttot / (txtsob / 100)) * 100.0) / 100.0;
-                    double txtporrest = Math.round((100-txtsob) * 100) / 100;
-                    double notanece = Math.round(((5-txttot)/(txtporrest/100)) * 100.0) / 100.0;
- 
-                    if(items.isEmpty() == true){
-                        txt.setCompoundDrawablesWithIntrinsicBounds(indicatorN, null, null, null);
-                    }else{
- 
-                        if(txtmed >= 5){
-                            txt.setCompoundDrawablesWithIntrinsicBounds(indicator, null, null, null);
-                        }
-                        else{
- 
-                            txt.setCompoundDrawablesWithIntrinsicBounds(indicatorR, null, null, null);
-                        }
-                    }
+
                     txttotal.setText(getString(R.string.Total) + " " + txttot);
                     txtmedia.setText(getString(R.string.Media) + " " + txtmed);
                     txtnotaneeded.setText(getString(R.string.recuadroo)+ " " + notanece + " ("+txtporrest+"%)");
@@ -229,30 +235,6 @@ public class FragmentAsig extends Fragment{
                     if (notanece<10 && notanece>0 )
                     {
                         txtnotaneeded.setText(getString(R.string.recuadroo)+ " " + notanece + " ("+txtporrest+ "%)");
-                    }
-                    else if (notanece>=10) 
-                    {
-                        if ((100-txtsob)>0)
-                        {
-                            txtnotaneeded.setText(getString(R.string.recuadroo)+ " +10 ("+txtporrest+" %)");
-                        }
-                        else
-                        {
-                            txtnotaneeded.setText("Suspendido");
- 
-                        }
-                    }
-                    else if (notanece<=0) 
-                    {
-                        if ((100-txtsob)>0 && (txttot<5))
-                        {
-                            txtnotaneeded.setText(getString(R.string.recuadroo)+ " 0 ("+txtporrest+" %)");
-                        }
-                        else
-                        {
-                            txtnotaneeded.setText("Aprobado");
-                        }
- 
                     }
                     itemselected.clearFocus();
                 }
@@ -267,13 +249,13 @@ public class FragmentAsig extends Fragment{
  
         while (i < Asignatura.getLon())
         {
-            items.add(new Item(i, Asignatura.getNotas(i).getEvaluable(), Double.toString(Asignatura.getNotas(i).getPorcentaje())+" %", Double.toString((Asignatura.getNotas(i).getNota()))));
+            items.add(new Item(Asignatura.getNotas(i).getId(), Asignatura.getNotas(i).getEvaluable(), Double.toString(Asignatura.getNotas(i).getPorcentaje())+" %", Double.toString((Asignatura.getNotas(i).getNota()))));
             i++;
         }
  
         TextView tvcrearnota = (TextView)footer.findViewById(R.id.tvanadir);
         tvcrearnota.setTypeface(tf);
-        //Fin de la configuraci�n de objetos
+        //Fin de la configuración de objetos
  
         lv = (ListView)fragment.findViewById(R.id.listView1);
         lv.addFooterView(footer);
@@ -300,7 +282,7 @@ public class FragmentAsig extends Fragment{
         double txttot = cn.TotalProducto(cn.IdAsignatura(mText));
         double txtmed = Math.round((txttot/(txtsob/ 100))*100.0)/100.0;
  
-        double txtporrest = (100-txtsob);
+        double txtporrest = Math.round((100.0-txtsob)*100.0) / 100.0;
         double notanece = Math.round(((5-txttot)/(txtporrest/100)) * 100.0) / 100.0;
  
         if(items.isEmpty() == true){
@@ -324,31 +306,17 @@ public class FragmentAsig extends Fragment{
         }
         else if (notanece>=10) 
         {
-            if ((100-txtsob)>0)
-            {
-                Log.d("pocetaje restante Aprob2",""+txtsob);
- 
-                txtnotaneeded.setText(getString(R.string.recuadroo)+ " +10 ("+txtporrest+" %)");
-            }
-            else
-            {
-                txtnotaneeded.setText("Suspendido");
- 
-            }
+        	Log.d("pocetaje restante Aprob2",""+txtsob);
+        	 
+            txtnotaneeded.setText(getString(R.string.recuadroo)+ " +10 ("+txtporrest+" %)");
+        
         }
         else if (notanece<=0) 
         {
-            if ((100-txtsob)>0 && (txttot<5))
-            {
-                Log.d("pocetaje restante suspnd2",""+txtsob);
- 
-                txtnotaneeded.setText(getString(R.string.recuadroo)+ " 0 ("+txtporrest+" %)");
-            }
-            else
-            {
-                txtnotaneeded.setText("Aprobado");
-            }
- 
+            Log.d("pocetaje restante suspnd2",""+txtsob);
+            
+            txtnotaneeded.setText(getString(R.string.recuadroo)+ " 0 ("+txtporrest+" %)");
+        
         }
         cn.closeDB();
         db.close();

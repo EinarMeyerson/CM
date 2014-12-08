@@ -6,7 +6,7 @@
     <string name="Total">Total: </string>
     <string name="recuadroo">Nota necesaria para aprobar: </string>
     <string name="addasig">Añadir asignatura </string>
-	<string name="Aprobado">Aprobado </string>
+    <string name="Aprobado">Aprobado </string>
     <string name="Suspendido">Suspendido </string>
     <string name="addmark">+ Añadir nota  </string>
     <string name="emptyfolder"> No existe ninguna asignatura creada.\n\nPresiona en el icono de la parte superior derecha de la pantalla para añadir una asignatura.</string>
@@ -21,5 +21,11 @@
     <string name="asignatura">Asignatura</string>
     <string name="delete">Eliminar</string>
     <string name="textoEliminar">¿Está seguro de\nque desea\neliminar la asignatura?</string>
-    
+    <string name="toastSinrellenar">!Campo sin rellenar!</string>
+    <string name="toastYaexiste"> ya existe</string>
+    <string name="toastMaxAsignaturas">¡Ya has introducido el máximo de asignaturas, 10!</string>
+    <string name="toastNotaExiste"> ya existe</string>
+    <string name="toastDatosincorrectos">¡Los datos no son correctos!</string>
+    <string name="toastCampossinrellenar">¡Faltan campos por rellenar!</string>
+
 </resources>

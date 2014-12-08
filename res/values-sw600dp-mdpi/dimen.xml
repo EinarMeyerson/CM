@@ -3,15 +3,16 @@
     <dimen name="notas">35sp</dimen>
     <dimen name="asignatura">42sp</dimen>
     <dimen name="titulo_footer">36sp</dimen>
-    <dimen name="datos">39sp</dimen>
+    <dimen name="datos">38sp</dimen>
     <dimen name="datosporcentaje_botones_eliminar_sin">38sp</dimen>
     <dimen name="datosporcentaje">37sp</dimen>
-    <dimen name="sin">38sp</dimen>
+    <dimen name="sin">36sp</dimen>
     <dimen name="titulodialog">43sp</dimen>
     <dimen name="textdialog">33sp</dimen>
     <dimen name="edittext">30sp</dimen>
     <dimen name="TFD">21sp</dimen>
     <dimen name="iconos">75dp</dimen>
     <dimen name="X">30dp</dimen>
+    <dimen name="iconos_asignatura">22dp</dimen>
     
 </resources>
