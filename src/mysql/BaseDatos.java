@@ -59,7 +59,7 @@ public class BaseDatos extends SQLiteOpenHelper {
     // todo_tag table create statement
     private static final String CREATE_TABLE_NOTAS = "CREATE TABLE "
             + TABLE_NOTAS + "(" + KEY_IdNotas + " INTEGER PRIMARY KEY,"
-            + KEY_Porcentaje + " DOUBLE," + KEY_Evaluable + " TEXT UNIQUE, "
+            + KEY_Porcentaje + " DOUBLE," + KEY_Evaluable + " TEXT, "
             + KEY_Nota + " DOUBLE," +KEY_IdAsignaturaReferencia +" INTEGER, FOREIGN KEY (" + KEY_IdAsignaturaReferencia + ") REFERENCES "+TABLE_ASIGNATURA+ "("+KEY_IdAsignatura+"));";
  
     public BaseDatos(Context context) {
@@ -98,7 +98,6 @@ public class BaseDatos extends SQLiteOpenHelper {
         values.put(KEY_Evaluable, Nota.getEvaluable());
         values.put(KEY_Nota, Nota.getNota());
         values.put(KEY_IdAsignaturaReferencia, Nota.getIdasignatura());
-        
         long insert =db.insert(TABLE_NOTAS, null, values);  
         if (insert ==-1){
         	i=1;
