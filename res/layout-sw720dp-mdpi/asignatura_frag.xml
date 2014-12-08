@@ -67,7 +67,7 @@
 
             <LinearLayout
                 android:id="@+id/resultados1"
-                android:layout_width="125dp"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical" >

@@ -7,7 +7,7 @@
     <dimen name="datos">18sp</dimen>
     <dimen name="datosporcentaje_botones_eliminar_sin">18sp</dimen>
     <dimen name="sin">20sp</dimen>
-    <dimen name="datosporcentaje">16sp</dimen>
+    <dimen name="datosporcentaje">17sp</dimen>
     <dimen name="titulodialog">22sp</dimen>
     <dimen name="textdialog">18sp</dimen>
     <dimen name="edittext">14sp</dimen>
@@ -15,5 +15,6 @@
     <dimen name="iconos">50dp</dimen>
     <dimen name="X">20dp</dimen>
     <dimen name="iconos_asignatura">12dp</dimen>
+    <dimen name="linear">110dp</dimen>
     
 </resources>

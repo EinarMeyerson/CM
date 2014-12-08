@@ -14,5 +14,6 @@
     <dimen name="iconos">75dp</dimen>
     <dimen name="X">30dp</dimen>
     <dimen name="iconos_asignatura">22dp</dimen>
+    <dimen name="linear">210dp</dimen>
     
 </resources>
