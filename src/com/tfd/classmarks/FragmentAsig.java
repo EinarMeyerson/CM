@@ -38,7 +38,7 @@ public class FragmentAsig extends Fragment{
     private static final int ID_EDIT     = 1;
     private static final int ID_ELIMINAR   = 2;
     public String mText;
-    public TextView txtnotaexfin, txttotal, txtmedia, txtsobre, txtaÃñadir;
+    public TextView txtnotaexfin, txttotal, txtmedia, txtsobre, txtaadir;
     public ListView lv;
     public Principal prin;
     public ListAdapter adap;
@@ -109,7 +109,7 @@ public class FragmentAsig extends Fragment{
  
         View fragment = inflater.inflate(R.layout.asignatura_frag, container, false);
  
-        // Configuración de objetos
+        // Configuraciï¿½n de objetos
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(),"Roboto-Light.ttf");
  
         //TextView nombre de la asignatura
@@ -117,18 +117,18 @@ public class FragmentAsig extends Fragment{
         txt.setText(mText);
         txt.setTypeface(tf);
  
-        //Código para crear y escalar el indicardor verde
+        //Cï¿½digo para crear y escalar el indicardor verde
         Drawable indic = getActivity().getResources().getDrawable(R.drawable.indicador_verde_x);   
         Bitmap bm = ((BitmapDrawable)indic).getBitmap();
         final Drawable indicator = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm, 22, 22, true));
  
  
-        //Código para crear y escalar el indicardor rojo
+        //Cï¿½digo para crear y escalar el indicardor rojo
         Drawable indicR = getActivity().getResources().getDrawable(R.drawable.indicador_rojo_x);   
         Bitmap bm1 = ((BitmapDrawable)indicR).getBitmap();
         final Drawable indicatorR = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm1, 22, 22, true));
  
-        //Código para crear y escalar el indicardor nulo
+        //Cï¿½digo para crear y escalar el indicardor nulo
         Drawable indicN = getActivity().getResources().getDrawable(R.drawable.indicador_nulo_x);   
         Bitmap bm2 = ((BitmapDrawable)indicN).getBitmap();
         final Drawable indicatorN = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm2, 22, 22, true));
@@ -270,7 +270,7 @@ public class FragmentAsig extends Fragment{
  
         TextView tvcrearnota = (TextView)footer.findViewById(R.id.tvanadir);
         tvcrearnota.setTypeface(tf);
-        //Fin de la configuración de objetos
+        //Fin de la configuraciï¿½n de objetos
  
         lv = (ListView)fragment.findViewById(R.id.listView1);
         lv.addFooterView(footer);

@@ -116,7 +116,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
  
         resetPosition = mPager.getCurrentItem();
  
-        //Si hay algún dialog abierto, lo cierra
+        //Si hay algï¿½n dialog abierto, lo cierra
         if (isShown == true){
             dismissDialog(0);
         }
@@ -137,7 +137,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
  
     }
  
-    //Método que determina si hay, o no, asignaturas creadas
+    //Mï¿½todo que determina si hay, o no, asignaturas creadas
     public void isEmpty() {
         BaseDatos cn = new BaseDatos(getApplicationContext());
  
@@ -153,7 +153,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
         cn.closeDB();
     }
  
-    //Método para escalar los iconos al clicar en ellos
+    //Mï¿½todo para escalar los iconos al clicar en ellos
     public void clickInTransformation(View view){
  
         float scale = 0.90f;
@@ -161,7 +161,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
         view.setScaleY(scale);
  
     }
-    //Método para escalar los iconos al levantar el dedo
+    //Mï¿½todo para escalar los iconos al levantar el dedo
     public void clickOutTransformation(View view){
  
         float scale = 1f;
@@ -209,8 +209,8 @@ public class Principal extends FragmentActivity implements FragmentProvider {
         }
     }
  
-    /* Este metodo lo llamamos en el archivo de diseño principal_act.xml con la funcion 'android:onClick="addSubject"', lo que nos permite
-    definir este metodo como la accion que debe hacerse cuando se clica sobre el imageview de añadir carpeta. */
+    /* Este metodo lo llamamos en el archivo de diseï¿½o principal_act.xml con la funcion 'android:onClick="addSubject"', lo que nos permite
+    definir este metodo como la accion que debe hacerse cuando se clica sobre el imageview de aï¿½adir carpeta. */
     public void addSubject(View v){
         showDialog(0);
     }
@@ -590,7 +590,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
                     //verificar si la casilla rellenar  nota esta vacia para mostrar mensaje
                     if (edtxt.getText().length()==0)
                     {
-                        Toast.makeText(getApplicationContext(),"¡Campo sin rellenar!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),R.string.toastSinrellenar,Toast.LENGTH_SHORT).show();
  
                     }
                     else if(cn.getCuatrimestreDataBase(spinner.getSelectedItem().toString()).getLon()<10) {
@@ -618,7 +618,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 						}
 						else{
 							edtxt.setText("");
-				    		Toast.makeText(getApplicationContext(), Asignatura.getNombre()+" ya existe", Toast.LENGTH_LONG).show();
+				    		Toast.makeText(getApplicationContext(), Asignatura.getNombre()+ getString(R.string.toastYaexiste), Toast.LENGTH_LONG).show();
 						}
                     }
                     else
@@ -626,7 +626,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
                         dismissDialog(0);
                         isShown = false;
                         edtxt.setText("");
-                        Toast.makeText(getApplicationContext(),"¡Ya has introducido el máximo de asignaturas, 10!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),R.string.toastMaxAsignaturas,Toast.LENGTH_LONG).show();
 						cn.closeDB();
 
                     }
@@ -652,7 +652,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
             return dialog;
  
         case 1:
-            //Añadir nota
+            //Aï¿½adir nota
             LayoutInflater inflater1=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View newNota = inflater1.inflate(R.layout.insertarnota_act, null);
  
@@ -869,12 +869,12 @@ public class Principal extends FragmentActivity implements FragmentProvider {
                         }
                         else
                         {
-                            Toast.makeText(getApplicationContext(),"¡Los datos no son correctos!",Toast.LENGTH_SHORT).show();   
+                            Toast.makeText(getApplicationContext(),R.string.toastDatosincorrectos,Toast.LENGTH_SHORT).show();   
  
                         }
                     }
                     else
-                        Toast.makeText(getApplicationContext(),"¡Falta campos por rellenar!",Toast.LENGTH_SHORT).show();    
+                        Toast.makeText(getApplicationContext(), R.string.toastCampossinrellenar,Toast.LENGTH_SHORT).show();    
                 }
             });
  
@@ -1135,12 +1135,12 @@ public class Principal extends FragmentActivity implements FragmentProvider {
                         }
                         else
                         {
-                            Toast.makeText(getApplicationContext(),"¡Los datos no son correctos!",Toast.LENGTH_SHORT).show();   
+                            Toast.makeText(getApplicationContext(),R.string.toastDatosincorrectos,Toast.LENGTH_SHORT).show();   
  
                         }
                     }
                     else
-                        Toast.makeText(getApplicationContext(),"¡Faltan campos por rellenar!",Toast.LENGTH_SHORT).show();   
+                        Toast.makeText(getApplicationContext(),R.string.toastCampossinrellenar,Toast.LENGTH_SHORT).show();   
                 }
             });
  
@@ -1165,7 +1165,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
             return dialog2;
  
         case 3:
-            //Confirmación eliminar asignatura
+            //Confirmaciï¿½n eliminar asignatura
             BaseDatos cn3= new BaseDatos(getApplicationContext());
  
             ClaseCuatrimestres cuatri2 = cn3.getCuatrimestreDataBase(spinner.getSelectedItem().toString());
