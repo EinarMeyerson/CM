@@ -210,7 +210,7 @@ public class FragmentAsig extends Fragment{
                     double txttot = cn.TotalProducto(cn.IdAsignatura(mText));
                      
                     double txtmed = Math.round((txttot / (txtsob / 100)) * 100.0) / 100.0;
-                    double txtporrest = Math.round((100-txtsob) * 100) / 100;
+                    double txtporrest = Math.round((100-txtsob)*100.0) / 100.0;
                     double notanece = Math.round(((5-txttot)/(txtporrest/100)) * 100.0) / 100.0;
  
                     if(items.isEmpty() == true){
@@ -301,7 +301,7 @@ public class FragmentAsig extends Fragment{
         double txttot = cn.TotalProducto(cn.IdAsignatura(mText));
         double txtmed = Math.round((txttot/(txtsob/ 100))*100.0)/100.0;
  
-        double txtporrest = (100-txtsob);
+        double txtporrest = Math.round((100.0-txtsob)*100.0) / 100.0;
         double notanece = Math.round(((5-txttot)/(txtporrest/100)) * 100.0) / 100.0;
  
         if(items.isEmpty() == true){

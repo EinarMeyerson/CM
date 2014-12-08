@@ -1348,7 +1348,12 @@ public class Principal extends FragmentActivity implements FragmentProvider {
             ed.requestFocus();
             EditText ep = (EditText)dialog.findViewById(R.id.edittextPorcentaje);
             ep.setHint("Max: "+String.valueOf(100-porcentajeusado)+"%");
- 
+            EditText en =(EditText)dialog.findViewById(R.id.edittextNota);
+            
+            ed.setText("");
+            ep.setText("");
+            en.setText("");
+
             break;
  
         case 2: 

@@ -27,7 +27,7 @@
     <string name="toastMaxAsignaturas">You\'ve entered the maximum of subjects, 10!</string>
     <string name="toastNotaExiste"> already exists</string>
     <string name="toastDatosincorrectos">Data are incorrect!</string>
-    <string name="toastCampossinrellenar">Some fields empty!</string>
+    <string name="toastCampossinrellenar">Some fields are empty!</string>
     
 
 </resources>
