@@ -1,15 +1,13 @@
 package com.tfd.classmarks;
 
 import android.content.Context;
-
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.RelativeLayout;
 import android.widget.PopupWindow.OnDismissListener;
-
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -253,11 +251,21 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 				LayoutParams l 	= mScroller.getLayoutParams();
 				l.height		= dyTop - anchor.getHeight();
 			} else {
-				yPos = anchorRect.top - rootHeight;
+				Log.d("anchorRect.height1",""+anchorRect.height());
+				Log.d("anchorRect.top",""+anchorRect.top);
+
+				yPos = anchorRect.top - anchorRect.bottom + anchorRect.height()/2;
+				Log.d("yPos1",""+yPos);
+
 			}
 		} else {
-			yPos = anchorRect.bottom;
-			
+			Log.d("anchorRect.height2",""+anchorRect.height());
+
+			yPos = anchorRect.bottom - anchorRect.height()/2;
+			Log.d("anchorRect.bottom",""+anchorRect.bottom);
+
+			Log.d("yPos2",""+yPos);
+
 			if (rootHeight > dyBottom) { 
 				LayoutParams l 	= mScroller.getLayoutParams();
 				l.height		= dyBottom;
