@@ -3,9 +3,9 @@
     <dimen name="notas">35sp</dimen>
     <dimen name="asignatura">42sp</dimen>
     <dimen name="titulo_footer">36sp</dimen>
-    <dimen name="datos">38sp</dimen>
+    <dimen name="datos">36sp</dimen>
     <dimen name="datosporcentaje_botones_eliminar_sin">38sp</dimen>
-    <dimen name="datosporcentaje">37sp</dimen>
+    <dimen name="datosporcentaje">34sp</dimen>
     <dimen name="sin">36sp</dimen>
     <dimen name="titulodialog">43sp</dimen>
     <dimen name="textdialog">33sp</dimen>
