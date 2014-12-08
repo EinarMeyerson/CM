@@ -187,44 +187,46 @@ public class FragmentAsig extends Fragment{
 
                     getActivity().showDialog(2);
                     adap.notifyDataSetChanged();
+                    if(items.size()==0){
+                    	
+                    }
                     //Toast.makeText(getActivity(), "Let's edit",Toast.LENGTH_SHORT).show();
                 } else if (actionId == ID_ELIMINAR) {
                     cn.EliminarNota(cn.IdNota(items.get(EliminarID).getId()));
  
+                    float txtsob = cn.SumaPorcentajes(cn.IdAsignatura(mText));
+                    double txttot = cn.TotalProducto(cn.IdAsignatura(mText));
+                     
+                    final double txtmed = Math.round((txttot / (txtsob / 100)) * 100.0) / 100.0;
+                    double txtporrest = Math.round((100-txtsob)*100.0) / 100.0;
+                    double notanece = Math.round(((5-txttot)/(txtporrest/100)) * 100.0) / 100.0;
  
+                    
                     ObjectAnimator anim = ObjectAnimator.ofFloat(itemselected, View.ALPHA, 0);
                     anim.setDuration(1000);
                     anim.addListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            items.remove(items.get(EliminarID));
+                            items.remove(items.get(EliminarID));      
+                            if(items.isEmpty() == true){
+                                txt.setCompoundDrawablesWithIntrinsicBounds(indicatorN, null, null, null);
+                            }else{
+         
+                                if(txtmed >= 5){
+                                    txt.setCompoundDrawablesWithIntrinsicBounds(indicator, null, null, null);
+                                }
+                                else{
+         
+                                    txt.setCompoundDrawablesWithIntrinsicBounds(indicatorR, null, null, null);
+                                }
+                            }
                             adap.notifyDataSetChanged();
  
                             itemselected.setAlpha(1);
                         }
                     });
                     anim.start();
- 
-                     
-                    float txtsob = cn.SumaPorcentajes(cn.IdAsignatura(mText));
-                    double txttot = cn.TotalProducto(cn.IdAsignatura(mText));
-                     
-                    double txtmed = Math.round((txttot / (txtsob / 100)) * 100.0) / 100.0;
-                    double txtporrest = Math.round((100-txtsob)*100.0) / 100.0;
-                    double notanece = Math.round(((5-txttot)/(txtporrest/100)) * 100.0) / 100.0;
- 
-                    if(items.isEmpty() == true){
-                        txt.setCompoundDrawablesWithIntrinsicBounds(indicatorN, null, null, null);
-                    }else{
- 
-                        if(txtmed >= 5){
-                            txt.setCompoundDrawablesWithIntrinsicBounds(indicator, null, null, null);
-                        }
-                        else{
- 
-                            txt.setCompoundDrawablesWithIntrinsicBounds(indicatorR, null, null, null);
-                        }
-                    }
+
                     txttotal.setText(getString(R.string.Total) + " " + txttot);
                     txtmedia.setText(getString(R.string.Media) + " " + txtmed);
                     txtnotaneeded.setText(getString(R.string.recuadroo)+ " " + notanece + " ("+txtporrest+"%)");
@@ -233,7 +235,6 @@ public class FragmentAsig extends Fragment{
                     {
                         txtnotaneeded.setText(getString(R.string.recuadroo)+ " " + notanece + " ("+txtporrest+ "%)");
                     }
- 
                 }
                 adap.notifyDataSetChanged();
                 cn.closeDB();
@@ -301,31 +302,17 @@ public class FragmentAsig extends Fragment{
         }
         else if (notanece>=10) 
         {
-            if ((100-txtsob)>0)
-            {
-                Log.d("pocetaje restante Aprob2",""+txtsob);
- 
-                txtnotaneeded.setText(getString(R.string.recuadroo)+ " +10 ("+txtporrest+" %)");
-            }
-            else
-            {
-                txtnotaneeded.setText("Suspendido");
- 
-            }
+        	Log.d("pocetaje restante Aprob2",""+txtsob);
+        	 
+            txtnotaneeded.setText(getString(R.string.recuadroo)+ " +10 ("+txtporrest+" %)");
+        
         }
         else if (notanece<=0) 
         {
-            if ((100-txtsob)>0 && (txttot<5))
-            {
-                Log.d("pocetaje restante suspnd2",""+txtsob);
- 
-                txtnotaneeded.setText(getString(R.string.recuadroo)+ " 0 ("+txtporrest+" %)");
-            }
-            else
-            {
-                txtnotaneeded.setText("Aprobado");
-            }
- 
+            Log.d("pocetaje restante suspnd2",""+txtsob);
+            
+            txtnotaneeded.setText(getString(R.string.recuadroo)+ " 0 ("+txtporrest+" %)");
+        
         }
         cn.closeDB();
         db.close();
