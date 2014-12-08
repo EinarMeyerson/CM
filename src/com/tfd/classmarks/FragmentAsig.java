@@ -233,30 +233,6 @@ public class FragmentAsig extends Fragment{
                     {
                         txtnotaneeded.setText(getString(R.string.recuadroo)+ " " + notanece + " ("+txtporrest+ "%)");
                     }
-                    else if (notanece>=10) 
-                    {
-                        if ((100-txtsob)>0)
-                        {
-                            txtnotaneeded.setText(getString(R.string.recuadroo)+ " +10 ("+txtporrest+" %)");
-                        }
-                        else
-                        {
-                            txtnotaneeded.setText("Suspendido");
- 
-                        }
-                    }
-                    else if (notanece<=0) 
-                    {
-                        if ((100-txtsob)>0 && (txttot<5))
-                        {
-                            txtnotaneeded.setText(getString(R.string.recuadroo)+ " 0 ("+txtporrest+" %)");
-                        }
-                        else
-                        {
-                            txtnotaneeded.setText("Aprobado");
-                        }
- 
-                    }
  
                 }
                 adap.notifyDataSetChanged();

@@ -619,7 +619,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 						}
 						else{
 							edtxt.setText("");
-				    		Toast.makeText(getApplicationContext(), Asignatura.getNombre()+ getString(R.string.toastYaexiste), Toast.LENGTH_LONG).show();
+				    		Toast.makeText(getApplicationContext(), Asignatura.getNombre()+ " "+getString(R.string.toastYaexiste), Toast.LENGTH_LONG).show();
 						}
                     }
                     else
