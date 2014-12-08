@@ -44,14 +44,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="15dp"
-            android:cacheColorHint="#FFFFFF"
-            android:drawSelectorOnTop="false"
-            android:smoothScrollbar="true"
             android:listSelector="@drawable/list_selector_background_custom"
-            android:footerDividersEnabled="false"
-            android:headerDividersEnabled="false"
-            android:requiresFadingEdge="vertical"
-            android:scrollbarFadeDuration="1000" >
+            android:divider="@drawable/divider_notas" >
 
         </ListView>
 

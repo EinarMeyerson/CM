@@ -3,6 +3,7 @@ package com.tfd.classmarks;
 import java.util.ArrayList;
 import java.util.HashMap;
  
+
 import mysql.BaseDatos;
 import mysql.ClaseAsignaturas;
 import android.animation.Animator;
@@ -20,6 +21,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.FocusFinder;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -181,6 +183,7 @@ public class FragmentAsig extends Fragment{
                     ((Principal)getActivity()).setIDmodif(cn.IdNota(items.get(EliminarID).getEvaluable()));
                     getActivity().showDialog(2);
                     adap.notifyDataSetChanged();
+                    itemselected.clearFocus();
                     //Toast.makeText(getActivity(), "Let's edit",Toast.LENGTH_SHORT).show();
                 } else if (actionId == ID_ELIMINAR) {
                     cn.EliminarNota(cn.IdNota(items.get(EliminarID).getEvaluable()));
@@ -251,7 +254,7 @@ public class FragmentAsig extends Fragment{
                         }
  
                     }
- 
+                    itemselected.clearFocus();
                 }
                 adap.notifyDataSetChanged();
                 cn.closeDB();
@@ -282,11 +285,13 @@ public class FragmentAsig extends Fragment{
         lv.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                    int arg2, long arg3) {
+                    int  arg2, long arg3) {
                 arg1.setSelected(true);
                 EliminarID = arg2;
                 quickAction.show(arg1);
                 itemselected = arg1;
+                
+                
                 return true;
             }
         });
@@ -376,11 +381,6 @@ public class FragmentAsig extends Fragment{
     }
     public void addMark(){
         this.getActivity().showDialog(1);   
-    }
- 
-    public void deleteSubject(){
-        Intent in = new Intent(getActivity().getBaseContext(), Principal.class);
-        startActivity(in);
     }
  
 }

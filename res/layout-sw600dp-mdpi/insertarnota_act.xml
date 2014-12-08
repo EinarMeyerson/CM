@@ -139,7 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_below="@id/layoutCrearNota2"
-            android:divider="@drawable/divider"
+            android:divider="@drawable/divider_buttons"
             android:gravity="center"
             android:orientation="horizontal"
             android:showDividers="middle" >
