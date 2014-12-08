@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutModificarNota"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background" >
+
+    <TextView
+        android:id="@+id/textviewAsignatura"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/layoutModificarNota1"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/asignatura"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/titulodialog" />
+    
+    <View 
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dp"
+	    android:background="#CED6DD"
+	    android:layout_alignRight="@id/textviewAsignatura"
+	    android:layout_below="@id/textviewAsignatura"/>
+
+    <LinearLayout
+        android:id="@+id/layoutModificarNota1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textviewAsignatura"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:translationY="-2dp">
+
+        <RelativeLayout
+            android:id="@+id/layoutModificarNota2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/textviewNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="20dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/nombre"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textdialog" />
+
+            <EditText
+                android:id="@+id/edittextNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/textviewNombre"
+                android:layout_alignBaseline="@id/textviewNombre"
+                android:background="@drawable/edittext_shape"
+                android:textSize="@dimen/edittext" 
+                android:ems="7"
+                android:hint="@string/introducirnombre"
+                android:inputType="textCapSentences"
+                android:gravity="center"
+                android:maxLength="14"
+                android:maxLines="1"
+                android:textColor="#777777" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/textviewPorcentaje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textviewNombre"
+				android:layout_marginTop="15dp"
+                android:text="@string/porcentaje"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textdialog" />
+
+            <EditText
+                android:id="@+id/edittextPorcentaje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/textviewPorcentaje"
+                android:layout_alignRight="@id/edittextNombre"
+                android:background="@drawable/edittext_shape"
+                android:textSize="@dimen/edittext" 
+                android:ems="5"
+                android:gravity="center"
+                android:singleLine="true"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:numeric="decimal"
+                android:textColor="#777777" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/textviewNota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textviewPorcentaje"
+                android:layout_marginTop="15dp"
+                android:paddingBottom="7dp"
+                android:text="@string/nota"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textdialog" />
+
+            <EditText
+                android:id="@+id/edittextNota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textviewNota"
+                android:layout_alignRight="@+id/edittextPorcentaje"
+                android:background="@drawable/edittext_shape"
+                android:textSize="@dimen/edittext" 
+                android:ems="5"
+                android:gravity="center"
+                android:maxLength="4"
+                android:maxLines="1"
+                android:numeric="decimal"
+                android:textColor="#777777" >
+            </EditText>
+
+        </RelativeLayout>
+        
+        <View 
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dp"
+	    android:background="#CED6DD"
+	    android:layout_alignRight="@id/textviewAsignatura"
+	    android:layout_above="@+id/layoutModificarAsigButtons"/>
+
+        <LinearLayout
+            android:id="@+id/layoutModificarAsigButtons"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/layoutModificarNota2"
+            android:divider="@drawable/divider_buttons"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:showDividers="middle" >
+
+            <Button
+                android:id="@+id/buttonSalirNota"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/datosporcentaje_botones_eliminar_sin" />
+
+            <Button
+                android:id="@+id/buttonModificarNota"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="@string/modificar"
+                android:textColor="@color/white"
+                android:textSize="@dimen/datosporcentaje_botones_eliminar_sin" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
