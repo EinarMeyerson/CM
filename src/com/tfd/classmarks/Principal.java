@@ -386,7 +386,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
  
             Log.d("ANIMATION FRAGMENT", "MOVIMIENTO DESDE LA IZQUIERDA");
             final ObjectAnimator anim2 = ObjectAnimator.ofFloat(fragmentLeft, View.TRANSLATION_X, fragwid);
-            anim2.setDuration(1200);
+            anim2.setDuration(800);
  
             anim2.addListener(new AnimatorListenerAdapter() {
                 @Override
@@ -412,7 +412,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
         else if(position >= 0 && position < lastPosition){
             Log.d("ANIMATION FRAGMENT", "MOVIMIENTO DESDE LA DERECHA");
             final ObjectAnimator anim2 = ObjectAnimator.ofFloat(fragmentRight, View.TRANSLATION_X, -fragwid);
-            anim2.setDuration(1200);
+            anim2.setDuration(800);
  
             anim2.addListener(new AnimatorListenerAdapter() {
                 @Override
