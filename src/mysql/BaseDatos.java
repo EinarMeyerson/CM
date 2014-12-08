@@ -362,10 +362,10 @@ public class BaseDatos extends SQLiteOpenHelper {
     	 return columntotal;
      } 
 
-     public int IdNota(String Evaluable){
+     public int IdNota(long idNota){
     	 
     	 SQLiteDatabase cn = this.getReadableDatabase();
-    	 Cursor cursor1 = cn.rawQuery("SELECT "+ KEY_IdNotas +" FROM "+ TABLE_NOTAS +" WHERE " +KEY_Evaluable +" = '"+Evaluable+"'",null);
+    	 Cursor cursor1 = cn.rawQuery("SELECT "+ KEY_IdNotas +" FROM "+ TABLE_NOTAS +" WHERE " +KEY_IdNotas +" = '"+idNota+"'",null);
     	 int columntotal = 0;
     	 
     	 if(cursor1.moveToFirst()) {

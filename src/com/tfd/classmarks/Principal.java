@@ -327,6 +327,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
  
     public void setIDmodif(int id){
         IDmodif= id;
+        Log.d("IDmodif",""+IDmodif);
     }
  
     @Override

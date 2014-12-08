@@ -178,12 +178,18 @@ public class FragmentAsig extends Fragment{
                 // here we can filter which action item was clicked with
                 // pos or actionId parameter
                 if (actionId == ID_EDIT) {
-                    ((Principal)getActivity()).setIDmodif(cn.IdNota(items.get(EliminarID).getEvaluable()));
+                    Log.d("items_IDnota",""+items.get(EliminarID).getId());
+
+                    ((Principal)getActivity()).setIDmodif(cn.IdNota(items.get(EliminarID).getId()));
+
+//                    Log.d("items_evaluable",""+items.get(EliminarID).getEvaluable());
+//                    Log.d("items_por",""+items.get(EliminarID).getPorcentaje());
+
                     getActivity().showDialog(2);
                     adap.notifyDataSetChanged();
                     //Toast.makeText(getActivity(), "Let's edit",Toast.LENGTH_SHORT).show();
                 } else if (actionId == ID_ELIMINAR) {
-                    cn.EliminarNota(cn.IdNota(items.get(EliminarID).getEvaluable()));
+                    cn.EliminarNota(cn.IdNota(items.get(EliminarID).getId()));
  
  
                     ObjectAnimator anim = ObjectAnimator.ofFloat(itemselected, View.ALPHA, 0);
@@ -264,7 +270,7 @@ public class FragmentAsig extends Fragment{
  
         while (i < Asignatura.getLon())
         {
-            items.add(new Item(i, Asignatura.getNotas(i).getEvaluable(), Double.toString(Asignatura.getNotas(i).getPorcentaje())+" %", Double.toString((Asignatura.getNotas(i).getNota()))));
+            items.add(new Item(Asignatura.getNotas(i).getId(), Asignatura.getNotas(i).getEvaluable(), Double.toString(Asignatura.getNotas(i).getPorcentaje())+" %", Double.toString((Asignatura.getNotas(i).getNota()))));
             i++;
         }
  
