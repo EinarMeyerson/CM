@@ -1,22 +1,21 @@
 package com.tfd.classmarks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
-import android.widget.ScrollView;
-import android.widget.RelativeLayout;
-import android.widget.PopupWindow.OnDismissListener;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
-
-import java.util.List;
-import java.util.ArrayList;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
+import android.widget.PopupWindow.OnDismissListener;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 public class QuickAction extends PopupWindows implements OnDismissListener {
 	private View mRootView;

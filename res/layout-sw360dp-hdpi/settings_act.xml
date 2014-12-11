@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/settings_act"
+    android:orientation="vertical"
+    android:background="#55000000" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Elige el tema"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="15dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="150dp"
+            android:layout_height="220dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/rounded"
+            android:src="@drawable/back_blur_blue_ed" />
+
+        <Button
+            android:id="@+id/btn_select_standard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Standard" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/ImageView01"
+            android:layout_width="150dp"
+            android:layout_height="220dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/rounded"
+            android:src="@drawable/back_black_magenta" />
+
+        <Button
+            android:id="@+id/btn_select_alternative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Alternative" />
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:layout_gravity="bottom"
+        android:textSize="20dp"
+        android:text="Salir" />
+
+</LinearLayout>

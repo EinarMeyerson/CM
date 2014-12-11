@@ -9,4 +9,19 @@
         <!-- API 14 theme customizations can go here. -->
     </style>
 
+    <!-- Diseño estandar de la aplicación -->
+
+	<style name="CM_standard_windowBackground">
+	    <item name="android:windowBackground">@drawable/back_blur_blue_ed</item>
+	</style>
+	
+	<!-- Fin del diseño estandar de la aplicación -->
+	
+	<!-- Diseño alternativo de la aplicación -->
+	
+	<style name="CM_alternative_windowBackground">
+	    <item name="android:windowBackground">@drawable/back_black_magenta</item>
+	</style>
+	
+	<!-- Fin del diseño alternativo de la aplicación -->
 </resources>

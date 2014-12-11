@@ -5,7 +5,6 @@
     android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back_blur_blue_ed"
     tools:context=".Principal" >
     
 	<ImageView

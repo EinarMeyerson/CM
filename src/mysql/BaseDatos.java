@@ -3,17 +3,10 @@ package mysql;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-import android.widget.Toast;
 
 public class BaseDatos extends SQLiteOpenHelper {
-
-	// Logcat tag
-    //private static final String LOG = BaseDatos.class.getName();
  
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -74,7 +67,6 @@ public class BaseDatos extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_Asignatura);
         db.execSQL(CREATE_TABLE_NOTAS);
         
-        Log.d("BASE DE DATOS","Fin de ejecucion de las Queris");
     }
     
     @Override
@@ -208,8 +200,7 @@ public class BaseDatos extends SQLiteOpenHelper {
 	 
 	    Cursor c = db.rawQuery(selectQuery, null);
 	    ClaseNotas Nota = new ClaseNotas();
-	    //int id = c.getInt(c.getColumnIndex(KEY_IdAsignatura));
-	    //Log.d("Log2",Integer.toString(id));
+	    
 	    if (c != null){
 	        c.moveToFirst();    
 	        //Asignamos parametros a las clase asignatura
@@ -227,6 +218,7 @@ public class BaseDatos extends SQLiteOpenHelper {
      //Funcion para seleciona notas a traves de nombre de asignatura
      public ClaseAsignaturas getAsignaturaDataBase (String NombreAsignatura) {
     	    //Selecionamos la id de asignatura, para sacar las notas q referencien a ese id
+
     	    SQLiteDatabase db = this.getReadableDatabase();
     	 
     	    String selectQuery = "SELECT * FROM " + TABLE_ASIGNATURA + " WHERE "
@@ -234,12 +226,11 @@ public class BaseDatos extends SQLiteOpenHelper {
     	 
     	    Cursor c = db.rawQuery(selectQuery, null);
     	    ClaseAsignaturas Asignatura = new ClaseAsignaturas();
-    	    //int id = c.getInt(c.getColumnIndex(KEY_IdAsignatura));
-    	    //Log.d("Log2",Integer.toString(id));
+    	    
     	    if (c != null){
     	        c.moveToFirst();    
     	        //Asignamos parametros a las clase asignatura
-    	   
+
     	        Asignatura.setId(c.getInt(c.getColumnIndex(KEY_IdAsignatura)));
     	        Asignatura.setNombre(c.getString(c.getColumnIndex(KEY_NombreAsignatura)));
     	        Asignatura.setIdcuatrimestre(c.getInt(c.getColumnIndex(KEY_IdCuatrimestreReferencia)));    	        
@@ -253,7 +244,6 @@ public class BaseDatos extends SQLiteOpenHelper {
     	 
     	    Cursor d = db.rawQuery(selectQuery2, null);
     	   
-    	   // Log.d("d",""+d.getPosition());
     	    if (d != null){
     	    	d.moveToFirst();
 	    	    for (int y = 0; y < d.getCount(); y++)
@@ -297,7 +287,6 @@ public class BaseDatos extends SQLiteOpenHelper {
     	    //cambio id
     	 
     	    Cursor d = db.rawQuery(selectQuery2, null);
-    	   // Log.d("d",""+d.getPosition());
     	    if (d != null){
     	    	d.moveToFirst();
 	    	    for (int y = 0; y < d.getCount(); y++)
@@ -419,8 +408,7 @@ public class BaseDatos extends SQLiteOpenHelper {
     	    values.put(KEY_Nota, nota.getNota());
     	    values.put(KEY_Porcentaje, nota.getPorcentaje());
     	    values.put(KEY_IdAsignaturaReferencia, nota.getIdasignatura());
-            Log.d("BBDDupdateINT", ""+db.updateWithOnConflict(TABLE_NOTAS, values, KEY_IdNotas + " = ?",new String[] { String.valueOf(nota.getId()) }, SQLiteDatabase.CONFLICT_IGNORE));
-
+            
     	    // updating row
     	    return db.updateWithOnConflict(TABLE_NOTAS, values, KEY_IdNotas + " = ?",new String[] { String.valueOf(nota.getId()) }, SQLiteDatabase.CONFLICT_IGNORE);
      }
