@@ -745,7 +745,9 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			edtxtnombreexa.setLines(1);
 			edtxtporcetaje.setMaxLines(1);
 			edtxtporcetaje.setLines(1);
-			edtxtporcetaje.setHint("Max: "+String.valueOf(100-porcentajeusado)+"%");
+			double hint = Math.round((100-porcentajeusado)*100.0)/100.0;
+
+			edtxtporcetaje.setHint("Max: "+String.valueOf(hint)+"%");
 			edtxtnota.setMaxLines(1);
 			edtxtnota.setLines(1);
 
@@ -853,7 +855,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			btn2.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-
+					
 					boolean verdad = true;
 					if (edtxtnombreexa.getText().length()==0)
 					{
@@ -872,63 +874,69 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 					if (verdad ==true)
 					{
-						BaseDatos cn = new BaseDatos(getApplicationContext());
-						//                      SQLiteDatabase db = cn.getWritableDatabase();
-						ClaseNotas notas = new ClaseNotas();
-						ClaseCuatrimestres cuatri = cn.getCuatrimestreDataBase(spinner.getSelectedItem().toString());
+						try {
 
-						boolean datoscorrectos = true;
-						String nombreexa = edtxtnombreexa.getText().toString();
-						String porcetajeex = edtxtporcetaje.getText().toString();
-						String notaex = edtxtnota.getText().toString();
-						float nota = Float.parseFloat(notaex);
-						float porcentajeusado = cn.SumaPorcentajes(cuatri.getAsignatura(mPager.getCurrentItem()).getId());
-						if (nota>10)
-						{
-							datoscorrectos = false;
-							edtxtnota.setText("");
+							BaseDatos cn = new BaseDatos(getApplicationContext());
+							//                      SQLiteDatabase db = cn.getWritableDatabase();
+							ClaseNotas notas = new ClaseNotas();
+							ClaseCuatrimestres cuatri = cn.getCuatrimestreDataBase(spinner.getSelectedItem().toString());
 
-						}
-
-						if (Float.parseFloat(edtxtporcetaje.getText().toString())>(100-porcentajeusado) || Float.parseFloat(edtxtporcetaje.getText().toString())==0)
-						{
-							datoscorrectos = false;
-							edtxtporcetaje.setText("");
-
-						}
-						if (datoscorrectos ==true)
-						{
-							notas.setEvaluable(nombreexa);
-							notas.setNota(Double.parseDouble(notaex));  
-							notas.setPorcentaje(Double.parseDouble(porcetajeex));
-							notas.setIdasignatura(cuatri.getAsignatura(mPager.getCurrentItem()).getId());
-							int ControlInsertNota=cn.InsertarNota(notas);
-							if(ControlInsertNota==0){
-								cn.closeDB();
-
-								dismissDialog(1);
-								removeDialog(1);
-								isShown1 = false;
-
-								mAdapter.notifyDataSetChanged();
-
-								edtxtporcetaje.setText("");
+							boolean datoscorrectos = true;
+							String nombreexa = edtxtnombreexa.getText().toString();
+							String porcetajeex = edtxtporcetaje.getText().toString();
+							String notaex = edtxtnota.getText().toString();
+							float nota = Float.parseFloat(notaex);
+							float porcentajeusado = cn.SumaPorcentajes(cuatri.getAsignatura(mPager.getCurrentItem()).getId());
+							if (nota>10)
+							{
+								datoscorrectos = false;
 								edtxtnota.setText("");
-								edtxtnombreexa.setText("");
-								edtxtnombreexa.requestFocus();
-							}
-
-							else{
-								edtxtnombreexa.setText("");
-								Toast.makeText(getApplicationContext(), notas.getEvaluable()+" ya existe", Toast.LENGTH_LONG).show();
-								cn.closeDB();
 
 							}
-						}
-						else
-						{
+
+							if (Float.parseFloat(edtxtporcetaje.getText().toString())>(100-porcentajeusado) || Float.parseFloat(edtxtporcetaje.getText().toString())==0)
+							{
+								datoscorrectos = false;
+								edtxtporcetaje.setText("");
+
+							}
+							if (datoscorrectos ==true)
+							{
+								notas.setEvaluable(nombreexa);
+								notas.setNota(Double.parseDouble(notaex));  
+								notas.setPorcentaje(Double.parseDouble(porcetajeex));
+								notas.setIdasignatura(cuatri.getAsignatura(mPager.getCurrentItem()).getId());
+								int ControlInsertNota=cn.InsertarNota(notas);
+								if(ControlInsertNota==0){
+									cn.closeDB();
+
+									dismissDialog(1);
+									removeDialog(1);
+									isShown1 = false;
+
+									mAdapter.notifyDataSetChanged();
+
+									edtxtporcetaje.setText("");
+									edtxtnota.setText("");
+									edtxtnombreexa.setText("");
+									edtxtnombreexa.requestFocus();
+								}
+
+								else{
+									edtxtnombreexa.setText("");
+									Toast.makeText(getApplicationContext(), notas.getEvaluable()+" ya existe", Toast.LENGTH_LONG).show();
+									cn.closeDB();
+
+								}
+							}
+							else
+							{
+								Toast.makeText(getApplicationContext(),R.string.toastDatosincorrectos,Toast.LENGTH_SHORT).show();   
+
+							}
+
+						} catch (NumberFormatException e) {
 							Toast.makeText(getApplicationContext(),R.string.toastDatosincorrectos,Toast.LENGTH_SHORT).show();   
-
 						}
 					}
 					else
@@ -1010,7 +1018,9 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 			edtxtporcetaje1.setMaxLines(1);
 			edtxtporcetaje1.setLines(1);
-			edtxtporcetaje1.setHint("Max: "+String.valueOf(100-porcentajeusado1+notamodif.getPorcentaje())+"%");
+			double hint2 = Math.round((100-porcentajeusado1+notamodif.getPorcentaje())*100.0)/100.0;
+
+			edtxtporcetaje1.setHint("Max: "+String.valueOf(hint2)+"%");
 			edtxtporcetaje1.setText(""+notamodif.getPorcentaje());
 
 			edtxtnota1.setMaxLines(1);
@@ -1137,71 +1147,79 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 					if (verdad ==true)
 					{
-						BaseDatos cn2 = new BaseDatos(getApplicationContext());
+						try{
 
-						String nombreexa = edtxtnombreexa1.getText().toString();
-						String porcetajeex = edtxtporcetaje1.getText().toString();
-						String notaex = edtxtnota1.getText().toString();
-						boolean datoscorrectos = true;
+							BaseDatos cn2 = new BaseDatos(getApplicationContext());
 
-						ClaseNotas notas = new ClaseNotas();
-						ClaseCuatrimestres cuatri2 = cn2.getCuatrimestreDataBase(spinner.getSelectedItem().toString());                     
-						ClaseNotas notamodif2 = cn2.getNotaDataBase(IDmodif);
+							String nombreexa = edtxtnombreexa1.getText().toString();
+							String porcetajeex = edtxtporcetaje1.getText().toString();
+							String notaex = edtxtnota1.getText().toString();
+							boolean datoscorrectos = true;
 
-						float nota = Float.parseFloat(notaex);
-						float porcentajeusado = cn2.SumaPorcentajes(cuatri2.getAsignatura(mPager.getCurrentItem()).getId());
+							ClaseNotas notas = new ClaseNotas();
+							ClaseCuatrimestres cuatri2 = cn2.getCuatrimestreDataBase(spinner.getSelectedItem().toString());                     
+							ClaseNotas notamodif2 = cn2.getNotaDataBase(IDmodif);
 
-						if (nota>10)
-						{
-							datoscorrectos = false;
-							edtxtnota1.setText("");
+							float nota = Float.parseFloat(notaex);
+							float porcentajeusado = cn2.SumaPorcentajes(cuatri2.getAsignatura(mPager.getCurrentItem()).getId());
 
-						}
-
-						if (Float.parseFloat(edtxtporcetaje1.getText().toString())>(100-porcentajeusado+notamodif2.getPorcentaje()))
-						{
-							
-							datoscorrectos = false;
-							edtxtporcetaje1.setText("");
-
-						}
-						if (datoscorrectos ==true)
-						{
-							notas.setId(IDmodif);
-							notas.setEvaluable(nombreexa);
-							notas.setNota(Double.parseDouble(notaex));  
-							notas.setPorcentaje(Double.parseDouble(porcetajeex));
-							notas.setIdasignatura(cuatri2.getAsignatura(mPager.getCurrentItem()).getId());
-
-							int ControlUpdateNota=cn2.updateNota(notas);
-							if(ControlUpdateNota==1){
-								cn2.closeDB();
-
-								dismissDialog(2);
-								removeDialog(2);
-								isShown2 = false;
-
-								mAdapter.notifyDataSetChanged();
-
-								edtxtporcetaje1.setText("");
+							if (nota>10)
+							{
+								datoscorrectos = false;
 								edtxtnota1.setText("");
-								edtxtnombreexa1.setText("");
-								edtxtnombreexa1.requestFocus();
-							}
-
-							else{
-								edtxtnombreexa1.setText("");
-								Toast.makeText(getApplicationContext(), notas.getEvaluable()+" ya existe", Toast.LENGTH_LONG).show();
-								cn2.closeDB();
 
 							}
 
+							if (Float.parseFloat(edtxtporcetaje1.getText().toString())>(100-porcentajeusado+notamodif2.getPorcentaje()))
+							{
+
+								datoscorrectos = false;
+								edtxtporcetaje1.setText("");
+
+							}
+							if (datoscorrectos ==true)
+							{
+
+								notas.setId(IDmodif);
+								notas.setEvaluable(nombreexa);
+								notas.setNota(Double.parseDouble(notaex));  
+								notas.setPorcentaje(Double.parseDouble(porcetajeex));
+								notas.setIdasignatura(cuatri2.getAsignatura(mPager.getCurrentItem()).getId());
+
+								int ControlUpdateNota=cn2.updateNota(notas);
+								if(ControlUpdateNota==1){
+									cn2.closeDB();
+
+									dismissDialog(2);
+									removeDialog(2);
+									isShown2 = false;
+
+									mAdapter.notifyDataSetChanged();
+
+									edtxtporcetaje1.setText("");
+									edtxtnota1.setText("");
+									edtxtnombreexa1.setText("");
+									edtxtnombreexa1.requestFocus();
+								}
+
+								else{
+									edtxtnombreexa1.setText("");
+									Toast.makeText(getApplicationContext(), notas.getEvaluable()+" ya existe", Toast.LENGTH_LONG).show();
+									cn2.closeDB();
+
+								}
+
+							}
+							else
+							{
+								Toast.makeText(getApplicationContext(),R.string.toastDatosincorrectos,Toast.LENGTH_SHORT).show();   
+
+							}
 						}
-						else
-						{
+						catch (NumberFormatException e) {
 							Toast.makeText(getApplicationContext(),R.string.toastDatosincorrectos,Toast.LENGTH_SHORT).show();   
-
 						}
+
 					}
 					else
 						Toast.makeText(getApplicationContext(),R.string.toastCampossinrellenar,Toast.LENGTH_SHORT).show();   
@@ -1421,7 +1439,8 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			EditText ed = (EditText)dialog.findViewById(R.id.edittextNombre);
 			ed.requestFocus();
 			EditText ep = (EditText)dialog.findViewById(R.id.edittextPorcentaje);
-			ep.setHint("Max: "+String.valueOf(100-porcentajeusado)+"%");
+			double hint = Math.round((100-porcentajeusado)*100.0)/100.0;
+			ep.setHint("Max: "+String.valueOf(hint)+"%");
 			EditText en =(EditText)dialog.findViewById(R.id.edittextNota);
 
 			ed.setText("");
@@ -1441,7 +1460,9 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			EditText ed1 = (EditText)dialog.findViewById(R.id.edittextNombre);
 			ed1.requestFocus();
 			EditText ep1 = (EditText)dialog.findViewById(R.id.edittextPorcentaje);
-			ep1.setHint("Max: "+String.valueOf(100-porcentajeusado1+notamodif.getPorcentaje())+"%");
+			double hint2 = Math.round((100-porcentajeusado1+notamodif.getPorcentaje())*100.0)/100.0;
+
+			ep1.setHint("Max: "+String.valueOf(hint2)+"%");
 			final EditText edtxtnombreexa1 = (EditText)dialog.findViewById(R.id.edittextNombre);
 			final EditText edtxtporcetaje1 = (EditText)dialog.findViewById(R.id.edittextPorcentaje);
 			final EditText edtxtnota1 = (EditText)dialog.findViewById(R.id.edittextNota);
