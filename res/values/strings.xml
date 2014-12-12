@@ -9,7 +9,7 @@
     <string name="Aprobado">Passed </string>
     <string name="Suspendido">Failed </string>
      <string name="addmark">+ Add new mark  </string>
-    <string name="emptyfolder"> Doesn\'t exist any subject.\n\n Click on the icon on the right top corner of the screen to add a new subject.</string>
+    <string name="emptyfolder"> Doesn\'t exist any subject\n\n Click on the icon on the right top corner of the screen to add a new subject</string>
     <string name="cancel">Cancel</string>
     <string name="create">Create</string>
     <string name="introducirnombre">Add name</string>
@@ -21,11 +21,11 @@
     <string name="nuevaasig">New subject</string>
     <string name="asignatura">Subject</string>
     <string name="delete">Delete</string>
-    <string name="textoEliminar">Are you sure to delete\nthe subject?</string>
+    <string name="textoEliminar">Are you sure to\ndelete the subject?</string>
     <string name="toastSinrellenar">Field blank!</string>
-    <string name="toastYaexiste"> already exists</string>
+    <string name="toastYaexiste"> Already exists</string>
     <string name="toastMaxAsignaturas">You\'ve entered the maximum of subjects, 10!</string>
-    <string name="toastNotaExiste"> already exists</string>
+    <string name="toastNotaExiste"> Already exists</string>
     <string name="toastDatosincorrectos">Data are incorrect!</string>
     <string name="toastCampossinrellenar">Some fields are empty!</string>
     

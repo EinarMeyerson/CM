@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tfd.classmarks"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0">
     
 	<supports-screens 
 	    android:smallScreens="false"
@@ -22,7 +22,7 @@
     <application
         android:largeHeap="true"
         android:allowBackup="true"
-        android:icon="@drawable/icono_cm"
+        android:icon="@drawable/icono_cm_app"
         android:theme="@android:style/Theme.Translucent.NoTitleBar"
         android:label="@string/app_name"
         android:hardwareAccelerated="true">

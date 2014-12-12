@@ -8,7 +8,7 @@
     <string name="Aprobado">Aprovat </string>
     <string name="Suspendido">Suspès </string>
     <string name="addmark">+ Afegeix una nota  </string>
-    <string name="emptyfolder"> No hi ha cap assignatura creada.\n\nFes clic a la icona de la part superior dreta de la pantalla per afegir una assignatura.</string>
+    <string name="emptyfolder"> No hi ha cap assignatura creada\n\nFes clic a la icona de la part superior dreta de la pantalla per afegir una assignatura</string>
     <string name="cancel">Cancel·lar</string>
     <string name="create">Crear</string>
     <string name="introducirnombre">Introduir nom</string>
@@ -19,11 +19,11 @@
     <string name="nuevaasig">Nova assignatura</string>
     <string name="asignatura">Assignatura</string>
     <string name="delete">Eliminar</string>
-    <string name="textoEliminar">¿Esteu segur\nque voleu\nsuprimir l\'assignatura?</string>
+    <string name="textoEliminar">¿Estàs segur que vols\nsuprimir l\'assignatura?</string>
      <string name="toastSinrellenar">!Camp sense omplir!</string>
-    <string name="toastYaexiste"> ja existeix</string>
+    <string name="toastYaexiste"> Ja existeix</string>
     <string name="toastMaxAsignaturas">¡Ja has introduït el màxim d\'assignatures, 10!</string>
-    <string name="toastNotaExiste"> ja existeix</string>
+    <string name="toastNotaExiste"> Ja existeix</string>
     <string name="toastDatosincorrectos">¡Les dades no són correctes!</string>
     <string name="toastCampossinrellenar">¡Falten camps per omplir!</string>
 </resources>
