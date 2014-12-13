@@ -3,11 +3,11 @@
     <string name="app_name">ClassMarks</string>
     <string name="Media">Mitjana: </string>
     <string name="Total">Total: </string>
-    <string name="recuadroo">Nota necessaria per aprobar:  </string>
+    <string name="recuadroo">Nota necessària per aprovar:  </string>
     <string name="addasig">Afegir asignatura  </string>
     <string name="Aprobado">Aprovat </string>
     <string name="Suspendido">Suspès </string>
-    <string name="addmark">+ Afegeix una nota  </string>
+    <string name="addmark">+ Afegir una nota  </string>
     <string name="emptyfolder"> No hi ha cap assignatura creada\n\nFes clic a la icona de la part superior dreta de la pantalla per afegir una assignatura</string>
     <string name="cancel">Cancel·lar</string>
     <string name="create">Crear</string>

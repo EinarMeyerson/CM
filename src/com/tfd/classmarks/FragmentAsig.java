@@ -42,6 +42,7 @@ public class FragmentAsig extends Fragment{
 	public ListAdapter adap;
 	public ArrayList<Item> items;
 	public View itemselected;
+	
 	HashMap<Long, Integer> mItemIdTopMap = new HashMap<Long, Integer>();
 
 	@Override
@@ -153,7 +154,7 @@ public class FragmentAsig extends Fragment{
 
 		/*
 		 * 
-		 *EMPIEZA EL Cï¿½DIGO DEL BOCADILLO (SPEECH BUBBLE)
+		 *EMPIEZA EL CODIGO DEL BOCADILLO (SPEECH BUBBLE)
 		 * 
 		 */
 
@@ -186,12 +187,13 @@ public class FragmentAsig extends Fragment{
 					cn.EliminarNota(cn.IdNota(items.get(EliminarID).getId()));
 
 					float txtsob = cn.SumaPorcentajes(cn.IdAsignatura(mText));
-					double txttot = cn.TotalProducto(cn.IdAsignatura(mText));
+					double txttot = Math.round(cn.TotalProducto(cn.IdAsignatura(mText)));
 
 					final double txtmed = Math.round((txttot / (txtsob / 100)) * 100.0) / 100.0;
 					double txtporrest = Math.round((100-txtsob)*100.0) / 100.0;
 					double notanece = Math.round(((5-txttot)/(txtporrest/100)) * 100.0) / 100.0;
 
+					
 
 					ObjectAnimator anim = ObjectAnimator.ofFloat(itemselected, View.ALPHA, 0);
 					anim.setDuration(1000);
@@ -274,7 +276,8 @@ public class FragmentAsig extends Fragment{
 
 		double txtporrest = Math.round((100.0-txtsob)*100.0) / 100.0;
 		double notanece = Math.round(((5-txttot)/(txtporrest/100)) * 100.0) / 100.0;
-
+		
+		
 		if(items.isEmpty() == true){
 			txt.setCompoundDrawablesWithIntrinsicBounds(indicatorN, null, null, null);
 		}else{
