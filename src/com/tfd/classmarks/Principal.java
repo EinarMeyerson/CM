@@ -64,6 +64,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 	Boolean isShown1 = false;
 	Boolean isShown2 = false;
 	Boolean isShown3 = false;
+//	private int tapsCount = 0;
 
 	ArrayList<Fragment> frags = new ArrayList<Fragment>();
 
@@ -166,7 +167,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		overridePendingTransition(anim.fade_in, anim.fade_out); 
+		overridePendingTransition(0, anim.fade_out); 
 		
 	}
 	
@@ -362,6 +363,15 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 		cn.closeDB();
 		ImageView icon = (ImageView)findViewById(R.id.imageView3);
+		
+//		icon.setOnClickListener(new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				tapCounting();
+//				
+//			}
+//		});
 		txtsinasig = (TextView)findViewById(R.id.txtsinasignaturas);
 		Animation anim_frags = AnimationUtils.loadAnimation(this, R.anim.fade_in_principal);
 
@@ -372,6 +382,29 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 
 	}
+
+//	protected void tapCounting() {
+//
+//		while(tapsCount < 10){
+//			tapsCount++;
+//			break;
+//		}
+//		
+////		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+////    	int value = preferences.getInt("fondo seleccionado", 0);
+////    	Presentacion pres = new Presentacion();
+////    	int T1 = pres.fondoElegido1;
+////    	int T2 = pres.fondoElegido2;
+////    	
+////    	if(value == 1)
+////			setTheme(T1);
+////		else
+////			setTheme(T2);
+////		
+//    	setTheme(R.style.CM_alternative_windowBackground);
+//		
+//		tapsCount=0;
+//	}
 
 	public void setIDmodif(int id){
 		IDmodif= id;

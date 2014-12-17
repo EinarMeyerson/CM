@@ -45,6 +45,7 @@ public class FragmentAsig extends Fragment{
 	public ListAdapter adap;
 	public ArrayList<Item> items;
 	public View itemselected;
+	
 	HashMap<Long, Integer> mItemIdTopMap = new HashMap<Long, Integer>();
 
 	@Override
@@ -167,7 +168,7 @@ public class FragmentAsig extends Fragment{
 
 		/*
 		 * 
-		 *EMPIEZA EL Cï¿½DIGO DEL BOCADILLO (SPEECH BUBBLE)
+		 *EMPIEZA EL CODIGO DEL BOCADILLO (SPEECH BUBBLE)
 		 * 
 		 */
 
@@ -313,7 +314,8 @@ public class FragmentAsig extends Fragment{
 		if (txttot<5)
 		{
 			notanece = Math.round(((5-txttotsinRound)/((100-txtsob)/100)) * 100.0) / 100.0;
-
+		
+		
 		}
 		if(items.isEmpty() == true){
 			txt.setCompoundDrawablesWithIntrinsicBounds(indicatorN, null, null, null);
