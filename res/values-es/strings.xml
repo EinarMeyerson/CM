@@ -27,5 +27,6 @@
     <string name="toastNotaExiste"> Ya existe</string>
     <string name="toastDatosincorrectos">¡Los datos no son correctos!</string>
     <string name="toastCampossinrellenar">¡Faltan campos por rellenar!</string>
-
+	<string name="toastMaxPorcentaje">¡Ya tienes el 100%!</string>
+    
 </resources>

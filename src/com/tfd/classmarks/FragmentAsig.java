@@ -1,5 +1,6 @@
 package com.tfd.classmarks;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,6 +19,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,6 +29,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressLint("ValidFragment")
 public class FragmentAsig extends Fragment{
@@ -97,8 +100,19 @@ public class FragmentAsig extends Fragment{
 		footer.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				BaseDatos cn = new BaseDatos(getActivity().getApplicationContext());
+				double txtsob = Math.round(cn.SumaPorcentajes(cn.IdAsignatura(mText))*100.0)/100.0;
+				Log.d("addmark_txtsob", ""+txtsob);
+				if(txtsob<100)
+				{
+					addMark();
+				}
+				else
+				{
+					Toast.makeText(getActivity().getApplicationContext(),R.string.toastMaxPorcentaje,Toast.LENGTH_LONG).show();
 
-				addMark();
+				}
+				cn.closeDB();
 			}
 		});
 
@@ -185,13 +199,27 @@ public class FragmentAsig extends Fragment{
 				} else if (actionId == ID_ELIMINAR) {
 					cn.EliminarNota(cn.IdNota(items.get(EliminarID).getId()));
 
-					float txtsob = cn.SumaPorcentajes(cn.IdAsignatura(mText));
-					double txttot = cn.TotalProducto(cn.IdAsignatura(mText));
+					double txtsob = cn.SumaPorcentajes(cn.IdAsignatura(mText));
+					Log.d("txtsob",""+txtsob);
+					double txttotsinRound = cn.TotalProducto(cn.IdAsignatura(mText));
+					Log.d("txttotsinRound",""+txttotsinRound);
 
-					final double txtmed = Math.round((txttot / (txtsob / 100)) * 100.0) / 100.0;
+					double txttotRound = Math.round(txttotsinRound*100.0)/100.0;
+					BigDecimal txttotBig = new BigDecimal(""+txttotRound);
+					double txttot = txttotBig.doubleValue();
+					
+					final double txtmedRound = Math.round((txttotsinRound / (txtsob / 100)) * 100.0) / 100.0;
+					BigDecimal txtmedbig = new BigDecimal(""+txtmedRound);
+					final double txtmed = txtmedbig.doubleValue();
+
 					double txtporrest = Math.round((100-txtsob)*100.0) / 100.0;
-					double notanece = Math.round(((5-txttot)/(txtporrest/100)) * 100.0) / 100.0;
 
+					double notanece=0;
+					if (txttot<5)
+					{
+						notanece = Math.round(((5-txttotsinRound)/((100-txtsob)/100)) * 100.0) / 100.0;
+
+					}
 
 					ObjectAnimator anim = ObjectAnimator.ofFloat(itemselected, View.ALPHA, 0);
 					anim.setDuration(1000);
@@ -268,13 +296,25 @@ public class FragmentAsig extends Fragment{
 			}
 		});
 
-		float txtsob = cn.SumaPorcentajes(cn.IdAsignatura(mText));
-		double txttot = cn.TotalProducto(cn.IdAsignatura(mText));
-		double txtmed = Math.round((txttot/(txtsob/ 100))*100.0)/100.0;
+		
+		double txtsob = cn.SumaPorcentajes(cn.IdAsignatura(mText));
+		
+		double txttotsinRound = cn.TotalProducto(cn.IdAsignatura(mText));
+		double txttotRound = Math.round(txttotsinRound*100.0)/100.0;
+		BigDecimal txttotBig = new BigDecimal(""+txttotRound);
+		double txttot = txttotBig.doubleValue();
 
-		double txtporrest = Math.round((100.0-txtsob)*100.0) / 100.0;
-		double notanece = Math.round(((5-txttot)/(txtporrest/100)) * 100.0) / 100.0;
+		double txtmedRound = Math.round((txttotsinRound / (txtsob / 100)) * 100.0) / 100.0;
+		BigDecimal txtmedbig = new BigDecimal(""+txtmedRound);
+		final double txtmed = txtmedbig.doubleValue();
 
+		double txtporrest = Math.round((100-txtsob)*100.0) / 100.0;
+		double notanece=0;
+		if (txttot<5)
+		{
+			notanece = Math.round(((5-txttotsinRound)/((100-txtsob)/100)) * 100.0) / 100.0;
+
+		}
 		if(items.isEmpty() == true){
 			txt.setCompoundDrawablesWithIntrinsicBounds(indicatorN, null, null, null);
 		}else{
@@ -294,15 +334,10 @@ public class FragmentAsig extends Fragment{
 		{
 			txtnotaneeded.setText(getString(R.string.recuadroo)+ " " + notanece + " ("+txtporrest+ "%)");
 		}
-		else if (notanece>=10) 
+		else if (notanece>10) 
 		{
 
 			txtnotaneeded.setText(getString(R.string.recuadroo)+ " +10 ("+txtporrest+" %)");
-
-		}
-		else if (notanece<=0) 
-		{
-			txtnotaneeded.setText(getString(R.string.recuadroo)+ " 0 ("+txtporrest+" %)");
 
 		}
 		cn.closeDB();

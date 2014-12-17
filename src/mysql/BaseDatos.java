@@ -137,17 +137,16 @@ public class BaseDatos extends SQLiteOpenHelper {
     		 for (int y = 0; y < cursor1.getCount(); y++){
     			 columntotalPorcentajes = cursor1.getFloat(cursor1.getColumnIndex(KEY_Porcentaje));
     			 columntotalNotas = cursor1.getFloat(cursor1.getColumnIndex(KEY_Nota));
-    			 TotalNot = TotalNot + ((columntotalPorcentajes / 100)*columntotalNotas);
+    			 TotalNot = TotalNot + ((columntotalPorcentajes/100) *columntotalNotas);
     			 cursor1.moveToNext();   	     
     		 }
 	     }
-    	 
-    	 return Math.round(TotalNot*100.0)/100.0;
+    	 return TotalNot;
     	 
      } 
      
      //suma los porcentajes de las notas vinculadas a una asigantura
-     public float SumaPorcentajes(int idasignatura){
+     public double SumaPorcentajes(int idasignatura){
     	 
     	 SQLiteDatabase db = this.getReadableDatabase();
     	 Cursor cursor1 = db.rawQuery("SELECT SUM("+ KEY_Porcentaje +") FROM "+ TABLE_NOTAS +" WHERE " +KEY_IdAsignaturaReferencia +" = "+idasignatura,null);

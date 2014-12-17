@@ -28,6 +28,6 @@
     <string name="toastNotaExiste"> Already exists</string>
     <string name="toastDatosincorrectos">Data are incorrect!</string>
     <string name="toastCampossinrellenar">Some fields are empty!</string>
+    <string name="toastMaxPorcentaje">You already have 100%!</string>
     
-
 </resources>

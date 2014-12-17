@@ -1,5 +1,6 @@
 package com.tfd.classmarks;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -716,7 +718,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			BaseDatos cn = new BaseDatos(getApplicationContext());
 
 			ClaseCuatrimestres cuatri = cn.getCuatrimestreDataBase(spinner.getSelectedItem().toString());
-			float porcentajeusado = cn.SumaPorcentajes(cuatri.getAsignatura(mPager.getCurrentItem()).getId());
+			double porcentajeusado = cn.SumaPorcentajes(cuatri.getAsignatura(mPager.getCurrentItem()).getId());
 
 			Typeface tf1 = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
 			TextView txt3 = (TextView)newNota.findViewById(R.id.textviewAsignatura);
@@ -886,7 +888,11 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 							String porcetajeex = edtxtporcetaje.getText().toString();
 							String notaex = edtxtnota.getText().toString();
 							float nota = Float.parseFloat(notaex);
-							float porcentajeusado = cn.SumaPorcentajes(cuatri.getAsignatura(mPager.getCurrentItem()).getId());
+							double porcentajeusado = cn.SumaPorcentajes(cuatri.getAsignatura(mPager.getCurrentItem()).getId());							
+							double porIf = Math.round((100-porcentajeusado)*100.0)/100.0;
+							BigDecimal porcentajeusadoBig = new BigDecimal(""+porIf);
+
+							
 							if (nota>10)
 							{
 								datoscorrectos = false;
@@ -894,8 +900,9 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 							}
 
-							if (Float.parseFloat(edtxtporcetaje.getText().toString())>(100-porcentajeusado) || Float.parseFloat(edtxtporcetaje.getText().toString())==0)
+							if (Double.parseDouble(edtxtporcetaje.getText().toString())>porcentajeusadoBig.doubleValue() || Double.parseDouble(edtxtporcetaje.getText().toString())==0)
 							{
+
 								datoscorrectos = false;
 								edtxtporcetaje.setText("");
 
@@ -934,6 +941,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 								Toast.makeText(getApplicationContext(),R.string.toastDatosincorrectos,Toast.LENGTH_SHORT).show();   
 
 							}
+							cn.closeDB();
 
 						} catch (NumberFormatException e) {
 							Toast.makeText(getApplicationContext(),R.string.toastDatosincorrectos,Toast.LENGTH_SHORT).show();   
@@ -981,7 +989,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 			ClaseCuatrimestres cuatri1 = cn1.getCuatrimestreDataBase(spinner.getSelectedItem().toString());
 			ClaseNotas notamodif = cn1.getNotaDataBase(IDmodif);
-			float porcentajeusado1 = cn1.SumaPorcentajes(cuatri1.getAsignatura(mPager.getCurrentItem()).getId());
+			double porcentajeusado1 = cn1.SumaPorcentajes(cuatri1.getAsignatura(mPager.getCurrentItem()).getId());
 
 			Typeface tf11 = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
 			TextView txt31 = (TextView)modifNota.findViewById(R.id.textviewAsignatura);
@@ -1161,7 +1169,9 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 							ClaseNotas notamodif2 = cn2.getNotaDataBase(IDmodif);
 
 							float nota = Float.parseFloat(notaex);
-							float porcentajeusado = cn2.SumaPorcentajes(cuatri2.getAsignatura(mPager.getCurrentItem()).getId());
+							double porcentajeusado = cn2.SumaPorcentajes(cuatri2.getAsignatura(mPager.getCurrentItem()).getId());
+							double porIf = Math.round((100-porcentajeusado+notamodif2.getPorcentaje())*100.0)/100.0;
+							BigDecimal porcentajeusadoBig = new BigDecimal(""+porIf);
 
 							if (nota>10)
 							{
@@ -1170,7 +1180,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 							}
 
-							if (Float.parseFloat(edtxtporcetaje1.getText().toString())>(100-porcentajeusado+notamodif2.getPorcentaje()))
+							if (Double.parseDouble(edtxtporcetaje1.getText().toString())>porcentajeusadoBig.doubleValue() || Double.parseDouble(edtxtporcetaje1.getText().toString())==0)
 							{
 
 								datoscorrectos = false;
@@ -1215,6 +1225,8 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 								Toast.makeText(getApplicationContext(),R.string.toastDatosincorrectos,Toast.LENGTH_SHORT).show();   
 
 							}
+							cn2.closeDB();
+
 						}
 						catch (NumberFormatException e) {
 							Toast.makeText(getApplicationContext(),R.string.toastDatosincorrectos,Toast.LENGTH_SHORT).show();   
@@ -1433,7 +1445,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 		case 1: 
 			ClaseCuatrimestres cuatri = cn.getCuatrimestreDataBase(spinner.getSelectedItem().toString());
 			String nom = cuatri.getAsignatura(mPager.getCurrentItem()).getNombre();
-			float porcentajeusado = cn.SumaPorcentajes(cuatri.getAsignatura(mPager.getCurrentItem()).getId());
+			double porcentajeusado = cn.SumaPorcentajes(cuatri.getAsignatura(mPager.getCurrentItem()).getId());
 			TextView txt3 = (TextView)dialog.findViewById(R.id.textviewAsignatura);
 			txt3.setText(nom);
 			EditText ed = (EditText)dialog.findViewById(R.id.edittextNombre);
@@ -1453,7 +1465,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			ClaseCuatrimestres cuatri1 = cn.getCuatrimestreDataBase(spinner.getSelectedItem().toString());
 			ClaseNotas notamodif = cn.getNotaDataBase(IDmodif);
 			String nom1 = cuatri1.getAsignatura(mPager.getCurrentItem()).getNombre();
-			float porcentajeusado1 = cn.SumaPorcentajes(cuatri1.getAsignatura(mPager.getCurrentItem()).getId());
+			double porcentajeusado1 = cn.SumaPorcentajes(cuatri1.getAsignatura(mPager.getCurrentItem()).getId());
 
 			TextView txt31 = (TextView)dialog.findViewById(R.id.textviewAsignatura);
 			txt31.setText(nom1);
