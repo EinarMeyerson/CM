@@ -679,45 +679,76 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 					BaseDatos cn = new BaseDatos(getApplicationContext());
 					//verificar si la casilla rellenar  nota esta vacia para mostrar mensaje
-					if (edtxt.getText().length()==0)
-					{
-						Toast.makeText(getApplicationContext(),R.string.toastSinrellenar,Toast.LENGTH_SHORT).show();
+					
+					
+					if(cn.getCuatrimestreDataBase(spinner.getSelectedItem().toString()).getLon()<10) {
+						boolean verdad = true;
+						if (edtxt.getText().length()==0)
+						{
+							verdad = false;
+						}
+						if (edmin.getText().length()==0)
+						{
+							verdad = false;
+						}
 
-					}
-					else if(cn.getCuatrimestreDataBase(spinner.getSelectedItem().toString()).getLon()<10) {
-						//
-						ClaseAsignaturas Asignatura = new ClaseAsignaturas();
+						if (edmin2.getText().length()==0)
+						{
+							verdad = false;
+						}
 
-						String asign = edtxt.getText().toString();
-						String min = edmin.getText().toString();
-						String max = edmin2.getText().toString();
-						
-						Asignatura.setNombre(asign);
-						Asignatura.setMin(Double.parseDouble(min));
-						Asignatura.setMax(Double.parseDouble(max));
+						if(verdad==true){
+							try{
+								ClaseAsignaturas Asignatura = new ClaseAsignaturas();
 
-						Asignatura.setIdcuatrimestre(cn.IdCuatrimestre(spinner.getSelectedItem().toString()));
+								String asign = edtxt.getText().toString();
+								String min = edmin.getText().toString();
+								String max = edmin2.getText().toString();
+								if(Double.parseDouble(min)<=Double.parseDouble(max)){
+									Asignatura.setNombre(asign);
+									Asignatura.setMin(Double.parseDouble(min));
+									Asignatura.setMax(Double.parseDouble(max));
 
-						int ControlInsertAsig =cn.InsertarAsignatura(Asignatura);
-						if (ControlInsertAsig==0){
-							
-							frags.add(new FragmentAsig(asign));
-							mAdapter.notifyDataSetChanged();
-							cn.closeDB();
-							//						db.close();
-							mPager.setCurrentItem(frags.size());
-							
-							dismissDialog(0);
-							removeDialog(0);
-							isShown = false;
+									Asignatura.setIdcuatrimestre(cn.IdCuatrimestre(spinner.getSelectedItem().toString()));
 
-							edtxt.setText("");
-							isEmpty();
+									int ControlInsertAsig =cn.InsertarAsignatura(Asignatura);
+									if (ControlInsertAsig==0){
+
+										frags.add(new FragmentAsig(asign));
+										mAdapter.notifyDataSetChanged();
+										cn.closeDB();
+										//						db.close();
+										mPager.setCurrentItem(frags.size());
+
+										dismissDialog(0);
+										removeDialog(0);
+										isShown = false;
+
+										edtxt.setText("");
+										isEmpty();
+									}
+									else{
+										edtxt.setText("");
+										Toast.makeText(getApplicationContext(), Asignatura.getNombre()+ " "+getString(R.string.toastYaexiste), Toast.LENGTH_LONG).show();
+									}
+
+								}
+								else{
+									edmin.setText("5");
+									edmin2.setText("10");
+									Toast.makeText(getApplicationContext(),R.string.toastDatosincorrectos,Toast.LENGTH_SHORT).show();
+								}
+
+							} 
+							catch (NumberFormatException e) {
+								Toast.makeText(getApplicationContext(),R.string.toastDatosincorrectos,Toast.LENGTH_SHORT).show();   
+							}
 						}
 						else{
-							edtxt.setText("");
-							Toast.makeText(getApplicationContext(), Asignatura.getNombre()+ " "+getString(R.string.toastYaexiste), Toast.LENGTH_LONG).show();
+							Toast.makeText(getApplicationContext(),R.string.toastSinrellenar,Toast.LENGTH_SHORT).show();
 						}
+
+						cn.closeDB();
 					}
 					else
 					{
@@ -931,7 +962,6 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 							//                      SQLiteDatabase db = cn.getWritableDatabase();
 							ClaseNotas notas = new ClaseNotas();
 							ClaseCuatrimestres cuatri = cn.getCuatrimestreDataBase(spinner.getSelectedItem().toString());
-
 							boolean datoscorrectos = true;
 							String nombreexa = edtxtnombreexa.getText().toString();
 							String porcetajeex = edtxtporcetaje.getText().toString();
@@ -942,7 +972,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 							BigDecimal porcentajeusadoBig = new BigDecimal(""+porIf);
 
 							
-							if (nota>10)
+							if (nota>cuatri.getAsignatura(mPager.getCurrentItem()).getMax())
 							{
 								datoscorrectos = false;
 								edtxtnota.setText("");
@@ -1222,7 +1252,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 							double porIf = Math.round((100-porcentajeusado+notamodif2.getPorcentaje())*100.0)/100.0;
 							BigDecimal porcentajeusadoBig = new BigDecimal(""+porIf);
 
-							if (nota>10)
+							if (nota>cuatri2.getAsignatura(mPager.getCurrentItem()).getMax())
 							{
 								datoscorrectos = false;
 								edtxtnota1.setText("");

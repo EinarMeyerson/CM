@@ -137,7 +137,7 @@ public class FragmentAsig extends Fragment {
 		final BaseDatos cn = new BaseDatos(this.getActivity());
 		SQLiteDatabase db = cn.getReadableDatabase();
 
-		ClaseAsignaturas asign = cn.getAsignaturaDataBase(mText);
+		final ClaseAsignaturas asign = cn.getAsignaturaDataBase(mText);
 		
 		fragment = inflater.inflate(R.layout.asignatura_frag, container,
 				false);
@@ -273,9 +273,9 @@ public class FragmentAsig extends Fragment {
 									.round((100 - txtsob) * 100.0) / 100.0;
 
 							double notanece = 0;
-							if (txttot < 5) {
+							if (txttot < asign.getMin()) {
 								notanece = Math
-										.round(((5 - txttotsinRound) / ((100 - txtsob) / 100)) * 100.0) / 100.0;
+										.round(((asign.getMin() - txttotsinRound) / ((100 - txtsob) / 100)) * 100.0) / 100.0;
 
 							}
 
@@ -290,7 +290,7 @@ public class FragmentAsig extends Fragment {
 												indicatorN, null, null, null);
 									} else {
 
-										if (txtmed >= 5) {
+										if (txtmed >= asign.getMin()) {
 											txt.setCompoundDrawablesWithIntrinsicBounds(
 													indicator, null, null, null);
 										} else {
@@ -316,7 +316,7 @@ public class FragmentAsig extends Fragment {
 											+ " " + notanece + " ("
 											+ txtporrest + "%)");
 
-							if (notanece < 10 && notanece > 0) {
+							if (notanece < asign.getMax() && notanece > 0) {
 								txtnotaneeded
 										.setText(getString(R.string.recuadroo)
 												+ " " + notanece + " ("
@@ -381,9 +381,9 @@ public class FragmentAsig extends Fragment {
 
 		double txtporrest = Math.round((100 - txtsob) * 100.0) / 100.0;
 		double notanece = 0;
-		if (txttot < 5) {
+		if (txttot < asign.getMin()) {
 			notanece = Math
-					.round(((5 - txttotsinRound) / ((100 - txtsob) / 100)) * 100.0) / 100.0;
+					.round(((asign.getMin() - txttotsinRound) / ((100 - txtsob) / 100)) * 100.0) / 100.0;
 
 		}
 		if (items.isEmpty() == true) {
@@ -391,7 +391,7 @@ public class FragmentAsig extends Fragment {
 					null);
 		} else {
 
-			if (txtmed >= 5) {
+			if (txtmed >= asign.getMin()) {
 				txt.setCompoundDrawablesWithIntrinsicBounds(indicator, null,
 						null, null);
 			} else {
@@ -404,12 +404,12 @@ public class FragmentAsig extends Fragment {
 		txtmedia.setText(getString(R.string.Media) + " " + txtmed);
 		txtnotaneeded.setText(getString(R.string.recuadroo) + " " + notanece
 				+ " (" + txtporrest + "%)");
-		if (notanece < 10 && notanece > 0) {
+		if (notanece < asign.getMax() && notanece > 0) {
 			txtnotaneeded.setText(getString(R.string.recuadroo) + " "
 					+ notanece + " (" + txtporrest + "%)");
-		} else if (notanece > 10) {
+		} else if (notanece > asign.getMax()) {
 
-			txtnotaneeded.setText(getString(R.string.recuadroo) + " +10 ("
+			txtnotaneeded.setText(getString(R.string.recuadroo) + " +"+asign.getMax()+" ("
 					+ txtporrest + " %)");
 
 		}
