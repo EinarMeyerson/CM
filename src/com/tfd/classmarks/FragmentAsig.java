@@ -7,9 +7,11 @@ import java.util.HashMap;
 import mysql.BaseDatos;
 import mysql.ClaseAsignaturas;
 import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -32,64 +34,78 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("ValidFragment")
-public class FragmentAsig extends Fragment{
+public class FragmentAsig extends Fragment {
 
 	private int EliminarID;
 	public int ModifID;
-	private static final int ID_EDIT     = 1;
-	private static final int ID_ELIMINAR   = 2;
-	public String mText;
+	private static final int ID_EDIT = 1;
+	private static final int ID_ELIMINAR = 2;
+//	private boolean isAnimating=false;
+//	private boolean didSlideOut=false;
+	public String mText, mTextminmax;
 	public TextView txtnotaexfin, txttotal, txtmedia, txtsobre, txtaadir;
 	public ListView lv;
 	public Principal prin;
 	public ListAdapter adap;
 	public ArrayList<Item> items;
 	public View itemselected;
-	
+	public QuickAction quickAction;
+	private View fragment;
+
 	HashMap<Long, Integer> mItemIdTopMap = new HashMap<Long, Integer>();
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		items = new ArrayList<Item>();
 
-		final View footer = ((LayoutInflater)getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.listview_forma_footer, null, false);
+		final View footer = ((LayoutInflater) getActivity()
+				.getApplicationContext().getSystemService(
+						Context.LAYOUT_INFLATER_SERVICE)).inflate(
+				R.layout.listview_forma_footer, null, false);
 
 		footer.setOnTouchListener(new View.OnTouchListener() {
 			private Rect rect;
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				int action = event.getAction();
 
-				switch(action){
+				switch (action) {
 
 				case MotionEvent.ACTION_UP:
-					if (!rect.contains(v.getLeft() + (int) event.getX(), v.getTop() + (int) event.getY())) {
+					if (!rect.contains(v.getLeft() + (int) event.getX(),
+							v.getTop() + (int) event.getY())) {
 						// User moved outside bounds
-						((Principal)getActivity()).clickOutTransformation(footer);
+						((Principal) getActivity())
+								.clickOutTransformation(footer);
 
 						return false;
-					}
-					else{
-						((Principal)getActivity()).clickOutTransformation(footer);
+					} else {
+						((Principal) getActivity())
+								.clickOutTransformation(footer);
 						v.performClick();
 
 					}
 					return false;
 
 				case MotionEvent.ACTION_DOWN:
-					rect = new Rect(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
-					((Principal)getActivity()).clickInTransformation(footer);
+					rect = new Rect(v.getLeft(), v.getTop(), v.getRight(), v
+							.getBottom());
+					((Principal) getActivity()).clickInTransformation(footer);
 
 					return true;
 
 				case MotionEvent.ACTION_MOVE:
-					if (!rect.contains(v.getLeft() + (int) event.getX(), v.getTop() + (int) event.getY())) {
+					if (!rect.contains(v.getLeft() + (int) event.getX(),
+							v.getTop() + (int) event.getY())) {
 						// User moved outside bounds
-						((Principal)getActivity()).clickOutTransformation(footer);
+						((Principal) getActivity())
+								.clickOutTransformation(footer);
 						return true;
-					}
-					else{
-						((Principal)getActivity()).clickInTransformation(footer);
+					} else {
+						((Principal) getActivity())
+								.clickInTransformation(footer);
 					}
 					return true;
 				}
@@ -101,16 +117,17 @@ public class FragmentAsig extends Fragment{
 		footer.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				BaseDatos cn = new BaseDatos(getActivity().getApplicationContext());
-				double txtsob = Math.round(cn.SumaPorcentajes(cn.IdAsignatura(mText))*100.0)/100.0;
-				Log.d("addmark_txtsob", ""+txtsob);
-				if(txtsob<100)
-				{
+				BaseDatos cn = new BaseDatos(getActivity()
+						.getApplicationContext());
+				double txtsob = Math.round(cn.SumaPorcentajes(cn
+						.IdAsignatura(mText)) * 100.0) / 100.0;
+				Log.d("addmark_txtsob", "" + txtsob);
+				if (txtsob < 100) {
 					addMark();
-				}
-				else
-				{
-					Toast.makeText(getActivity().getApplicationContext(),R.string.toastMaxPorcentaje,Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(getActivity().getApplicationContext(),
+							R.string.toastMaxPorcentaje, Toast.LENGTH_LONG)
+							.show();
 
 				}
 				cn.closeDB();
@@ -120,47 +137,73 @@ public class FragmentAsig extends Fragment{
 		final BaseDatos cn = new BaseDatos(this.getActivity());
 		SQLiteDatabase db = cn.getReadableDatabase();
 
-		View fragment = inflater.inflate(R.layout.asignatura_frag, container, false);
+		ClaseAsignaturas asign = cn.getAsignaturaDataBase(mText);
+		
+		fragment = inflater.inflate(R.layout.asignatura_frag, container,
+				false);
 
-		// Configuraci贸n de objetos
-		Typeface tf = Typeface.createFromAsset(getActivity().getAssets(),"Roboto-Light.ttf");
+		// Configuracion de objetos
+		Typeface tf = Typeface.createFromAsset(getActivity().getAssets(),
+				"Roboto-Light.ttf");
 
-		//TextView nombre de la asignatura
-		final TextView txt = (TextView)fragment.findViewById(R.id.textViewAnd);
+		// TextView nombre de la asignatura
+		final TextView txt = (TextView) fragment.findViewById(R.id.textViewAnd);
 		txt.setText(mText);
+		
+		//TextView valor minimo y maximo de la asignatura
+		TextView txt_minmax = (TextView)fragment.findViewById(R.id.textView_asig_minmax);
+		txt_minmax.setText("(M韓: "+asign.getMin()+" - M醲: "+asign.getMax()+")");
+		
+		txt_minmax.setTypeface(tf);
 		txt.setTypeface(tf);
+		
+//		txt.setOnClickListener(new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				fragment_transactions();
+//				
+//			}
+//		});
 
-		//C贸digo para crear y escalar el indicardor verde
-		Drawable indic = getActivity().getResources().getDrawable(R.drawable.indicador_verde_x);   
-		Bitmap bm = ((BitmapDrawable)indic).getBitmap();
+		// Codigo para crear y escalar el indicardor verde
+		Drawable indic = getActivity().getResources().getDrawable(
+				R.drawable.indicador_verde_x);
+		Bitmap bm = ((BitmapDrawable) indic).getBitmap();
 		int dim = (int) getResources().getDimension(R.dimen.iconos_asignatura);
-		final Drawable indicator = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm,dim, dim, true));
+		final Drawable indicator = new BitmapDrawable(getResources(),
+				Bitmap.createScaledBitmap(bm, dim, dim, true));
 
+		// Codigo para crear y escalar el indicardor rojo
+		Drawable indicR = getActivity().getResources().getDrawable(
+				R.drawable.indicador_rojo_x);
+		Bitmap bm1 = ((BitmapDrawable) indicR).getBitmap();
+		final Drawable indicatorR = new BitmapDrawable(getResources(),
+				Bitmap.createScaledBitmap(bm1, dim, dim, true));
 
-		//C贸digo para crear y escalar el indicardor rojo
-		Drawable indicR = getActivity().getResources().getDrawable(R.drawable.indicador_rojo_x);   
-		Bitmap bm1 = ((BitmapDrawable)indicR).getBitmap();
-		final Drawable indicatorR = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm1, dim,dim, true));
+		// Codigo para crear y escalar el indicardor nulo
+		Drawable indicN = getActivity().getResources().getDrawable(
+				R.drawable.indicador_nulo_x);
+		Bitmap bm2 = ((BitmapDrawable) indicN).getBitmap();
+		final Drawable indicatorN = new BitmapDrawable(getResources(),
+				Bitmap.createScaledBitmap(bm2, dim, dim, true));
 
-		//C贸digo para crear y escalar el indicardor nulo
-		Drawable indicN = getActivity().getResources().getDrawable(R.drawable.indicador_nulo_x);   
-		Bitmap bm2 = ((BitmapDrawable)indicN).getBitmap();
-		final Drawable indicatorN = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bm2, dim, dim, true));
-
-
-		ImageView x = (ImageView)fragment.findViewById(R.id.imageViewEliminar);
+		ImageView x = (ImageView) fragment.findViewById(R.id.imageViewEliminar);
 
 		x.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				((Principal)getActivity()).showDialog(3);
+				((Principal) getActivity()).showDialog(3);
 			}
 		});
 
-		final TextView txttotal = (TextView)fragment.findViewById(R.id.TVtotal);
-		final TextView txtmedia = (TextView)fragment.findViewById(R.id.TVmedia);
-		final TextView txtnotaneeded = (TextView)fragment.findViewById(R.id.TVnotaneeded);
+		final TextView txttotal = (TextView) fragment
+				.findViewById(R.id.TVtotal);
+		final TextView txtmedia = (TextView) fragment
+				.findViewById(R.id.TVmedia);
+		final TextView txtnotaneeded = (TextView) fragment
+				.findViewById(R.id.TVnotaneeded);
 
 		txttotal.setTypeface(tf);
 		txtmedia.setTypeface(tf);
@@ -168,117 +211,145 @@ public class FragmentAsig extends Fragment{
 
 		/*
 		 * 
-		 *EMPIEZA EL CODIGO DEL BOCADILLO (SPEECH BUBBLE)
-		 * 
+		 * EMPIEZA EL CODIGO DEL BOCADILLO (SPEECH BUBBLE)
 		 */
 
-		ActionItem editItem = new ActionItem(ID_EDIT, null, getResources().getDrawable(R.drawable.ic_action_edit));
-		ActionItem eliminarItem = new ActionItem(ID_ELIMINAR, null, getResources().getDrawable(R.drawable.ic_action_discard));
+		ActionItem editItem = new ActionItem(ID_EDIT, null, getResources()
+				.getDrawable(R.drawable.ic_action_edit));
+		ActionItem eliminarItem = new ActionItem(ID_ELIMINAR, null,
+				getResources().getDrawable(R.drawable.ic_action_discard));
 
-		// Crea un objeto QuickAction y determina que su orientaci茂驴陆n sea horizontal
-		final QuickAction quickAction = new QuickAction(getActivity(), QuickAction.HORIZONTAL);
+		// Crea un objeto QuickAction y determina que su orientacion sea
+		// horizontal
+		quickAction = new QuickAction(getActivity(), QuickAction.HORIZONTAL);
 
 		// add action items into QuickAction
 		quickAction.addActionItem(editItem);
 		quickAction.addActionItem(eliminarItem);
 
 		// Set listener for action item clicked
-		quickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
-			@Override
-			public void onItemClick(QuickAction source, int pos, int actionId) {
-				BaseDatos cn = new BaseDatos(getActivity().getApplicationContext());
-				// here we can filter which action item was clicked with
-				// pos or actionId parameter
-				if (actionId == ID_EDIT) {
+		quickAction
+				.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
+					@Override
+					public void onItemClick(QuickAction source, int pos,
+							int actionId) {
+						BaseDatos cn = new BaseDatos(getActivity()
+								.getApplicationContext());
+						// here we can filter which action item was clicked with
+						// pos or actionId parameter
+						if (actionId == ID_EDIT) {
 
-					((Principal)getActivity()).setIDmodif(cn.IdNota(items.get(EliminarID).getId()));
+							((Principal) getActivity()).setIDmodif(cn
+									.IdNota(items.get(EliminarID).getId()));
 
-					getActivity().showDialog(2);
-					adap.notifyDataSetChanged();
-					itemselected.clearFocus();
-
-				} else if (actionId == ID_ELIMINAR) {
-					cn.EliminarNota(cn.IdNota(items.get(EliminarID).getId()));
-
-					double txtsob = cn.SumaPorcentajes(cn.IdAsignatura(mText));
-					Log.d("txtsob",""+txtsob);
-					double txttotsinRound = cn.TotalProducto(cn.IdAsignatura(mText));
-					Log.d("txttotsinRound",""+txttotsinRound);
-
-					double txttotRound = Math.round(txttotsinRound*100.0)/100.0;
-					BigDecimal txttotBig = new BigDecimal(""+txttotRound);
-					double txttot = txttotBig.doubleValue();
-					
-					final double txtmedRound = Math.round((txttotsinRound / (txtsob / 100)) * 100.0) / 100.0;
-					BigDecimal txtmedbig = new BigDecimal(""+txtmedRound);
-					final double txtmed = txtmedbig.doubleValue();
-
-					double txtporrest = Math.round((100-txtsob)*100.0) / 100.0;
-
-					double notanece=0;
-					if (txttot<5)
-					{
-						notanece = Math.round(((5-txttotsinRound)/((100-txtsob)/100)) * 100.0) / 100.0;
-
-					}
-
-					ObjectAnimator anim = ObjectAnimator.ofFloat(itemselected, View.ALPHA, 0);
-					anim.setDuration(1000);
-					anim.addListener(new AnimatorListenerAdapter() {
-						@Override
-						public void onAnimationEnd(Animator animation) {
-							items.remove(items.get(EliminarID));      
-							if(items.isEmpty() == true){
-								txt.setCompoundDrawablesWithIntrinsicBounds(indicatorN, null, null, null);
-							}else{
-
-								if(txtmed >= 5){
-									txt.setCompoundDrawablesWithIntrinsicBounds(indicator, null, null, null);
-								}
-								else{
-
-									txt.setCompoundDrawablesWithIntrinsicBounds(indicatorR, null, null, null);
-								}
-							}
+							getActivity().showDialog(2);
 							adap.notifyDataSetChanged();
+							itemselected.clearFocus();
 
-							itemselected.setAlpha(1);
+						} else if (actionId == ID_ELIMINAR) {
+							cn.EliminarNota(cn.IdNota(items.get(EliminarID)
+									.getId()));
+
+							double txtsob = cn.SumaPorcentajes(cn
+									.IdAsignatura(mText));
+							Log.d("txtsob", "" + txtsob);
+							double txttotsinRound = cn.TotalProducto(cn
+									.IdAsignatura(mText));
+							Log.d("txttotsinRound", "" + txttotsinRound);
+
+							double txttotRound = Math
+									.round(txttotsinRound * 100.0) / 100.0;
+							BigDecimal txttotBig = new BigDecimal(""
+									+ txttotRound);
+							double txttot = txttotBig.doubleValue();
+
+							final double txtmedRound = Math
+									.round((txttotsinRound / (txtsob / 100)) * 100.0) / 100.0;
+							BigDecimal txtmedbig = new BigDecimal(""
+									+ txtmedRound);
+							final double txtmed = txtmedbig.doubleValue();
+
+							double txtporrest = Math
+									.round((100 - txtsob) * 100.0) / 100.0;
+
+							double notanece = 0;
+							if (txttot < 5) {
+								notanece = Math
+										.round(((5 - txttotsinRound) / ((100 - txtsob) / 100)) * 100.0) / 100.0;
+
+							}
+
+							ObjectAnimator anim = ObjectAnimator.ofFloat(itemselected, View.ALPHA, 0);
+							anim.setDuration(1000);
+							anim.addListener(new AnimatorListenerAdapter() {
+								@Override
+								public void onAnimationEnd(Animator animation) {
+									items.remove(items.get(EliminarID));
+									if (items.isEmpty() == true) {
+										txt.setCompoundDrawablesWithIntrinsicBounds(
+												indicatorN, null, null, null);
+									} else {
+
+										if (txtmed >= 5) {
+											txt.setCompoundDrawablesWithIntrinsicBounds(
+													indicator, null, null, null);
+										} else {
+
+											txt.setCompoundDrawablesWithIntrinsicBounds(
+													indicatorR, null, null,
+													null);
+										}
+									}
+									adap.notifyDataSetChanged();
+
+									itemselected.setAlpha(1);
+								}
+							});
+							anim.start();
+
+							txttotal.setText(getString(R.string.Total) + " "
+									+ txttot);
+							txtmedia.setText(getString(R.string.Media) + " "
+									+ txtmed);
+							txtnotaneeded
+									.setText(getString(R.string.recuadroo)
+											+ " " + notanece + " ("
+											+ txtporrest + "%)");
+
+							if (notanece < 10 && notanece > 0) {
+								txtnotaneeded
+										.setText(getString(R.string.recuadroo)
+												+ " " + notanece + " ("
+												+ txtporrest + "%)");
+							}
+							itemselected.clearFocus();
 						}
-					});
-					anim.start();
-
-					txttotal.setText(getString(R.string.Total) + " " + txttot);
-					txtmedia.setText(getString(R.string.Media) + " " + txtmed);
-					txtnotaneeded.setText(getString(R.string.recuadroo)+ " " + notanece + " ("+txtporrest+"%)");
-
-					if (notanece<10 && notanece>0 )
-					{
-						txtnotaneeded.setText(getString(R.string.recuadroo)+ " " + notanece + " ("+txtporrest+ "%)");
+						adap.notifyDataSetChanged();
+						cn.closeDB();
 					}
-					itemselected.clearFocus();
-				}
-				adap.notifyDataSetChanged();
-				cn.closeDB();
-			}
-		});
+				});
 
-		//Mostramos los datos recogidos de la base de datos
+		// Mostramos los datos recogidos de la base de datos
+		Log.d("LOG CURSOR DATA-BASE ERROR 2", "Valor asignatura: " + mText);
 		ClaseAsignaturas Asignatura = cn.getAsignaturaDataBase(mText);
-		int i=0;
+		int i = 0;
 
-		while (i < Asignatura.getLon())
-		{
-			items.add(new Item(Asignatura.getNotas(i).getId(), Asignatura.getNotas(i).getEvaluable(), Double.toString(Asignatura.getNotas(i).getPorcentaje())+" %", Double.toString((Asignatura.getNotas(i).getNota()))));
+		while (i < Asignatura.getLon()) {
+			items.add(new Item(Asignatura.getNotas(i).getId(), Asignatura
+					.getNotas(i).getEvaluable(), Double.toString(Asignatura
+					.getNotas(i).getPorcentaje()) + " %", Double
+					.toString((Asignatura.getNotas(i).getNota()))));
 			i++;
 		}
 
-		TextView tvcrearnota = (TextView)footer.findViewById(R.id.tvanadir);
+		TextView tvcrearnota = (TextView) footer.findViewById(R.id.tvanadir);
 		tvcrearnota.setTypeface(tf);
-		//Fin de la configuraci贸n de objetos
+		// Fin de la configuracion de objetos
 
-		lv = (ListView)fragment.findViewById(R.id.listView1);
+		lv = (ListView) fragment.findViewById(R.id.listView1);
 		lv.addFooterView(footer);
-		adap = new ListAdapter(this.getActivity(), R.layout.listview_forma, items);
+		adap = new ListAdapter(this.getActivity(), R.layout.listview_forma,
+				items);
 		lv.setAdapter(adap);
 
 		lv.setLongClickable(true);
@@ -286,60 +357,60 @@ public class FragmentAsig extends Fragment{
 		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int  arg2, long arg3) {
+					int arg2, long arg3) {
 				arg1.setSelected(true);
 				EliminarID = arg2;
 				quickAction.show(arg1);
 				itemselected = arg1;
 
-
 				return true;
 			}
 		});
 
-		
 		double txtsob = cn.SumaPorcentajes(cn.IdAsignatura(mText));
-		
+
 		double txttotsinRound = cn.TotalProducto(cn.IdAsignatura(mText));
-		double txttotRound = Math.round(txttotsinRound*100.0)/100.0;
-		BigDecimal txttotBig = new BigDecimal(""+txttotRound);
+		double txttotRound = Math.round(txttotsinRound * 100.0) / 100.0;
+		BigDecimal txttotBig = new BigDecimal("" + txttotRound);
 		double txttot = txttotBig.doubleValue();
 
-		double txtmedRound = Math.round((txttotsinRound / (txtsob / 100)) * 100.0) / 100.0;
-		BigDecimal txtmedbig = new BigDecimal(""+txtmedRound);
+		double txtmedRound = Math
+				.round((txttotsinRound / (txtsob / 100)) * 100.0) / 100.0;
+		BigDecimal txtmedbig = new BigDecimal("" + txtmedRound);
 		final double txtmed = txtmedbig.doubleValue();
 
-		double txtporrest = Math.round((100-txtsob)*100.0) / 100.0;
-		double notanece=0;
-		if (txttot<5)
-		{
-			notanece = Math.round(((5-txttotsinRound)/((100-txtsob)/100)) * 100.0) / 100.0;
-		
-		
-		}
-		if(items.isEmpty() == true){
-			txt.setCompoundDrawablesWithIntrinsicBounds(indicatorN, null, null, null);
-		}else{
+		double txtporrest = Math.round((100 - txtsob) * 100.0) / 100.0;
+		double notanece = 0;
+		if (txttot < 5) {
+			notanece = Math
+					.round(((5 - txttotsinRound) / ((100 - txtsob) / 100)) * 100.0) / 100.0;
 
-			if(txtmed >= 5){
-				txt.setCompoundDrawablesWithIntrinsicBounds(indicator, null, null, null);
+		}
+		if (items.isEmpty() == true) {
+			txt.setCompoundDrawablesWithIntrinsicBounds(indicatorN, null, null,
+					null);
+		} else {
+
+			if (txtmed >= 5) {
+				txt.setCompoundDrawablesWithIntrinsicBounds(indicator, null,
+						null, null);
+			} else {
+
+				txt.setCompoundDrawablesWithIntrinsicBounds(indicatorR, null,
+						null, null);
 			}
-			else{
-
-				txt.setCompoundDrawablesWithIntrinsicBounds(indicatorR, null, null, null);
-			}
 		}
-		txttotal.setText(getString(R.string.Total)+ " "+txttot);
-		txtmedia.setText(getString(R.string.Media)+" "+ txtmed);
-		txtnotaneeded.setText(getString(R.string.recuadroo)+ " " + notanece + " ("+txtporrest+"%)");
-		if (notanece<10 && notanece>0 )
-		{
-			txtnotaneeded.setText(getString(R.string.recuadroo)+ " " + notanece + " ("+txtporrest+ "%)");
-		}
-		else if (notanece>10) 
-		{
+		txttotal.setText(getString(R.string.Total) + " " + txttot);
+		txtmedia.setText(getString(R.string.Media) + " " + txtmed);
+		txtnotaneeded.setText(getString(R.string.recuadroo) + " " + notanece
+				+ " (" + txtporrest + "%)");
+		if (notanece < 10 && notanece > 0) {
+			txtnotaneeded.setText(getString(R.string.recuadroo) + " "
+					+ notanece + " (" + txtporrest + "%)");
+		} else if (notanece > 10) {
 
-			txtnotaneeded.setText(getString(R.string.recuadroo)+ " +10 ("+txtporrest+" %)");
+			txtnotaneeded.setText(getString(R.string.recuadroo) + " +10 ("
+					+ txtporrest + " %)");
 
 		}
 		cn.closeDB();
@@ -347,30 +418,62 @@ public class FragmentAsig extends Fragment{
 		return fragment;
 	}
 
+//	protected void fragment_transactions() {
+//		
+//		// TODO Auto-generated method stub
+//		if(isAnimating){
+//			return;
+//		}
+//		isAnimating=true;
+//		
+//		if(didSlideOut){
+//			didSlideOut=false;
+//			getFragmentManager().popBackStack();
+//		}
+//		
+// 		AnimatorListener listener = new AnimatorListenerAdapter() {
+//			@Override
+//			public void onAnimationEnd(Animator arg0){
+//				android.support.v4.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//				transaction.setCustomAnimations(R.anim.grow_from_bottom, R.anim.pump_bottom);
+//				transaction.add(, arg1)
+//			}
+//			
+//		};
+//		
+//	}
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 	}
 
-	public FragmentAsig() {
+	public void dismPopup() {
+		quickAction.dismiss();
 	}
 
+	public FragmentAsig() {
+	}
+	
 	public FragmentAsig(String text) {
 		this.mText = text;
 	}
-
+	
 	public String NombreAsig() {
 		return mText;
 	}
-	public void setModifID(int id){
-		this.EliminarID= id;
+
+	public void setModifID(int id) {
+		this.EliminarID = id;
 	}
-	public int getModifID(){
+
+	public int getModifID() {
 
 		return EliminarID;
 	}
-	public void addMark(){
-		this.getActivity().showDialog(1);   
+
+	public void addMark() {
+		this.getActivity().showDialog(1);
 	}
 
 }

@@ -8,7 +8,10 @@
         android:id="@+id/android_layout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/borde">
 
         
@@ -18,11 +21,23 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:gravity="center"
             android:layout_marginTop="17dp"
             android:textColor="#FFFFFF"
-            android:drawablePadding="10dp"
+            android:drawablePadding="7dp"
             android:text="@string/asignatura"
             android:textSize="@dimen/asignatura" />
+        
+        <TextView
+            android:id="@+id/textView_asig_minmax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewAnd"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:textColor="#BBFFFFFF"
+            android:text="(Mín: 5 - Máx: 10)"
+            android:textSize="@dimen/asignatura_minmax" />
 
         <ImageView
             android:id="@+id/imageViewEliminar"
@@ -37,17 +52,15 @@
         <ListView
             
             android:id="@+id/listView1"
-            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewAnd"
+            android:layout_below="@id/textView_asig_minmax"
             android:layout_above="@+id/resultados"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:listSelector="@drawable/list_selector_background_custom"
             android:divider="@drawable/divider_notas" >
-
 
         </ListView>
 

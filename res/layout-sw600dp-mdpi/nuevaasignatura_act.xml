@@ -9,30 +9,31 @@
     <TextView
         android:id="@+id/textviewCarpeta"
         android:layout_width="wrap_content"
-        android:layout_height="55dp"
+        android:layout_height="45dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/layoutCrearAsig2"
-       	android:clickable="true"
+        
+        android:clickable="true"
         android:gravity="center"
         android:text="@string/nuevaasig"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFFFF"
         android:textSize="@dimen/titulodialog" />
-    
-    <View 
-	    android:layout_width="fill_parent"
-	    android:layout_height="1dp"
-	    android:background="#CED6DD"
-	    android:layout_alignRight="@id/textviewCarpeta"
-	    android:layout_below="@id/textviewCarpeta"/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_alignRight="@id/textviewCarpeta"
+        android:layout_below="@id/textviewCarpeta"
+        android:background="#CED6DD" />
 
     <LinearLayout
         android:id="@+id/layoutCrearAsig2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textviewCarpeta"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <!-- <TextView -->
         <!-- android:id="@+id/textviewnuevaasig" -->
@@ -49,8 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/edittext_shape"
             android:ems="8"
@@ -62,18 +63,113 @@
             android:singleLine="true"
             android:textColor="#777777"
             android:textSize="@dimen/edittext" />
-        
-        <View 
-	    android:layout_width="fill_parent"
-	    android:layout_height="1dp"
-	    android:background="#CED6DD"
-	    android:layout_marginTop="20dp"
-	    android:layout_above="@+id/layoutCrearAsigButtons"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nota para aprobar"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="@dimen/minitextdialog"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nota máxima"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/minitextdialog"
+                    android:layout_gravity="center" />
+                
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal" >
+
+                
+
+                <EditText
+                    android:id="@+id/edittxt_crearasig_notamin"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edittext_shape"
+                    android:ems="1"
+                    android:layout_gravity="center"
+                    android:inputType="numberDecimal"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="5"
+                    android:textColor="#666666"
+                    android:textSize="18sp" >
+
+                    <requestFocus />
+                </EditText>
+                <EditText
+                    android:id="@+id/edittxt_crearasig_notamax"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edittext_shape"
+                    android:ems="1"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="10"
+                    android:textColor="#666666"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/layoutCrearAsigButtons"
+            android:background="#CED6DD" />
 
         <LinearLayout
             android:id="@+id/layoutCrearAsigButtons"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="45dp"
             android:divider="@drawable/divider_buttons"
             android:gravity="center"
             android:orientation="horizontal"

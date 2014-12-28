@@ -15,5 +15,8 @@
     <dimen name="X">30dp</dimen>
     <dimen name="iconos_asignatura">22dp</dimen>
     <dimen name="linear">210dp</dimen>
+    <dimen name="minitextdialog">30sp</dimen>
+    <dimen name="edittext_lil">27sp</dimen>
+    <dimen name="asignatura_minmax">23sp</dimen>
     
 </resources>

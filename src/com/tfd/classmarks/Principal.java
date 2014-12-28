@@ -105,17 +105,20 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 	@Override
 	protected void onStart() {
+		Log.d("LOG CURSOR DATA-BASE ERROR 1", "just before super.onStart()");
 		super.onStart();
+		Log.d("LOG CURSOR DATA-BASE ERROR 1.1", "just after super.onStart()");
 
 		mPager.setOffscreenPageLimit(4);
-
+		Log.d("LOG CURSOR DATA-BASE ERROR 1.2", "after mPager.setOffscreenPageLimit(4)");
 		mPager.setPageTransformer(true, new ZoomOutPageTransformer());
+		Log.d("LOG CURSOR DATA-BASE ERROR 1.3", "after mPager.setPageTransformer(true, new ZoomOutPageTransformer())");
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+		Log.d("LOG CURSOR DATA-BASE ERROR 1.4", "after super.onResume()");
 		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
     	int resetPosition = preferences.getInt("ultimo fragment", 0);
 		
@@ -569,7 +572,14 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 			final Button btn1 = (Button)newAsig.findViewById(R.id.buttonSalirAsig);
 			btn1.setTypeface(tf);
-
+			
+			final EditText edmin = (EditText)newAsig.findViewById(R.id.edittxt_crearasig_notamin);
+			edmin.setTypeface(tf);
+			
+			final EditText edmin2 = (EditText)newAsig.findViewById(R.id.edittxt_crearasig_notamax);
+			edmin2.setTypeface(tf);
+			
+			edtxt.requestFocus();
 			//boton crear - gestos
 			btn.setOnTouchListener(new View.OnTouchListener() {
 				private Rect rect;
@@ -679,18 +689,24 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 						ClaseAsignaturas Asignatura = new ClaseAsignaturas();
 
 						String asign = edtxt.getText().toString();
-
+						String min = edmin.getText().toString();
+						String max = edmin2.getText().toString();
+						
 						Asignatura.setNombre(asign);
+						Asignatura.setMin(Double.parseDouble(min));
+						Asignatura.setMax(Double.parseDouble(max));
 
 						Asignatura.setIdcuatrimestre(cn.IdCuatrimestre(spinner.getSelectedItem().toString()));
 
 						int ControlInsertAsig =cn.InsertarAsignatura(Asignatura);
 						if (ControlInsertAsig==0){
+							
 							frags.add(new FragmentAsig(asign));
 							mAdapter.notifyDataSetChanged();
 							cn.closeDB();
 							//						db.close();
 							mPager.setCurrentItem(frags.size());
+							
 							dismissDialog(0);
 							removeDialog(0);
 							isShown = false;

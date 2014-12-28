@@ -20,12 +20,12 @@
     <string name="asignatura">Assignatura</string>
     <string name="delete">Eliminar</string>
     <string name="textoEliminar">¿Estàs segur que vols\nsuprimir l\'assignatura?</string>
-     <string name="toastSinrellenar">!Camp sense omplir!</string>
+     <string name="toastSinrellenar">Camp sense omplir!</string>
     <string name="toastYaexiste"> Ja existeix</string>
-    <string name="toastMaxAsignaturas">¡Ja has introduït el màxim d\'assignatures, 10!</string>
+    <string name="toastMaxAsignaturas">Ja has introduït el màxim d\'assignatures, 10!</string>
     <string name="toastNotaExiste"> Ja existeix</string>
-    <string name="toastDatosincorrectos">¡Les dades no són correctes!</string>
-    <string name="toastCampossinrellenar">¡Falten camps per omplir!</string>
-    <string name="toastMaxPorcentaje">¡Ja tens 100%!</string>
+    <string name="toastDatosincorrectos">Les dades no són correctes!</string>
+    <string name="toastCampossinrellenar">Falten camps per omplir!</string>
+    <string name="toastMaxPorcentaje">Ja tens 100%!</string>
     
 </resources>

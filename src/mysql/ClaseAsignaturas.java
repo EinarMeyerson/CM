@@ -8,7 +8,25 @@ public class ClaseAsignaturas {
 	double notafinal;
 	ClaseNotas[]  Notas = new ClaseNotas[100];
 	int lon=0;
+	double max;
+	double min;
 	
+	public double getMax() {
+		return max;
+	}
+
+	public void setMax(double  max) {
+		this.max = max;
+	}
+
+	public double getMin() {
+		return min;
+	}
+
+	public void setMin(double d) {
+		this.min = d;
+	}
+
 	public ClaseNotas getNotas(int i) {
 		return Notas[i];
 	}
@@ -36,6 +54,7 @@ public class ClaseAsignaturas {
 	public void setNombre(String nombre) {
 		Nombre = nombre;
 	}
+
 	public int getIdcuatrimestre() {
 		return idcuatrimestre;
 	}
