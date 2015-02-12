@@ -10,7 +10,7 @@ import android.util.Log;
 public class BaseDatos extends SQLiteOpenHelper {
 
 	// Database Version
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	// Database Name
 	private static final String DATABASE_NAME = "ClassMarksdb.db";
@@ -19,6 +19,7 @@ public class BaseDatos extends SQLiteOpenHelper {
 	private static final String TABLE_CUATRIMESTRE = "Cuatrimestres";
 	private static final String TABLE_ASIGNATURA = "Asignaturas";
 	private static final String TABLE_NOTAS = "Notas";
+	private static final String TEMP_TABLE_ASIGNATURAS = "temp_Asignaturas";
 
 	// Common column names
 
@@ -49,8 +50,8 @@ public class BaseDatos extends SQLiteOpenHelper {
 
 	// Asignatura table create statement
 	private static final String CREATE_TABLE_Asignatura = "CREATE TABLE " + TABLE_ASIGNATURA
-			+ "(" + KEY_IdAsignatura + " INTEGER PRIMARY KEY," + KEY_NombreAsignatura + " TEXT UNIQUE, " + KEY_AsignaturaMin + " INTEGER, "+KEY_AsignaturaMax+" INTEGER, "
-			+ KEY_IdCuatrimestreReferencia + " INTEGER, FOREIGN KEY (" + KEY_IdCuatrimestreReferencia + ") REFERENCES "+TABLE_CUATRIMESTRE+ "("+KEY_IdCuatrimestre+"));" ;
+			+ "(" + KEY_IdAsignatura + " INTEGER PRIMARY KEY," + KEY_NombreAsignatura + " TEXT UNIQUE, "
+			+ KEY_IdCuatrimestreReferencia + " INTEGER," + KEY_AsignaturaMin + " INTEGER, "+KEY_AsignaturaMax+" INTEGER, FOREIGN KEY (" + KEY_IdCuatrimestreReferencia + ") REFERENCES "+TABLE_CUATRIMESTRE+ "("+KEY_IdCuatrimestre+"));" ;
 
 	// todo_tag table create statement
 	private static final String CREATE_TABLE_NOTAS = "CREATE TABLE "
@@ -74,13 +75,41 @@ public class BaseDatos extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		
+		Log.d("UPDATEbbdd","entramosn en el update de bbdd");
+		
+		
+		String TEMP_CREATE_TABLE_ASIGNATURAS = "CREATE TABLE " + TEMP_TABLE_ASIGNATURAS
+				+ "(" + KEY_IdAsignatura + " INTEGER PRIMARY KEY," + KEY_NombreAsignatura + " TEXT UNIQUE, "
+				+ KEY_IdCuatrimestreReferencia + " INTEGER, FOREIGN KEY (" + KEY_IdCuatrimestreReferencia + ") REFERENCES "+TABLE_CUATRIMESTRE+ "("+KEY_IdCuatrimestre+"));" ;
+		db.execSQL(TEMP_CREATE_TABLE_ASIGNATURAS);
+
+		db.execSQL("INSERT INTO " + TEMP_TABLE_ASIGNATURAS + " SELECT " +  KEY_IdAsignatura + ", "
+		         +  KEY_NombreAsignatura + ", " +  KEY_IdCuatrimestreReferencia + " FROM " + TABLE_ASIGNATURA);
+		
+		db.execSQL("DROP TABLE "+TABLE_ASIGNATURA);
+
+		
+		 String CREATE_TABLE_ASIGNATURAS = "CREATE TABLE " + TABLE_ASIGNATURA
+					+ "(" + KEY_IdAsignatura + " INTEGER PRIMARY KEY," + KEY_NombreAsignatura + " TEXT UNIQUE, "
+					+ KEY_IdCuatrimestreReferencia + " INTEGER," + KEY_AsignaturaMin + " INTEGER, "+KEY_AsignaturaMax+" INTEGER, FOREIGN KEY (" + KEY_IdCuatrimestreReferencia + ") REFERENCES "+TABLE_CUATRIMESTRE+ "("+KEY_IdCuatrimestre+"));" ;
+		 db.execSQL(CREATE_TABLE_ASIGNATURAS);
+	      
+	// Create new table with email column
+		 int max =10;
+		 int min= 5;
+	       db.execSQL("INSERT INTO " + TABLE_ASIGNATURA + " SELECT " +  KEY_IdAsignatura + ", "
+	         +  KEY_NombreAsignatura + ", " +  KEY_IdCuatrimestreReferencia +", " + min +", " + max + " FROM " + TEMP_TABLE_ASIGNATURAS );
+	// Insert data ffrom temporary table that doesn't have email column so left it that column name as null.     
+	       db.execSQL("DROP TABLE " + TEMP_TABLE_ASIGNATURAS);
+		
 		// on upgrade drop older tables
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUATRIMESTRE);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ASIGNATURA);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTAS);
+//		db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUATRIMESTRE);
+//		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ASIGNATURA);
+//		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTAS);
 
 		// create new tables
-		onCreate(db);
+//		onCreate(db);
 	}
 
 	//Funcion para insertar nota
