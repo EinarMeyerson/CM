@@ -751,23 +751,6 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 										isEmpty();
 									}
 									else{
-										edtxt.setText("");
-										Toast.makeText(getApplicationContext(), Asignatura.getNombre()+ " "+getString(R.string.toastYaexiste), Toast.LENGTH_LONG).show();
-									}
-
-									if (ControlInsertAsig==0){
-
-										frags.add(new FragmentAsig(asign));
-										mAdapter.notifyDataSetChanged();
-										cn.closeDB();
-										//						db.close();
-										mPager.setCurrentItem(frags.size());
-
-										dismissDialog(0);
-										removeDialog(0);
-										isShown = false;
-									}
-									else{
 										edmin.setText("5");
 										edmin2.setText("10");
 										Toast.makeText(getApplicationContext(),R.string.toastDatosincorrectos,Toast.LENGTH_SHORT).show();

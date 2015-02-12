@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Elige el tema"
+        android:text="Elige un tema para la aplicación"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -19,17 +19,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:gravity="center_horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:orientation="horizontal">
+       
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="15dp"
+        android:paddingRight="18dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="150dp"
-            android:layout_height="220dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:scaleType="fitXY"
             android:background="#FFFFFF"
 			android:padding="2dp"
@@ -40,13 +44,14 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
+        android:paddingLeft="18dp"
+        android:layout_weight="1"
         android:orientation="vertical" >
 
         <ImageView
             android:id="@+id/ImageView01"
-            android:layout_width="150dp"
-            android:layout_height="220dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:scaleType="fitXY"
             android:background="#FFFFFF"
 			android:padding="2dp"
