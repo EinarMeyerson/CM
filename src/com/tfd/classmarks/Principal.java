@@ -74,17 +74,17 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		//		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-		//    	int value = preferences.getInt("fondo seleccionado", 0);
-		//    	Presentacion pres = new Presentacion();
-		//    	int T1 = pres.fondoElegido1;
-		//    	int T2 = pres.fondoElegido2;
-		//    	
-		//    	if(value == 1)
-		//			setTheme(T1);
-		//		else
-		//			setTheme(T2);
-		//		
+		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+    	int value = preferences.getInt("fondo seleccionado", 0);
+    	Presentacion pres = new Presentacion();
+    	int T1 = pres.fondoElegido1;
+    	int T2 = pres.fondoElegido2;
+    	
+    	if(value == 1)
+			setTheme(T1);
+		else
+			setTheme(T2);
+		
 		setTheme(R.style.CM_standard_windowBackground);
 
 		super.onCreate(savedInstanceState);
@@ -122,22 +122,16 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 		super.onResume();
 		Log.d("LOG CURSOR DATA-BASE ERROR 1.4", "after super.onResume()");
 		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-		int resetPosition = preferences.getInt("ultimo fragment", 0);
-
+		
 		mAdapter.notifyDataSetChanged();
-		mPager.setCurrentItem(resetPosition,true);
-		//		frags.get(resetPosition);
-		//		mAdapter.notifyDataSetChanged();
 
-		//		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-		//    	int value = preferences.getInt("fondo seleccionado", 0);
-		//    	
-		//    	if(value == 1)
-		//			getWindow().setBackgroundDrawableResource(R.drawable.back_blur_blue_ed);
-		//		else
-		//			getWindow().setBackgroundDrawableResource(R.drawable.back_black_magenta);
-		//    	
-
+    	int value = preferences.getInt("fondo seleccionado", 0);
+    	
+    	if(value == 1)
+			getWindow().setBackgroundDrawableResource(R.drawable.back_blur_blue_ed);
+		else
+			getWindow().setBackgroundDrawableResource(R.drawable.back_black_magenta);
+		    	
 	}
 
 	@Override
@@ -368,20 +362,11 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 		});
 
 		cn.closeDB();
-		ImageView icon = (ImageView)findViewById(R.id.imageView3);
-
-		//		icon.setOnClickListener(new View.OnClickListener() {
-		//			
-		//			@Override
-		//			public void onClick(View v) {
-		//				tapCounting();
-		//				
-		//			}
-		//		});
+		
 		txtsinasig = (TextView)findViewById(R.id.txtsinasignaturas);
 		Animation anim_frags = AnimationUtils.loadAnimation(this, R.anim.fade_in_principal);
 
-		icon.setAnimation(anim_frags);
+		//ico.setAnimation(anim_frags);
 		sub.setAnimation(anim_frags);
 		txtTitulo.setAnimation(anim_frags);
 		txtsinasig.setAnimation(anim_frags);
@@ -389,28 +374,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 	}
 
-	//	protected void tapCounting() {
-	//
-	//		while(tapsCount < 10){
-	//			tapsCount++;
-	//			break;
-	//		}
-	//		
-	////		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-	////    	int value = preferences.getInt("fondo seleccionado", 0);
-	////    	Presentacion pres = new Presentacion();
-	////    	int T1 = pres.fondoElegido1;
-	////    	int T2 = pres.fondoElegido2;
-	////    	
-	////    	if(value == 1)
-	////			setTheme(T1);
-	////		else
-	////			setTheme(T2);
-	////		
-	//    	setTheme(R.style.CM_alternative_windowBackground);
-	//		
-	//		tapsCount=0;
-	//	}
+
 
 	public void setIDmodif(int id){
 		IDmodif= id;
@@ -567,14 +531,15 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			//Crear asignatura
 			LayoutInflater inflater=(LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View newAsig = inflater.inflate(R.layout.nuevaasignatura_act, null);
-
-			//			SharedPreferences preferencesD = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-			//	    	int valueD = preferencesD.getInt("fondo seleccionado", 0);
-			//	    	
-			//	    	if(valueD == 1)
-			//				newAsig.setBackgroundResource(R.drawable.dialog_background);
-			//			else
-			//				newAsig.setBackgroundResource(R.drawable.dialog_background_alternative);
+			
+			//Carga el diseño del tema elegido en el dialog
+			SharedPreferences preferencesD = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+	    	int valueD = preferencesD.getInt("fondo seleccionado", 0);
+	    	
+	    	if(valueD == 1)
+				newAsig.setBackgroundResource(R.drawable.dialog_background);
+			else
+				newAsig.setBackgroundResource(R.drawable.dialog_background_alternative);
 
 			Typeface tf = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
 
@@ -801,17 +766,18 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			return dialog;
 
 		case 1:
-			//Aï¿½adir nota
+			//Añadir nota
 			LayoutInflater inflater1=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View newNota = inflater1.inflate(R.layout.insertarnota_act, null);
-
-			//			SharedPreferences preferencesD1 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-			//	    	int valueD1 = preferencesD1.getInt("fondo seleccionado", 0);
-			//	    	
-			//	    	if(valueD1 == 1)
-			//	    		newNota.setBackgroundResource(R.drawable.dialog_background);
-			//			else
-			//				newNota.setBackgroundResource(R.drawable.dialog_background_alternative);
+			
+			//Carga el diseño del tema elegido en el dialog
+			SharedPreferences preferencesD1 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+	    	int valueD1 = preferencesD1.getInt("fondo seleccionado", 0);
+	    	
+	    	if(valueD1 == 1)
+	    		newNota.setBackgroundResource(R.drawable.dialog_background);
+			else
+				newNota.setBackgroundResource(R.drawable.dialog_background_alternative);
 
 			BaseDatos cn = new BaseDatos(getApplicationContext());
 
@@ -1074,13 +1040,14 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			LayoutInflater inflater2=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View modifNota = inflater2.inflate(R.layout.modificarnota_act, null);
 
-			//			SharedPreferences preferencesD2 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-			//	    	int valueD2 = preferencesD2.getInt("fondo seleccionado", 0);
-			//	    	
-			//	    	if(valueD2 == 1)
-			//	    		modifNota.setBackgroundResource(R.drawable.dialog_background);
-			//			else
-			//				modifNota.setBackgroundResource(R.drawable.dialog_background_alternative);
+			//Carga el diseño del tema elegido en el dialog
+			SharedPreferences preferencesD2 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+	    	int valueD2 = preferencesD2.getInt("fondo seleccionado", 0);
+	    	
+	    	if(valueD2 == 1)
+	    		modifNota.setBackgroundResource(R.drawable.dialog_background);
+			else
+				modifNota.setBackgroundResource(R.drawable.dialog_background_alternative);
 
 			BaseDatos cn1 = new BaseDatos(getApplicationContext());
 
@@ -1366,14 +1333,15 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			LayoutInflater inflater3 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View confirmarEliminar = inflater3.inflate(R.layout.confimar_eliminar_act, null);
 
-			//			SharedPreferences preferencesD3 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-			//	    	int valueD3 = preferencesD3.getInt("fondo seleccionado", 0);
-			//	    	
-			//	    	if(valueD3 == 1)
-			//	    		confirmarEliminar.setBackgroundResource(R.drawable.dialog_background);
-			//			else
-			//				confirmarEliminar.setBackgroundResource(R.drawable.dialog_background_alternative);
-
+			//Carga el diseño del tema elegido en el dialog
+			SharedPreferences preferencesD3 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+	    	int valueD3 = preferencesD3.getInt("fondo seleccionado", 0);
+	    	
+	    	if(valueD3 == 1)
+	    		confirmarEliminar.setBackgroundResource(R.drawable.dialog_background);
+			else
+				confirmarEliminar.setBackgroundResource(R.drawable.dialog_background_alternative);
+	    	
 			Typeface tf3 = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
 
 			TextView txtAsigEliminarCabecera = (TextView)confirmarEliminar.findViewById(R.id.textviewAsignatura);

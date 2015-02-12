@@ -8,6 +8,7 @@ import mysql.ClaseCuatrimestres;
 import android.R.anim;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -28,13 +29,13 @@ public class Presentacion extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		//    	SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-		//    	int value = preferences.getInt("fondo seleccionado", 0);
-		//    	
-		//    	if(value == 1)
-		setTheme(fondoElegido1);
-		//		else
-		//			setTheme(fondoElegido2);
+    	SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+    	int value = preferences.getInt("fondo seleccionado", 0);
+    	
+    	if(value == 1)
+    		setTheme(fondoElegido1);
+		else
+			setTheme(fondoElegido2);
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.presentacion_act);
@@ -61,8 +62,7 @@ public class Presentacion extends Activity {
 
 			@Override
 			public void run() {
-
-
+				
 				BaseDatos cn = new BaseDatos(getApplicationContext());
 
 				ClaseCuatrimestres CT = new ClaseCuatrimestres();
@@ -81,7 +81,6 @@ public class Presentacion extends Activity {
 				cn.closeDB();
 				startActivity(in);
 
-
 			}
 		};  
 		time.schedule(tasko, 2500);
@@ -98,8 +97,5 @@ public class Presentacion extends Activity {
 	protected void onResume() {
 		super.onResume();
 	}
-
-
-
 
 }
