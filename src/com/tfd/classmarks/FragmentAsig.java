@@ -224,8 +224,8 @@ public class FragmentAsig extends Fragment {
 		quickAction = new QuickAction(getActivity(), QuickAction.HORIZONTAL);
 
 		// add action items into QuickAction
-		quickAction.addActionItem(editItem);
-		quickAction.addActionItem(eliminarItem);
+		//quickAction.addActionItem(editItem, value);
+		//quickAction.addActionItem(eliminarItem, value);
 
 		// Set listener for action item clicked
 		quickAction
@@ -233,99 +233,7 @@ public class FragmentAsig extends Fragment {
 					@Override
 					public void onItemClick(QuickAction source, int pos,
 							int actionId) {
-						BaseDatos cn = new BaseDatos(getActivity()
-								.getApplicationContext());
-						// here we can filter which action item was clicked with
-						// pos or actionId parameter
-						if (actionId == ID_EDIT) {
-
-							((Principal) getActivity()).setIDmodif(cn
-									.IdNota(items.get(EliminarID).getId()));
-
-							getActivity().showDialog(2);
-							adap.notifyDataSetChanged();
-							itemselected.clearFocus();
-
-						} else if (actionId == ID_ELIMINAR) {
-							cn.EliminarNota(cn.IdNota(items.get(EliminarID)
-									.getId()));
-
-							double txtsob = cn.SumaPorcentajes(cn
-									.IdAsignatura(mText));
-							Log.d("txtsob", "" + txtsob);
-							double txttotsinRound = cn.TotalProducto(cn
-									.IdAsignatura(mText));
-							Log.d("txttotsinRound", "" + txttotsinRound);
-
-							double txttotRound = Math
-									.round(txttotsinRound * 100.0) / 100.0;
-							BigDecimal txttotBig = new BigDecimal(""
-									+ txttotRound);
-							double txttot = txttotBig.doubleValue();
-
-							final double txtmedRound = Math
-									.round((txttotsinRound / (txtsob / 100)) * 100.0) / 100.0;
-							BigDecimal txtmedbig = new BigDecimal(""
-									+ txtmedRound);
-							final double txtmed = txtmedbig.doubleValue();
-
-							double txtporrest = Math
-									.round((100 - txtsob) * 100.0) / 100.0;
-
-							double notanece = 0;
-							if (txttot < asign.getMin()) {
-								notanece = Math
-										.round(((asign.getMin() - txttotsinRound) / ((100 - txtsob) / 100)) * 100.0) / 100.0;
-
-							}
-
-							ObjectAnimator anim = ObjectAnimator.ofFloat(itemselected, View.ALPHA, 0);
-							anim.setDuration(1000);
-							anim.addListener(new AnimatorListenerAdapter() {
-								@Override
-								public void onAnimationEnd(Animator animation) {
-									items.remove(items.get(EliminarID));
-									if (items.isEmpty() == true) {
-										txt.setCompoundDrawablesWithIntrinsicBounds(
-												indicatorN, null, null, null);
-									} else {
-
-										if (txtmed >= asign.getMin()) {
-											txt.setCompoundDrawablesWithIntrinsicBounds(
-													indicator, null, null, null);
-										} else {
-
-											txt.setCompoundDrawablesWithIntrinsicBounds(
-													indicatorR, null, null,
-													null);
-										}
-									}
-									adap.notifyDataSetChanged();
-
-									itemselected.setAlpha(1);
-								}
-							});
-							anim.start();
-
-							txttotal.setText(getString(R.string.Total) + " "
-									+ txttot);
-							txtmedia.setText(getString(R.string.Media) + " "
-									+ txtmed);
-							txtnotaneeded
-									.setText(getString(R.string.recuadroo)
-											+ " " + notanece + " ("
-											+ txtporrest + "%)");
-
-							if (notanece < asign.getMax() && notanece > 0) {
-								txtnotaneeded
-										.setText(getString(R.string.recuadroo)
-												+ " " + notanece + " ("
-												+ txtporrest + "%)");
-							}
-							itemselected.clearFocus();
-						}
-						adap.notifyDataSetChanged();
-						cn.closeDB();
+						//quickActionClickAction(source,pos,actionId);
 					}
 				});
 
@@ -417,6 +325,104 @@ public class FragmentAsig extends Fragment {
 		db.close();
 		return fragment;
 	}
+
+//protected void quickActionClickAction(QuickAction source, int pos,
+//			int actionId) {
+//		// TODO Auto-generated method stub
+//	BaseDatos cn = new BaseDatos(getActivity()
+//			.getApplicationContext());
+//	// here we can filter which action item was clicked with
+//	// pos or actionId parameter
+//	if (actionId == ID_EDIT) {
+//
+//		((Principal) getActivity()).setIDmodif(cn
+//				.IdNota(items.get(EliminarID).getId()));
+//
+//		getActivity().showDialog(2);
+//		adap.notifyDataSetChanged();
+//		itemselected.clearFocus();
+//
+//	} else if (actionId == ID_ELIMINAR) {
+//		cn.EliminarNota(cn.IdNota(items.get(EliminarID)
+//				.getId()));
+//
+//		double txtsob = cn.SumaPorcentajes(cn
+//				.IdAsignatura(mText));
+//		Log.d("txtsob", "" + txtsob);
+//		double txttotsinRound = cn.TotalProducto(cn
+//				.IdAsignatura(mText));
+//		Log.d("txttotsinRound", "" + txttotsinRound);
+//
+//		double txttotRound = Math
+//				.round(txttotsinRound * 100.0) / 100.0;
+//		BigDecimal txttotBig = new BigDecimal(""
+//				+ txttotRound);
+//		double txttot = txttotBig.doubleValue();
+//
+//		final double txtmedRound = Math
+//				.round((txttotsinRound / (txtsob / 100)) * 100.0) / 100.0;
+//		BigDecimal txtmedbig = new BigDecimal(""
+//				+ txtmedRound);
+//		final double txtmed = txtmedbig.doubleValue();
+//
+//		double txtporrest = Math
+//				.round((100 - txtsob) * 100.0) / 100.0;
+//
+//		double notanece = 0;
+//		if (txttot < asign.getMin()) {
+//			notanece = Math
+//					.round(((asign.getMin() - txttotsinRound) / ((100 - txtsob) / 100)) * 100.0) / 100.0;
+//
+//		}
+//
+//		ObjectAnimator anim = ObjectAnimator.ofFloat(itemselected, View.ALPHA, 0);
+//		anim.setDuration(1000);
+//		anim.addListener(new AnimatorListenerAdapter() {
+//			@Override
+//			public void onAnimationEnd(Animator animation) {
+//				items.remove(items.get(EliminarID));
+//				if (items.isEmpty() == true) {
+//					txt.setCompoundDrawablesWithIntrinsicBounds(
+//							indicatorN, null, null, null);
+//				} else {
+//
+//					if (txtmed >= asign.getMin()) {
+//						txt.setCompoundDrawablesWithIntrinsicBounds(
+//								indicator, null, null, null);
+//					} else {
+//
+//						txt.setCompoundDrawablesWithIntrinsicBounds(
+//								indicatorR, null, null,
+//								null);
+//					}
+//				}
+//				adap.notifyDataSetChanged();
+//
+//				itemselected.setAlpha(1);
+//			}
+//		});
+//		anim.start();
+//
+//		txttotal.setText(getString(R.string.Total) + " "
+//				+ txttot);
+//		txtmedia.setText(getString(R.string.Media) + " "
+//				+ txtmed);
+//		txtnotaneeded
+//				.setText(getString(R.string.recuadroo)
+//						+ " " + notanece + " ("
+//						+ txtporrest + "%)");
+//
+//		if (notanece < asign.getMax() && notanece > 0) {
+//			txtnotaneeded
+//					.setText(getString(R.string.recuadroo)
+//							+ " " + notanece + " ("
+//							+ txtporrest + "%)");
+//		}
+//		itemselected.clearFocus();
+//	}
+//	adap.notifyDataSetChanged();
+//	cn.closeDB();
+//	}
 
 //	protected void fragment_transactions() {
 //		

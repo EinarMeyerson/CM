@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
@@ -26,6 +27,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	private ScrollView mScroller;
 	private OnActionItemClickListener mItemClickListener;
 	private OnDismissListener mDismissListener;
+	private SharedPreferences preferences;
 	
 	private List<ActionItem> actionItems = new ArrayList<ActionItem>();
 	
@@ -134,13 +136,18 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	 * 
 	 * @param action  {@link ActionItem}
 	 */
-	public void addActionItem(ActionItem action) {
+	public void addActionItem(ActionItem action, int value) {
 		actionItems.add(action);
 
 		Drawable icon 	= action.getIcon();
 		
 		View container;
-        container = mInflater.inflate(R.layout.action_item_horizontal, null);
+    	
+    	if(value == 1)
+    		container = mInflater.inflate(R.layout.action_item_horizontal, null);
+		else
+			container = mInflater.inflate(R.layout.action_item_horizontal_alternative, null);
+		
 
 		ImageView img 	= (ImageView) container.findViewById(R.id.iv_icon);
 		
