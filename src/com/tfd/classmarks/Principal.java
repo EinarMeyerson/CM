@@ -30,6 +30,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -64,7 +65,8 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 	Boolean isShown1 = false;
 	Boolean isShown2 = false;
 	Boolean isShown3 = false;
-//	private int tapsCount = 0;
+	ObjectAnimator anim1, anim2;
+	//	private int tapsCount = 0;
 
 	ArrayList<Fragment> frags = new ArrayList<Fragment>();
 
@@ -72,26 +74,26 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-//		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-//    	int value = preferences.getInt("fondo seleccionado", 0);
-//    	Presentacion pres = new Presentacion();
-//    	int T1 = pres.fondoElegido1;
-//    	int T2 = pres.fondoElegido2;
-//    	
-//    	if(value == 1)
-//			setTheme(T1);
-//		else
-//			setTheme(T2);
-//		
-    	setTheme(R.style.CM_standard_windowBackground);
-    	
+		//		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+		//    	int value = preferences.getInt("fondo seleccionado", 0);
+		//    	Presentacion pres = new Presentacion();
+		//    	int T1 = pres.fondoElegido1;
+		//    	int T2 = pres.fondoElegido2;
+		//    	
+		//    	if(value == 1)
+		//			setTheme(T1);
+		//		else
+		//			setTheme(T2);
+		//		
+		setTheme(R.style.CM_standard_windowBackground);
+
 		super.onCreate(savedInstanceState);
 		/*ColorDrawable colorDrawable = new ColorDrawable( Color.TRANSPARENT );
         getWindow().setBackgroundDrawable( colorDrawable );*/
 		overridePendingTransition(0, 0);
 		setContentView(R.layout.principal_act);
 		mPager = (ViewPager) findViewById(R.id.pager);
-    	
+
 		configuracionInicial();
 
 		mAdapter = new MyPagerAdapter(this.getSupportFragmentManager(),this);
@@ -120,22 +122,22 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 		super.onResume();
 		Log.d("LOG CURSOR DATA-BASE ERROR 1.4", "after super.onResume()");
 		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-    	int resetPosition = preferences.getInt("ultimo fragment", 0);
-		
-    	mAdapter.notifyDataSetChanged();
+		int resetPosition = preferences.getInt("ultimo fragment", 0);
+
+		mAdapter.notifyDataSetChanged();
 		mPager.setCurrentItem(resetPosition,true);
-//		frags.get(resetPosition);
-//		mAdapter.notifyDataSetChanged();
-		
-//		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-//    	int value = preferences.getInt("fondo seleccionado", 0);
-//    	
-//    	if(value == 1)
-//			getWindow().setBackgroundDrawableResource(R.drawable.back_blur_blue_ed);
-//		else
-//			getWindow().setBackgroundDrawableResource(R.drawable.back_black_magenta);
-//    	
-    	    	
+		//		frags.get(resetPosition);
+		//		mAdapter.notifyDataSetChanged();
+
+		//		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+		//    	int value = preferences.getInt("fondo seleccionado", 0);
+		//    	
+		//    	if(value == 1)
+		//			getWindow().setBackgroundDrawableResource(R.drawable.back_blur_blue_ed);
+		//		else
+		//			getWindow().setBackgroundDrawableResource(R.drawable.back_black_magenta);
+		//    	
+
 	}
 
 	@Override
@@ -147,7 +149,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 		editor.putInt("ultimo fragment",mPager.getCurrentItem());
 		editor.commit();
 
-		//Si hay alg�n dialog abierto, lo cierra
+		//Si hay alun dialog abierto, lo cierra
 		if (isShown == true){
 			dismissDialog(0);
 		}
@@ -160,6 +162,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 		else if (isShown3 == true) {
 			dismissDialog(3);
 		}
+
 	}
 
 	@Override
@@ -171,9 +174,9 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 	public void onBackPressed() {
 		super.onBackPressed();
 		overridePendingTransition(0, anim.fade_out); 
-		
+
 	}
-	
+
 	@Override
 	public void onStop() {
 		super.onStop();
@@ -256,7 +259,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 	public void addSubject(View v){
 		showDialog(0);
 	}
-	
+
 
 	private void configuracionInicial(){
 
@@ -308,14 +311,14 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			j++;
 		}
 
-//		ico = (ImageView)findViewById(R.id.imageView3);
-//		ico.setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				startActivity(new Intent(getApplicationContext(), Settings.class));
-//			}
-//		});
+		ico = (ImageView)findViewById(R.id.imageView3);
+		ico.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(getApplicationContext(), Settings.class));
+			}
+		});
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_custom,list);
 		adapter.setDropDownViewResource(R.layout.spinner_custom);
@@ -366,15 +369,15 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 		cn.closeDB();
 		ImageView icon = (ImageView)findViewById(R.id.imageView3);
-		
-//		icon.setOnClickListener(new View.OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				tapCounting();
-//				
-//			}
-//		});
+
+		//		icon.setOnClickListener(new View.OnClickListener() {
+		//			
+		//			@Override
+		//			public void onClick(View v) {
+		//				tapCounting();
+		//				
+		//			}
+		//		});
 		txtsinasig = (TextView)findViewById(R.id.txtsinasignaturas);
 		Animation anim_frags = AnimationUtils.loadAnimation(this, R.anim.fade_in_principal);
 
@@ -386,28 +389,28 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 	}
 
-//	protected void tapCounting() {
-//
-//		while(tapsCount < 10){
-//			tapsCount++;
-//			break;
-//		}
-//		
-////		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-////    	int value = preferences.getInt("fondo seleccionado", 0);
-////    	Presentacion pres = new Presentacion();
-////    	int T1 = pres.fondoElegido1;
-////    	int T2 = pres.fondoElegido2;
-////    	
-////    	if(value == 1)
-////			setTheme(T1);
-////		else
-////			setTheme(T2);
-////		
-//    	setTheme(R.style.CM_alternative_windowBackground);
-//		
-//		tapsCount=0;
-//	}
+	//	protected void tapCounting() {
+	//
+	//		while(tapsCount < 10){
+	//			tapsCount++;
+	//			break;
+	//		}
+	//		
+	////		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+	////    	int value = preferences.getInt("fondo seleccionado", 0);
+	////    	Presentacion pres = new Presentacion();
+	////    	int T1 = pres.fondoElegido1;
+	////    	int T2 = pres.fondoElegido2;
+	////    	
+	////    	if(value == 1)
+	////			setTheme(T1);
+	////		else
+	////			setTheme(T2);
+	////		
+	//    	setTheme(R.style.CM_alternative_windowBackground);
+	//		
+	//		tapsCount=0;
+	//	}
 
 	public void setIDmodif(int id){
 		IDmodif= id;
@@ -471,68 +474,85 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 		if (position == lastPosition && position != 0){
 
-			final ObjectAnimator anim2 = ObjectAnimator.ofFloat(fragmentLeft, View.TRANSLATION_X, fragwid);
-			anim2.setDuration(800);
+			anim2 = ObjectAnimator.ofFloat(fragmentLeft, View.TRANSLATION_X, fragwid);
+			anim2.setDuration(500);
 
 			anim2.addListener(new AnimatorListenerAdapter() {
 				@Override
 				public void onAnimationEnd(Animator animation) {
-					frags.remove(position);
-					mAdapter.notifyDataSetChanged();
+					try{
+						frags.remove(position);
+						mAdapter.notifyDataSetChanged();
+					}catch(Exception e){
+						System.out.println(e.getMessage());
+					}
 				}
 			});
 			anim2.setInterpolator(AnimationUtils.loadInterpolator(getApplicationContext(), android.R.interpolator.decelerate_cubic));
 
-			ObjectAnimator anim = ObjectAnimator.ofFloat(fragment, View.ALPHA, 0);
-			anim.setDuration(1200);
+			anim1 = ObjectAnimator.ofFloat(fragment, View.ALPHA, 0);
+			anim1.setDuration(800);
 
-			anim.addListener(new AnimatorListenerAdapter() {
+			anim1.addListener(new AnimatorListenerAdapter() {
 				@Override
 				public void onAnimationEnd(Animator animation) {
 					anim2.start();
+
 				}
 			});
-			anim.start();
+			anim1.start();
+
 		}
 
 		else if(position >= 0 && position < lastPosition){
-			final ObjectAnimator anim2 = ObjectAnimator.ofFloat(fragmentRight, View.TRANSLATION_X, -fragwid);
-			anim2.setDuration(800);
+			anim2 = ObjectAnimator.ofFloat(fragmentRight, View.TRANSLATION_X, -fragwid);
+			anim2.setDuration(500);
 
 			anim2.addListener(new AnimatorListenerAdapter() {
 				@Override
 				public void onAnimationEnd(Animator animation) {
-					frags.remove(position);
-					mAdapter.notifyDataSetChanged();
+					try{
+						frags.remove(position);
+						mAdapter.notifyDataSetChanged();
+					}catch(Exception e){
+						System.out.println(e.getMessage());
+					}
 				}
 			});
 			anim2.setInterpolator(AnimationUtils.loadInterpolator(getApplicationContext(), android.R.interpolator.decelerate_cubic));
 
-			ObjectAnimator anim = ObjectAnimator.ofFloat(fragment, View.ALPHA, 0);
-			anim.setDuration(1200);
+			anim1 = ObjectAnimator.ofFloat(fragment, View.ALPHA, 0);
+			anim1.setDuration(800);
 
-			anim.addListener(new AnimatorListenerAdapter() {
+			anim1.addListener(new AnimatorListenerAdapter() {
 				@Override
 				public void onAnimationEnd(Animator animation) {
 					anim2.start();
+
 				}
 			});
-			anim.start();
+
+			anim1.start();
 		}
 		else{
 
-			ObjectAnimator anim = ObjectAnimator.ofFloat(fragment, View.ALPHA, 0);
-			anim.setDuration(1200);
+			anim1 = ObjectAnimator.ofFloat(fragment, View.ALPHA, 0);
+			anim1.setDuration(800);
 
-			anim.addListener(new AnimatorListenerAdapter() {
+			anim1.addListener(new AnimatorListenerAdapter() {
 				@Override
 				public void onAnimationEnd(Animator animation) {
-					frags.remove(position);
-					mAdapter.notifyDataSetChanged();
-					isEmpty();
+					try{
+						frags.remove(position);
+						mAdapter.notifyDataSetChanged();
+						isEmpty();
+					}catch(Exception e){
+						System.out.println(e.getMessage());
+					}
+
 				}
 			});
-			anim.start();
+			anim1.start();
 		}
 
 
@@ -548,14 +568,14 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			LayoutInflater inflater=(LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View newAsig = inflater.inflate(R.layout.nuevaasignatura_act, null);
 
-//			SharedPreferences preferencesD = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-//	    	int valueD = preferencesD.getInt("fondo seleccionado", 0);
-//	    	
-//	    	if(valueD == 1)
-//				newAsig.setBackgroundResource(R.drawable.dialog_background);
-//			else
-//				newAsig.setBackgroundResource(R.drawable.dialog_background_alternative);
-	    	
+			//			SharedPreferences preferencesD = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+			//	    	int valueD = preferencesD.getInt("fondo seleccionado", 0);
+			//	    	
+			//	    	if(valueD == 1)
+			//				newAsig.setBackgroundResource(R.drawable.dialog_background);
+			//			else
+			//				newAsig.setBackgroundResource(R.drawable.dialog_background_alternative);
+
 			Typeface tf = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
 
 			TextView txt1 = (TextView)newAsig.findViewById(R.id.textviewCarpeta);
@@ -572,13 +592,13 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 			final Button btn1 = (Button)newAsig.findViewById(R.id.buttonSalirAsig);
 			btn1.setTypeface(tf);
-			
+
 			final EditText edmin = (EditText)newAsig.findViewById(R.id.edittxt_crearasig_notamin);
 			edmin.setTypeface(tf);
-			
+
 			final EditText edmin2 = (EditText)newAsig.findViewById(R.id.edittxt_crearasig_notamax);
 			edmin2.setTypeface(tf);
-			
+
 			edtxt.requestFocus();
 			//boton crear - gestos
 			btn.setOnTouchListener(new View.OnTouchListener() {
@@ -691,7 +711,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 						String asign = edtxt.getText().toString();
 						String min = edmin.getText().toString();
 						String max = edmin2.getText().toString();
-						
+
 						Asignatura.setNombre(asign);
 						Asignatura.setMin(Double.parseDouble(min));
 						Asignatura.setMax(Double.parseDouble(max));
@@ -700,13 +720,13 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 						int ControlInsertAsig =cn.InsertarAsignatura(Asignatura);
 						if (ControlInsertAsig==0){
-							
+
 							frags.add(new FragmentAsig(asign));
 							mAdapter.notifyDataSetChanged();
 							cn.closeDB();
 							//						db.close();
 							mPager.setCurrentItem(frags.size());
-							
+
 							dismissDialog(0);
 							removeDialog(0);
 							isShown = false;
@@ -756,14 +776,14 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			LayoutInflater inflater1=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View newNota = inflater1.inflate(R.layout.insertarnota_act, null);
 
-//			SharedPreferences preferencesD1 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-//	    	int valueD1 = preferencesD1.getInt("fondo seleccionado", 0);
-//	    	
-//	    	if(valueD1 == 1)
-//	    		newNota.setBackgroundResource(R.drawable.dialog_background);
-//			else
-//				newNota.setBackgroundResource(R.drawable.dialog_background_alternative);
-	    	
+			//			SharedPreferences preferencesD1 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+			//	    	int valueD1 = preferencesD1.getInt("fondo seleccionado", 0);
+			//	    	
+			//	    	if(valueD1 == 1)
+			//	    		newNota.setBackgroundResource(R.drawable.dialog_background);
+			//			else
+			//				newNota.setBackgroundResource(R.drawable.dialog_background_alternative);
+
 			BaseDatos cn = new BaseDatos(getApplicationContext());
 
 			ClaseCuatrimestres cuatri = cn.getCuatrimestreDataBase(spinner.getSelectedItem().toString());
@@ -906,7 +926,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			btn2.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					
+
 					boolean verdad = true;
 					if (edtxtnombreexa.getText().length()==0)
 					{
@@ -941,7 +961,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 							double porIf = Math.round((100-porcentajeusado)*100.0)/100.0;
 							BigDecimal porcentajeusadoBig = new BigDecimal(""+porIf);
 
-							
+
 							if (nota>10)
 							{
 								datoscorrectos = false;
@@ -1026,14 +1046,14 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			LayoutInflater inflater2=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View modifNota = inflater2.inflate(R.layout.modificarnota_act, null);
 
-//			SharedPreferences preferencesD2 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-//	    	int valueD2 = preferencesD2.getInt("fondo seleccionado", 0);
-//	    	
-//	    	if(valueD2 == 1)
-//	    		modifNota.setBackgroundResource(R.drawable.dialog_background);
-//			else
-//				modifNota.setBackgroundResource(R.drawable.dialog_background_alternative);
-	    	
+			//			SharedPreferences preferencesD2 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+			//	    	int valueD2 = preferencesD2.getInt("fondo seleccionado", 0);
+			//	    	
+			//	    	if(valueD2 == 1)
+			//	    		modifNota.setBackgroundResource(R.drawable.dialog_background);
+			//			else
+			//				modifNota.setBackgroundResource(R.drawable.dialog_background_alternative);
+
 			BaseDatos cn1 = new BaseDatos(getApplicationContext());
 
 			ClaseCuatrimestres cuatri1 = cn1.getCuatrimestreDataBase(spinner.getSelectedItem().toString());
@@ -1318,14 +1338,14 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			LayoutInflater inflater3 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View confirmarEliminar = inflater3.inflate(R.layout.confimar_eliminar_act, null);
 
-//			SharedPreferences preferencesD3 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-//	    	int valueD3 = preferencesD3.getInt("fondo seleccionado", 0);
-//	    	
-//	    	if(valueD3 == 1)
-//	    		confirmarEliminar.setBackgroundResource(R.drawable.dialog_background);
-//			else
-//				confirmarEliminar.setBackgroundResource(R.drawable.dialog_background_alternative);
-			
+			//			SharedPreferences preferencesD3 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
+			//	    	int valueD3 = preferencesD3.getInt("fondo seleccionado", 0);
+			//	    	
+			//	    	if(valueD3 == 1)
+			//	    		confirmarEliminar.setBackgroundResource(R.drawable.dialog_background);
+			//			else
+			//				confirmarEliminar.setBackgroundResource(R.drawable.dialog_background_alternative);
+
 			Typeface tf3 = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
 
 			TextView txtAsigEliminarCabecera = (TextView)confirmarEliminar.findViewById(R.id.textviewAsignatura);
@@ -1488,7 +1508,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			//          String nom2 = spinner.getSelectedItem().toString();
 			//          TextView txt1 = (TextView)dialog.findViewById(R.id.textviewCarpeta);
 			//          txt1.setText(nom2); 
-			
+
 			break;
 
 		case 1: 

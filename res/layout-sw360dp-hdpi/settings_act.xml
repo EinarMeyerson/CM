@@ -31,15 +31,9 @@
             android:layout_width="150dp"
             android:layout_height="220dp"
             android:scaleType="fitXY"
-            android:background="@drawable/rounded"
+            android:background="#FFFFFF"
+			android:padding="2dp"
             android:src="@drawable/back_blur_blue_ed" />
-
-        <Button
-            android:id="@+id/btn_select_standard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="Standard" />
 
     </LinearLayout>
 
@@ -54,27 +48,12 @@
             android:layout_width="150dp"
             android:layout_height="220dp"
             android:scaleType="fitXY"
-            android:background="@drawable/rounded"
+            android:background="#FFFFFF"
+			android:padding="2dp"
             android:src="@drawable/back_black_magenta" />
 
-        <Button
-            android:id="@+id/btn_select_alternative"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="Alternative" />
-
     </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="15dp"
-        android:layout_gravity="bottom"
-        android:textSize="20dp"
-        android:text="Salir" />
 
 </LinearLayout>

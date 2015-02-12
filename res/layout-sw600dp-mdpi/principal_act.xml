@@ -51,7 +51,6 @@
         android:layout_toLeftOf="@+id/subject"
         android:layout_toRightOf="@id/txtTitle"
         android:clickable="false"
-      
         android:gravity="center"
         android:background="@color/Transparent"
         android:popupBackground="#0074A1"

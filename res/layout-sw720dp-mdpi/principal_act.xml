@@ -30,6 +30,8 @@
         android:paddingLeft="6dp"
         android:paddingRight="3dp"
         android:gravity="center"
+        android:layout_alignTop="@id/imageView3"
+        android:layout_alignBottom="@id/imageView3"
         android:textColor="@color/white"
         android:layout_toRightOf="@id/imageView3"/>
     

@@ -51,7 +51,6 @@
         android:layout_toLeftOf="@+id/subject"
         android:layout_toRightOf="@id/txtTitle"
         android:clickable="false"
-      
         android:gravity="center"
         android:background="@color/Transparent"
         android:popupBackground="#0074A1"
@@ -60,8 +59,8 @@
     
     <ImageView
         android:id="@+id/subject"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:alpha="1"
@@ -70,6 +69,8 @@
         android:onClick="addSubject"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
+        android:layout_alignTop="@id/imageView3"
+        android:layout_alignBottom="@id/imageView3"
         android:src="@drawable/subjectmas" />
 
 
