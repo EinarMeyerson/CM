@@ -9,7 +9,7 @@
     <string name="Aprobado">Aprobado </string>
     <string name="Suspendido">Suspendido </string>
     <string name="addmark">+ Añadir nota  </string>
-    <string name="emptyfolder"> No existe ninguna asignatura creada\n\nPresiona en el icono de la parte superior derecha de la pantalla para añadir una asignatura</string>
+    <string name="emptyfolder"> No existe ninguna asignatura creada\n\nPresiona en el icono de la parte\n superior derecha de la pantalla\n para añadir una asignatura</string>
     <string name="cancel">Cancelar</string>
     <string name="create">Crear</string>
     <string name="introducirnombre">Introducir nombre</string>

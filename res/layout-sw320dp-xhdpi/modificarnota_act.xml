@@ -66,7 +66,7 @@
                 android:gravity="center"
                 android:maxLength="14"
                 android:maxLines="1"
-                android:textColor="#777777" >
+                android:textColor="#CC000000" >
             </EditText>
 
             <TextView
@@ -87,13 +87,13 @@
                 android:layout_alignRight="@id/edittextNombre"
                 android:background="@drawable/edittext_shape"
                 android:textSize="@dimen/edittext" 
-                android:ems="4"
+                android:ems="5"
                 android:gravity="center"
                 android:singleLine="true"
                 android:maxLength="5"
                 android:maxLines="1"
                 android:numeric="decimal"
-                android:textColor="#777777" >
+                android:textColor="#CC000000" >
             </EditText>
 
             <TextView
@@ -115,12 +115,12 @@
                 android:layout_alignRight="@+id/edittextPorcentaje"
                 android:background="@drawable/edittext_shape"
                 android:textSize="@dimen/edittext" 
-                android:ems="4"
+                android:ems="5"
                 android:gravity="center"
                 android:maxLength="4"
                 android:maxLines="1"
                 android:numeric="decimal"
-                android:textColor="#777777" >
+                android:textColor="#CC000000" >
             </EditText>
 
         </RelativeLayout>

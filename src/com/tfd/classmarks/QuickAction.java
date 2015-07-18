@@ -138,7 +138,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	 */
 	public void addActionItem(ActionItem action, int value) {
 		actionItems.add(action);
-
+		
 		Drawable icon 	= action.getIcon();
 		
 		View container;

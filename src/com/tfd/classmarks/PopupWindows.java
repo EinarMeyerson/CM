@@ -42,6 +42,10 @@ public class PopupWindows {
 					
 					return true;
 				}
+//				if (event.getAction() == MotionEvent.ACTION_MOVE) {
+//					mWindow.dismiss();	
+//					return true;
+//				}
 				
 				return false;
 			}

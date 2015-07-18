@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/princi"
-    android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".Principal" >
-    
-	<ImageView
+
+    <ImageView
         android:id="@+id/imageView3"
         android:layout_width="@dimen/iconos"
         android:layout_height="@dimen/iconos"
@@ -20,44 +20,43 @@
         android:paddingRight="2dp"
         android:paddingTop="4dp"
         android:src="@drawable/icono_cm" />
-	
-	<TextView 
-	    android:id="@+id/txtTitle"
+
+    <TextView
+        android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="ClassMarks"
-        android:textSize="@dimen/titulo_footer"
+        android:layout_alignBottom="@id/imageView3"
+        android:layout_alignTop="@id/imageView3"
+        android:layout_toRightOf="@id/imageView3"
+        android:gravity="center"
         android:paddingLeft="6dp"
         android:paddingRight="3dp"
-        android:gravity="center"
-        android:layout_alignTop="@id/imageView3"
-        android:layout_alignBottom="@id/imageView3"
+        android:text="ClassMarks"
         android:textColor="@color/white"
-        android:layout_toRightOf="@id/imageView3"/>
-    
+        android:textSize="@dimen/titulo_footer" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/imageView3" />
-    
+
     <Spinner
         android:id="@+id/cuatrimestre_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/txtTitle"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_toLeftOf="@+id/subject"
         android:layout_toRightOf="@id/txtTitle"
-        android:clickable="false"
-      
-        android:gravity="center"
         android:background="@color/Transparent"
+        android:clickable="false"
+        android:gravity="center"
         android:popupBackground="#0074A1"
-        android:text="Carpeta"
-        android:layout_centerHorizontal="true"/>
-    
+        android:text="Carpeta" />
+
     <ImageView
         android:id="@+id/subject"
         android:layout_width="@dimen/iconos"
@@ -72,17 +71,14 @@
         android:paddingTop="4dp"
         android:src="@drawable/subjectmas" />
 
-
     <TextView
         android:id="@+id/txtsinasignaturas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:textSize="@dimen/sin"
+        android:gravity="center"
         android:textColor="@color/white"
-        android:gravity="center"/>
+        android:textSize="@dimen/sin" />
 
-    
-        
 </RelativeLayout>

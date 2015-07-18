@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/back"
-     android:background="@drawable/back_blur_blue_ed"
+    android:background="@drawable/back_blur_blue_ed"
     tools:context=".Presentacion" >
 
-		<ImageView
-		    android:id="@+id/lay_class"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_centerHorizontal="true"
-		    android:layout_centerVertical="true"
-		    android:alpha="0.9"
-		    android:paddingLeft="15dp"
-		    android:paddingRight="15dp"
-		    android:scaleType="centerInside"
-		    android:src="@drawable/classmarks" />
-		
-        <TextView
-        android:id="@+id/TVtfd"
+    <ImageView
+        android:id="@+id/lay_class"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:alpha="0.9"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/classmarks" />
+
+    <TextView
+        android:id="@+id/TVtfd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:textSize="@dimen/TFD"
-        android:text="TFD" />
+        android:text="TFD"
+        android:textSize="@dimen/TFD" />
 
 </RelativeLayout>

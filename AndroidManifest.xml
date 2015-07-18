@@ -1,50 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tfd.classmarks"
-    android:versionCode="102"
-    android:versionName="1.0.2">
-    
-	<supports-screens 
-	    android:smallScreens="false"
-	    android:normalScreens="true"
-	    android:largeScreens="true"
-	    android:xlargeScreens="true"
-	    />
-	
+    android:versionCode="1021"
+    android:versionName="1.0.2.1" >
+
+    <supports-screens
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="false"
+        android:xlargeScreens="true"
+        />
+
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="14" />
 
     <application
-        android:largeHeap="true"
         android:allowBackup="true"
-        android:icon="@drawable/icono_cm_final"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/icono_cm_final3"
         android:label="@string/app_name"
-        android:hardwareAccelerated="true">
-        <activity 
+        android:largeHeap="true"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        
+        <activity
             android:name="com.tfd.classmarks.Principal"
-            android:windowSoftInputMode="adjustResize|adjustPan"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
         <activity
+            android:name="com.tfd.classmarks.Presentacion"
             android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:name="com.tfd.classmarks.Presentacion">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
+        
+        <activity
             android:name="com.tfd.classmarks.Settings"
-            android:windowSoftInputMode="adjustResize|adjustPan"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:noHistory="true"
+            android:windowSoftInputMode="adjustResize|adjustPan" >
         </activity>
+        
+        <activity
+            android:name="com.tfd.classmarks.Principal_List"
+            android:screenOrientation="portrait" >
+        </activity>
+        
     </application>
 
 </manifest>

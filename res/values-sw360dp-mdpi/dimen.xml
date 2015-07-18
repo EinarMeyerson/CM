@@ -12,7 +12,7 @@
     <dimen name="textdialog">30sp</dimen>
     <dimen name="edittext">26sp</dimen>
     <dimen name="TFD">18sp</dimen>
-    <dimen name="iconos">65dp</dimen>
+    <dimen name="iconos">60dp</dimen>
     <dimen name="X">26dp</dimen>
     <dimen name="iconos_asignatura">20dp</dimen>
     <dimen name="linear">125dp</dimen>

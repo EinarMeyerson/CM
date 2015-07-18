@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android" >
+    <rotate 
+        android:fromDegrees="0"
+        android:toDegrees="390"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:duration="400"
+        />
+    <rotate 
+        android:fromDegrees="390"
+        android:toDegrees="340"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:startOffset="400"
+        android:duration="250"
+        />
+    <rotate 
+        android:fromDegrees="340"
+        android:toDegrees="350"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:duration="150"
+        android:startOffset="650"
+        />
+    
+
+</set>

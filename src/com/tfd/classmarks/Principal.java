@@ -18,6 +18,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -37,6 +38,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -75,32 +77,22 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-    	int value = preferences.getInt("fondo seleccionado", 0);
-    	Presentacion pres = new Presentacion();
-    	int T1 = pres.fondoElegido1;
-    	int T2 = pres.fondoElegido2;
-    	
-    	if(value == 1)
+		int value = preferences.getInt("fondo seleccionado", 0);
+		Presentacion pres = new Presentacion();
+		int T1 = pres.fondoElegido1;
+		int T2 = pres.fondoElegido2;
+
+		if(value == 1)
 			setTheme(T1);
-		else
+		if(value == 2)
 			setTheme(T2);
-		
-		setTheme(R.style.CM_standard_windowBackground);
+		else
+			setTheme(T1);
 
 		super.onCreate(savedInstanceState);
-		/*ColorDrawable colorDrawable = new ColorDrawable( Color.TRANSPARENT );
-        getWindow().setBackgroundDrawable( colorDrawable );*/
-		overridePendingTransition(0, 0);
 		setContentView(R.layout.principal_act);
-		mPager = (ViewPager) findViewById(R.id.pager);
-
+		
 		configuracionInicial();
-
-		mAdapter = new MyPagerAdapter(this.getSupportFragmentManager(),this);
-		mPager.setAdapter(mAdapter);
-
-		Animation anim_frags = AnimationUtils.loadAnimation(this, R.anim.fade_in_principal);
-		mPager.setAnimation(anim_frags);
 
 		isEmpty();
 	}
@@ -110,6 +102,8 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 		Log.d("LOG CURSOR DATA-BASE ERROR 1", "just before super.onStart()");
 		super.onStart();
 		Log.d("LOG CURSOR DATA-BASE ERROR 1.1", "just after super.onStart()");
+
+		overridePendingTransition(R.anim.fade_in_principal, 0);
 
 		mPager.setOffscreenPageLimit(4);
 		Log.d("LOG CURSOR DATA-BASE ERROR 1.2", "after mPager.setOffscreenPageLimit(4)");
@@ -122,16 +116,16 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 		super.onResume();
 		Log.d("LOG CURSOR DATA-BASE ERROR 1.4", "after super.onResume()");
 		SharedPreferences preferences = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-		
+
 		mAdapter.notifyDataSetChanged();
 
-    	int value = preferences.getInt("fondo seleccionado", 0);
-    	
-    	if(value == 1)
+		int value = preferences.getInt("fondo seleccionado", 0);
+
+		if(value == 1)
 			getWindow().setBackgroundDrawableResource(R.drawable.back_blur_blue_ed);
 		else
 			getWindow().setBackgroundDrawableResource(R.drawable.back_black_magenta);
-		    	
+
 	}
 
 	@Override
@@ -218,12 +212,13 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			int pageWidth = view.getWidth();
 			int pageHeight = view.getHeight();
 
-			if (position < -1) { // [-Infinity,-1)
-				// This page is way off-screen to the left.
+			if (position < -1) { // [-Infinito, -1)
+				//Esta vista está fuera de la pantalla por la izquierda.
 				view.setAlpha(0);
 
 			} else if (position <= 1) { // [-1,1]
-				// Modify the default slide transition to shrink the page as well
+
+				//Modifica la transición de desplazamiento predeterminado a encoger la página
 				float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
 				float vertMargin = pageHeight * (1 - scaleFactor) / 2;
 				float horzMargin = pageWidth * (1 - scaleFactor) / 2;
@@ -234,7 +229,7 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 					view.setTranslationX(-horzMargin + vertMargin / 2);
 				}
 
-				// Scale the page down (between MIN_SCALE and 1)
+				//Reduce la página (between MIN_SCALE and 1)
 				view.setScaleX(scaleFactor);
 				view.setScaleY(scaleFactor);
 
@@ -259,21 +254,31 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 		BaseDatos cn = new BaseDatos(getApplicationContext());
 
-		TextView txtTitulo = (TextView)findViewById(R.id.txtTitle);
+		mPager = (ViewPager) findViewById(R.id.pager);
+		mAdapter = new MyPagerAdapter(this.getSupportFragmentManager(),this);
+		mPager.setAdapter(mAdapter);
+		
+		final TextView txtTitulo = (TextView)findViewById(R.id.txtTitle);
 		Typeface tf = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
 
 		txtTitulo.setTypeface(tf);
 
+		//Las tres siguientes lineas muestran los dpi's del dispositivo donde se está ejecutando la aplicacion, en lugar de "ClassMarks", en la barra superior.
+		Integer dpis = getResources().getDisplayMetrics().densityDpi;
+		Float y_axis_dpis = getResources().getDisplayMetrics().xdpi;
+		txtTitulo.setText(dpis.toString()+"-"+y_axis_dpis.toString());
+		//
+		
 		spinner =  ( Spinner ) findViewById ( R.id.cuatrimestre_spinner );
 
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				frags.clear();
+
 				BaseDatos cn = new BaseDatos(getApplicationContext());
-				//              SQLiteDatabase db = cn.getReadableDatabase();
+
 				ClaseCuatrimestres Cuatrimestre = cn.getCuatrimestreDataBase(spinner.getSelectedItem().toString());
 				int i=0;
 
@@ -284,7 +289,6 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 				}
 
 				cn.closeDB();
-				//              db.close(); 
 				mAdapter.notifyDataSetChanged();
 
 			}
@@ -306,11 +310,40 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 		}
 
 		ico = (ImageView)findViewById(R.id.imageView3);
+
+		final Animation animIco = AnimationUtils.loadAnimation(this, R.anim.icon_flipping);
+
 		ico.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(getApplicationContext(), Settings.class));
+				ico.startAnimation(animIco);
+
+				animIco.setAnimationListener(new AnimationListener() {
+
+					@Override
+					public void onAnimationEnd(Animation animation) {
+						// TODO Auto-generated method stub
+
+						startActivity(new Intent(getApplicationContext(), Settings.class));
+						//overridePendingTransition(R.anim.from_right_to_left, R.anim.from_left_to_right);
+						//overridePendingTransition(0, 0);
+
+					}
+
+					@Override
+					public void onAnimationStart(Animation animation) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onAnimationRepeat(Animation animation) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
 			}
 		});
 
@@ -362,15 +395,15 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 		});
 
 		cn.closeDB();
-		
+
 		txtsinasig = (TextView)findViewById(R.id.txtsinasignaturas);
 		Animation anim_frags = AnimationUtils.loadAnimation(this, R.anim.fade_in_principal);
 
-		//ico.setAnimation(anim_frags);
-		sub.setAnimation(anim_frags);
-		txtTitulo.setAnimation(anim_frags);
-		txtsinasig.setAnimation(anim_frags);
-
+		sub.startAnimation(anim_frags);
+		txtTitulo.startAnimation(anim_frags);
+		txtsinasig.startAnimation(anim_frags);
+		mPager.startAnimation(anim_frags);
+		ico.startAnimation(anim_frags);
 
 	}
 
@@ -531,12 +564,12 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			//Crear asignatura
 			LayoutInflater inflater=(LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View newAsig = inflater.inflate(R.layout.nuevaasignatura_act, null);
-			
+
 			//Carga el diseño del tema elegido en el dialog
 			SharedPreferences preferencesD = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-	    	int valueD = preferencesD.getInt("fondo seleccionado", 0);
-	    	
-	    	if(valueD == 1)
+			int valueD = preferencesD.getInt("fondo seleccionado", 0);
+
+			if(valueD == 1)
 				newAsig.setBackgroundResource(R.drawable.dialog_background);
 			else
 				newAsig.setBackgroundResource(R.drawable.dialog_background_alternative);
@@ -769,13 +802,13 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 			//Añadir nota
 			LayoutInflater inflater1=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View newNota = inflater1.inflate(R.layout.insertarnota_act, null);
-			
+
 			//Carga el diseño del tema elegido en el dialog
 			SharedPreferences preferencesD1 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-	    	int valueD1 = preferencesD1.getInt("fondo seleccionado", 0);
-	    	
-	    	if(valueD1 == 1)
-	    		newNota.setBackgroundResource(R.drawable.dialog_background);
+			int valueD1 = preferencesD1.getInt("fondo seleccionado", 0);
+
+			if(valueD1 == 1)
+				newNota.setBackgroundResource(R.drawable.dialog_background);
 			else
 				newNota.setBackgroundResource(R.drawable.dialog_background_alternative);
 
@@ -1042,10 +1075,10 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 			//Carga el diseño del tema elegido en el dialog
 			SharedPreferences preferencesD2 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-	    	int valueD2 = preferencesD2.getInt("fondo seleccionado", 0);
-	    	
-	    	if(valueD2 == 1)
-	    		modifNota.setBackgroundResource(R.drawable.dialog_background);
+			int valueD2 = preferencesD2.getInt("fondo seleccionado", 0);
+
+			if(valueD2 == 1)
+				modifNota.setBackgroundResource(R.drawable.dialog_background);
 			else
 				modifNota.setBackgroundResource(R.drawable.dialog_background_alternative);
 
@@ -1335,13 +1368,13 @@ public class Principal extends FragmentActivity implements FragmentProvider {
 
 			//Carga el diseño del tema elegido en el dialog
 			SharedPreferences preferencesD3 = getSharedPreferences("CMpreferences", MODE_PRIVATE);
-	    	int valueD3 = preferencesD3.getInt("fondo seleccionado", 0);
-	    	
-	    	if(valueD3 == 1)
-	    		confirmarEliminar.setBackgroundResource(R.drawable.dialog_background);
+			int valueD3 = preferencesD3.getInt("fondo seleccionado", 0);
+
+			if(valueD3 == 1)
+				confirmarEliminar.setBackgroundResource(R.drawable.dialog_background);
 			else
 				confirmarEliminar.setBackgroundResource(R.drawable.dialog_background_alternative);
-	    	
+
 			Typeface tf3 = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
 
 			TextView txtAsigEliminarCabecera = (TextView)confirmarEliminar.findViewById(R.id.textviewAsignatura);

@@ -13,6 +13,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -40,8 +41,8 @@ public class FragmentAsig extends Fragment {
 	public int ModifID;
 	private static final int ID_EDIT = 1;
 	private static final int ID_ELIMINAR = 2;
-//	private boolean isAnimating=false;
-//	private boolean didSlideOut=false;
+	//	private boolean isAnimating=false;
+	//	private boolean didSlideOut=false;
 	public String mText, mTextminmax;
 	public TextView txtnotaexfin, txttotal, txtmedia, txtsobre, txtaadir;
 	public ListView lv;
@@ -57,12 +58,16 @@ public class FragmentAsig extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		SharedPreferences preferences = getActivity().getSharedPreferences("CMpreferences", Context.MODE_PRIVATE);
+
+		int value = preferences.getInt("fondo seleccionado", 0);
+
 		items = new ArrayList<Item>();
 
 		final View footer = ((LayoutInflater) getActivity()
 				.getApplicationContext().getSystemService(
 						Context.LAYOUT_INFLATER_SERVICE)).inflate(
-				R.layout.listview_forma_footer, null, false);
+								R.layout.listview_forma_footer, null, false);
 
 		footer.setOnTouchListener(new View.OnTouchListener() {
 			private Rect rect;
@@ -78,12 +83,12 @@ public class FragmentAsig extends Fragment {
 							v.getTop() + (int) event.getY())) {
 						// User moved outside bounds
 						((Principal) getActivity())
-								.clickOutTransformation(footer);
-
+						.clickOutTransformation(footer);
+						
 						return false;
 					} else {
 						((Principal) getActivity())
-								.clickOutTransformation(footer);
+						.clickOutTransformation(footer);
 						v.performClick();
 
 					}
@@ -101,11 +106,11 @@ public class FragmentAsig extends Fragment {
 							v.getTop() + (int) event.getY())) {
 						// User moved outside bounds
 						((Principal) getActivity())
-								.clickOutTransformation(footer);
+						.clickOutTransformation(footer);
 						return true;
 					} else {
 						((Principal) getActivity())
-								.clickInTransformation(footer);
+						.clickInTransformation(footer);
 					}
 					return true;
 				}
@@ -138,7 +143,7 @@ public class FragmentAsig extends Fragment {
 		SQLiteDatabase db = cn.getReadableDatabase();
 
 		final ClaseAsignaturas asign = cn.getAsignaturaDataBase(mText);
-		
+
 		fragment = inflater.inflate(R.layout.asignatura_frag, container,
 				false);
 
@@ -149,22 +154,22 @@ public class FragmentAsig extends Fragment {
 		// TextView nombre de la asignatura
 		final TextView txt = (TextView) fragment.findViewById(R.id.textViewAnd);
 		txt.setText(mText);
-		
+
 		//TextView valor minimo y maximo de la asignatura
 		TextView txt_minmax = (TextView)fragment.findViewById(R.id.textView_asig_minmax);
 		txt_minmax.setText("(Mín: "+asign.getMin()+" - Máx: "+asign.getMax()+")");
-		
+
 		txt_minmax.setTypeface(tf);
 		txt.setTypeface(tf);
-		
-//		txt.setOnClickListener(new View.OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				fragment_transactions();
-//				
-//			}
-//		});
+
+		//		txt.setOnClickListener(new View.OnClickListener() {
+		//			
+		//			@Override
+		//			public void onClick(View v) {
+		//				fragment_transactions();
+		//				
+		//			}
+		//		});
 
 		// Codigo para crear y escalar el indicardor verde
 		Drawable indic = getActivity().getResources().getDrawable(
@@ -224,18 +229,108 @@ public class FragmentAsig extends Fragment {
 		quickAction = new QuickAction(getActivity(), QuickAction.HORIZONTAL);
 
 		// add action items into QuickAction
-		//quickAction.addActionItem(editItem, value);
-		//quickAction.addActionItem(eliminarItem, value);
+		quickAction.addActionItem(editItem, value);
+		quickAction.addActionItem(eliminarItem, value);
 
 		// Set listener for action item clicked
 		quickAction
-				.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
-					@Override
-					public void onItemClick(QuickAction source, int pos,
-							int actionId) {
-						//quickActionClickAction(source,pos,actionId);
+		.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
+			@Override
+			public void onItemClick(QuickAction source, int pos,
+					int actionId) {
+				BaseDatos cn = new BaseDatos(getActivity().getApplicationContext());
+				// here we can filter which action item was clicked with
+				// pos or actionId parameter
+				if (actionId == ID_EDIT) {
+
+					((Principal) getActivity()).setIDmodif(cn
+							.IdNota(items.get(EliminarID).getId()));
+
+					getActivity().showDialog(2);
+					adap.notifyDataSetChanged();
+					itemselected.clearFocus();
+
+				} else if (actionId == ID_ELIMINAR) {
+					cn.EliminarNota(cn.IdNota(items.get(EliminarID)
+							.getId()));
+
+					double txtsob = cn.SumaPorcentajes(cn
+							.IdAsignatura(mText));
+					Log.d("txtsob", "" + txtsob);
+					double txttotsinRound = cn.TotalProducto(cn
+							.IdAsignatura(mText));
+					Log.d("txttotsinRound", "" + txttotsinRound);
+
+					double txttotRound = Math
+							.round(txttotsinRound * 100.0) / 100.0;
+					BigDecimal txttotBig = new BigDecimal(""
+							+ txttotRound);
+					double txttot = txttotBig.doubleValue();
+
+					final double txtmedRound = Math
+							.round((txttotsinRound / (txtsob / 100)) * 100.0) / 100.0;
+					BigDecimal txtmedbig = new BigDecimal(""
+							+ txtmedRound);
+					final double txtmed = txtmedbig.doubleValue();
+
+					double txtporrest = Math
+							.round((100 - txtsob) * 100.0) / 100.0;
+
+					double notanece = 0;
+					if (txttot < asign.getMin()) {
+						notanece = Math
+								.round(((asign.getMin() - txttotsinRound) / ((100 - txtsob) / 100)) * 100.0) / 100.0;
+
 					}
-				});
+
+					ObjectAnimator anim = ObjectAnimator.ofFloat(itemselected, View.ALPHA, 0);
+					anim.setDuration(1000);
+					anim.addListener(new AnimatorListenerAdapter() {
+						@Override
+						public void onAnimationEnd(Animator animation) {
+							items.remove(items.get(EliminarID));
+							if (items.isEmpty() == true) {
+								txt.setCompoundDrawablesWithIntrinsicBounds(
+										indicatorN, null, null, null);
+							} else {
+
+								if (txtmed >= asign.getMin()) {
+									txt.setCompoundDrawablesWithIntrinsicBounds(
+											indicator, null, null, null);
+								} else {
+
+									txt.setCompoundDrawablesWithIntrinsicBounds(
+											indicatorR, null, null,
+											null);
+								}
+							}
+							adap.notifyDataSetChanged();
+
+							itemselected.setAlpha(1);
+						}
+					});
+					anim.start();
+
+					txttotal.setText(getString(R.string.Total) + " "
+							+ txttot);
+					txtmedia.setText(getString(R.string.Media) + " "
+							+ txtmed);
+					txtnotaneeded
+					.setText(getString(R.string.recuadroo)
+							+ " " + notanece + " ("
+							+ txtporrest + "%)");
+
+					if (notanece < asign.getMax() && notanece > 0) {
+						txtnotaneeded
+						.setText(getString(R.string.recuadroo)
+								+ " " + notanece + " ("
+								+ txtporrest + "%)");
+					}
+					itemselected.clearFocus();
+				}adap.notifyDataSetChanged();
+				cn.closeDB();
+			}
+		});
 
 		// Mostramos los datos recogidos de la base de datos
 		Log.d("LOG CURSOR DATA-BASE ERROR 2", "Valor asignatura: " + mText);
@@ -245,8 +340,8 @@ public class FragmentAsig extends Fragment {
 		while (i < Asignatura.getLon()) {
 			items.add(new Item(Asignatura.getNotas(i).getId(), Asignatura
 					.getNotas(i).getEvaluable(), Double.toString(Asignatura
-					.getNotas(i).getPorcentaje()) + " %", Double
-					.toString((Asignatura.getNotas(i).getNota()))));
+							.getNotas(i).getPorcentaje()) + " %", Double
+							.toString((Asignatura.getNotas(i).getNota()))));
 			i++;
 		}
 
@@ -256,8 +351,7 @@ public class FragmentAsig extends Fragment {
 
 		lv = (ListView) fragment.findViewById(R.id.listView1);
 		lv.addFooterView(footer);
-		adap = new ListAdapter(this.getActivity(), R.layout.listview_forma,
-				items);
+		adap = new ListAdapter(this.getActivity(), R.layout.listview_forma, items);
 		lv.setAdapter(adap);
 
 		lv.setLongClickable(true);
@@ -326,128 +420,31 @@ public class FragmentAsig extends Fragment {
 		return fragment;
 	}
 
-//protected void quickActionClickAction(QuickAction source, int pos,
-//			int actionId) {
-//		// TODO Auto-generated method stub
-//	BaseDatos cn = new BaseDatos(getActivity()
-//			.getApplicationContext());
-//	// here we can filter which action item was clicked with
-//	// pos or actionId parameter
-//	if (actionId == ID_EDIT) {
-//
-//		((Principal) getActivity()).setIDmodif(cn
-//				.IdNota(items.get(EliminarID).getId()));
-//
-//		getActivity().showDialog(2);
-//		adap.notifyDataSetChanged();
-//		itemselected.clearFocus();
-//
-//	} else if (actionId == ID_ELIMINAR) {
-//		cn.EliminarNota(cn.IdNota(items.get(EliminarID)
-//				.getId()));
-//
-//		double txtsob = cn.SumaPorcentajes(cn
-//				.IdAsignatura(mText));
-//		Log.d("txtsob", "" + txtsob);
-//		double txttotsinRound = cn.TotalProducto(cn
-//				.IdAsignatura(mText));
-//		Log.d("txttotsinRound", "" + txttotsinRound);
-//
-//		double txttotRound = Math
-//				.round(txttotsinRound * 100.0) / 100.0;
-//		BigDecimal txttotBig = new BigDecimal(""
-//				+ txttotRound);
-//		double txttot = txttotBig.doubleValue();
-//
-//		final double txtmedRound = Math
-//				.round((txttotsinRound / (txtsob / 100)) * 100.0) / 100.0;
-//		BigDecimal txtmedbig = new BigDecimal(""
-//				+ txtmedRound);
-//		final double txtmed = txtmedbig.doubleValue();
-//
-//		double txtporrest = Math
-//				.round((100 - txtsob) * 100.0) / 100.0;
-//
-//		double notanece = 0;
-//		if (txttot < asign.getMin()) {
-//			notanece = Math
-//					.round(((asign.getMin() - txttotsinRound) / ((100 - txtsob) / 100)) * 100.0) / 100.0;
-//
-//		}
-//
-//		ObjectAnimator anim = ObjectAnimator.ofFloat(itemselected, View.ALPHA, 0);
-//		anim.setDuration(1000);
-//		anim.addListener(new AnimatorListenerAdapter() {
-//			@Override
-//			public void onAnimationEnd(Animator animation) {
-//				items.remove(items.get(EliminarID));
-//				if (items.isEmpty() == true) {
-//					txt.setCompoundDrawablesWithIntrinsicBounds(
-//							indicatorN, null, null, null);
-//				} else {
-//
-//					if (txtmed >= asign.getMin()) {
-//						txt.setCompoundDrawablesWithIntrinsicBounds(
-//								indicator, null, null, null);
-//					} else {
-//
-//						txt.setCompoundDrawablesWithIntrinsicBounds(
-//								indicatorR, null, null,
-//								null);
-//					}
-//				}
-//				adap.notifyDataSetChanged();
-//
-//				itemselected.setAlpha(1);
-//			}
-//		});
-//		anim.start();
-//
-//		txttotal.setText(getString(R.string.Total) + " "
-//				+ txttot);
-//		txtmedia.setText(getString(R.string.Media) + " "
-//				+ txtmed);
-//		txtnotaneeded
-//				.setText(getString(R.string.recuadroo)
-//						+ " " + notanece + " ("
-//						+ txtporrest + "%)");
-//
-//		if (notanece < asign.getMax() && notanece > 0) {
-//			txtnotaneeded
-//					.setText(getString(R.string.recuadroo)
-//							+ " " + notanece + " ("
-//							+ txtporrest + "%)");
-//		}
-//		itemselected.clearFocus();
-//	}
-//	adap.notifyDataSetChanged();
-//	cn.closeDB();
-//	}
 
-//	protected void fragment_transactions() {
-//		
-//		// TODO Auto-generated method stub
-//		if(isAnimating){
-//			return;
-//		}
-//		isAnimating=true;
-//		
-//		if(didSlideOut){
-//			didSlideOut=false;
-//			getFragmentManager().popBackStack();
-//		}
-//		
-// 		AnimatorListener listener = new AnimatorListenerAdapter() {
-//			@Override
-//			public void onAnimationEnd(Animator arg0){
-//				android.support.v4.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//				transaction.setCustomAnimations(R.anim.grow_from_bottom, R.anim.pump_bottom);
-//				transaction.add(, arg1)
-//			}
-//			
-//		};
-//		
-//	}
+	//	protected void fragment_transactions() {
+	//		
+	//		// TODO Auto-generated method stub
+	//		if(isAnimating){
+	//			return;
+	//		}
+	//		isAnimating=true;
+	//		
+	//		if(didSlideOut){
+	//			didSlideOut=false;
+	//			getFragmentManager().popBackStack();
+	//		}
+	//		
+	// 		AnimatorListener listener = new AnimatorListenerAdapter() {
+	//			@Override
+	//			public void onAnimationEnd(Animator arg0){
+	//				android.support.v4.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+	//				transaction.setCustomAnimations(R.anim.grow_from_bottom, R.anim.pump_bottom);
+	//				transaction.add(, arg1)
+	//			}
+	//			
+	//		};
+	//		
+	//	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -460,11 +457,11 @@ public class FragmentAsig extends Fragment {
 
 	public FragmentAsig() {
 	}
-	
+
 	public FragmentAsig(String text) {
 		this.mText = text;
 	}
-	
+
 	public String NombreAsig() {
 		return mText;
 	}

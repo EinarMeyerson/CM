@@ -9,7 +9,7 @@
     <string name="Aprobado">Passed </string>
     <string name="Suspendido">Failed </string>
      <string name="addmark">+ Add new mark  </string>
-    <string name="emptyfolder"> Doesn\'t exist any subject\n\n Click on the icon on the right top corner of the screen to add a new subject</string>
+    <string name="emptyfolder"> Doesn\'t exist any subject\n\n Click on the icon on the right\n top corner of the screen\n to add a new subject</string>
     <string name="cancel">Cancel</string>
     <string name="create">Create</string>
     <string name="introducirnombre">Add name</string>
